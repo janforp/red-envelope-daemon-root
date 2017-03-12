@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_score_exchange">
+
+    <resultMap id="ScoreExchangeMap" type="com.hongbao.api.model.dto.ReScoreExchangeInfo">
+        <result column="exchange_img" property="exchangeImg" jdbcType="VARCHAR"/>
+        <result column="exchange_name" property="exchangeName" jdbcType="VARCHAR"/>
+        <result column="exchange_desc" property="exchangeDesc" jdbcType="VARCHAR"/>
+        <result column="exchange_url" property="exchangeUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectIosScoreExchange" resultMap="ScoreExchangeMap">
+        SELECT exchange_img, exchange_name, exchange_desc, exchange_url
+        FROM re_score_exchange
+        WHERE exchange_status = 0 OR exchange_status = 2
+        ORDER BY exchange_order ASC
+    </select>
+
+    <select id="selectAndriodScoreExchange" resultMap="ScoreExchangeMap">
+        SELECT exchange_img, exchange_name, exchange_desc, exchange_url
+        FROM re_score_exchange
+        WHERE exchange_status = 1 OR exchange_status = 2
+        ORDER BY exchange_order ASC
+    </select>
+
+</mapper>

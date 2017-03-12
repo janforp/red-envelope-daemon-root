@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_mission">
+
+    <resultMap id="GreatInfoMap" type="com.hongbao.api.model.dto.GreatMissionInfo">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="mission_icon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="mission_title" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="mission_reward" property="missionReward" jdbcType="VARCHAR"/>
+        <result column="merchant_icon" property="merchantIcon" jdbcType="VARCHAR"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="participants_num" property="participantsNum" jdbcType="INTEGER"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="task_status" property="taskStatus" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <select id="selectGreatMissionList" resultMap="GreatInfoMap" parameterType="map">
+        SELECT t.* FROM (
+          SELECT (@rowNO:=@rowNo + 1) AS rowno, d.* FROM (
+            SELECT c.* FROM (
+              (SELECT a.mission_id, a.mission_icon, a.mission_title, a.mission_reward, a.merchant_icon, a.merchant_name,
+                a.participants_num, a.end_time, a.left_num, a.is_end, a.mission_order, 1 as ord
+              <if test="userId != null">
+                , e.task_id, e.task_status
+              </if>
+              FROM re_recommend_mission a
+              <if test="userId != null">
+                LEFT JOIN re_recommend_task e ON (e.mission_id = a.mission_id AND e.user_id = #{userId,jdbcType=INTEGER} AND e.task_status != 4)
+              </if>
+              WHERE (a.mission_status = 2 OR a.mission_status = #{platform,jdbcType=INTEGER})
+              AND a.start_time <![CDATA[ <= ]]> #{today,jdbcType=VARCHAR}
+              AND a.end_time >= #{today,jdbcType=VARCHAR}
+              AND a.is_end = 1
+              AND a.left_num > 0
+              AND a.mission_type != 1)
+
+              UNION
+
+              (SELECT b.mission_id, b.mission_icon, b.mission_title, b.mission_reward, b.merchant_icon, b.merchant_name,
+                b.participants_num, b.end_time, b.left_num, b.is_end, b.mission_order, 0 as ord
+              <if test="userId != null">
+                , e.task_id, e.task_status
+              </if>
+              FROM re_recommend_mission b
+              <if test="userId != null">
+                LEFT JOIN re_recommend_task e ON (e.mission_id = b.mission_id AND e.user_id = #{userId,jdbcType=INTEGER} AND e.task_status != 4)
+              </if>
+              WHERE (b.mission_status = 2 OR b.mission_status = #{platform,jdbcType=INTEGER})
+              AND (b.end_time <![CDATA[ < ]]> #{today,jdbcType=VARCHAR} OR b.is_end = 0 OR b.left_num = 0)
+              AND b.mission_type != 1)
+            ) c ORDER BY c.ord DESC , c.mission_order DESC , c.mission_id DESC
+          ) d, (SELECT @rowNO:=0) f
+        ) t
+        <if test="missionId != null">
+        WHERE t.rowno > (
+          SELECT t.rowno FROM (
+            SELECT (@rowNO:=@rowNo + 1) AS rowno, d.* FROM (
+              SELECT c.* FROM(
+                (SELECT a.mission_id, a.mission_icon, a.mission_title, a.mission_reward, a.merchant_icon, a.merchant_name,
+                  a.participants_num, a.end_time, a.left_num, a.is_end, a.mission_order, 1 as ord
+                FROM re_recommend_mission a
+                WHERE (a.mission_status = 2 OR a.mission_status = #{platform,jdbcType=INTEGER})
+                AND a.start_time <![CDATA[ <= ]]> #{today,jdbcType=VARCHAR}
+                AND a.end_time >= #{today,jdbcType=VARCHAR}
+                AND a.is_end = 1
+                AND a.left_num > 0
+                AND a.mission_type != 1)
+
+                UNION
+
+                (SELECT b.mission_id, b.mission_icon, b.mission_title, b.mission_reward, b.merchant_icon, b.merchant_name,
+                  b.participants_num, b.end_time, b.left_num, b.is_end, b.mission_order, 0 as ord
+                FROM re_recommend_mission b
+                WHERE (b.mission_status = 2 OR b.mission_status = #{platform,jdbcType=INTEGER})
+                AND (b.end_time <![CDATA[ < ]]> #{today,jdbcType=VARCHAR} OR b.is_end = 0 OR b.left_num = 0)
+                AND b.mission_type != 1)
+              )c ORDER BY c.ord DESC , c.mission_order DESC , c.mission_id DESC
+            ) d, (SELECT @rowNO:=0) e ) t
+          WHERE t.mission_id = #{missionId,jdbcType=BIGINT}
+        )
+        </if>
+        Limit 0, 20
+    </select>
+
+    <select id="selectByPlatformAndUserId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE (mission_status = 2 OR mission_status = #{platform,jdbcType=INTEGER})
+        AND left_num > 0
+        AND start_time <![CDATA[ <= ]]> #{today,jdbcType=VARCHAR}
+        AND end_time >= #{today,jdbcType=VARCHAR}
+        <if test="userId != null">
+            AND mission_id NOT IN
+            (SELECT mission_id FROM re_recommend_task WHERE user_id = #{userId,jdbcType=INTEGER} AND task_status = 2)
+        </if>
+        ORDER BY mission_order ASC
+    </select>
+
+    <select id="selectUnderwayAttentionList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE (mission_status = 2 OR mission_status = #{platform,jdbcType=INTEGER})
+        AND left_num > 0
+        AND mission_type = 1
+        AND start_time <![CDATA[ <= ]]> #{today,jdbcType=VARCHAR}
+        AND end_time >= #{today,jdbcType=VARCHAR}
+        <if test="userId != null">
+            AND mission_id NOT IN
+            (SELECT mission_id FROM re_code_exchange_detail WHERE user_id = #{userId,jdbcType=INTEGER} AND exchange_status = 1)
+        </if>
+        ORDER BY left_num ASC
+    </select>
+
+    <select id="selectUnderwayGreatList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE (mission_status = 2 OR mission_status = #{platform,jdbcType=INTEGER})
+        AND left_num > 0
+        AND (mission_type = 0 or mission_type = 2)
+        AND start_time <![CDATA[ <= ]]> #{today,jdbcType=VARCHAR}
+        AND end_time >= #{today,jdbcType=VARCHAR}
+        <if test="userId != null">
+            AND mission_id NOT IN
+            (SELECT mission_id
+              FROM re_recommend_task
+              WHERE user_id = #{userId,jdbcType=INTEGER}
+              AND task_status != 4
+            )
+        </if>
+        ORDER BY left_num ASC
+    </select>
+
+    <select id="selectOverGreatList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE (mission_status = 2 OR mission_status = #{platform,jdbcType=INTEGER})
+        AND (left_num = 0 or end_time <![CDATA[ < ]]> #{today,jdbcType=VARCHAR})
+        AND (mission_type = 0 or mission_type = 2)
+        <if test="userId != null">
+            AND mission_id NOT IN
+            (SELECT mission_id
+            FROM re_recommend_task
+            WHERE user_id = #{userId,jdbcType=INTEGER}
+            AND task_status != 4
+            )
+        </if>
+        ORDER BY left_num ASC
+    </select>
+
+</mapper>

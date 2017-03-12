@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_withdraw_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReWithdrawDetail">
+        <id column="withdraw_id" property="withdrawId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="withdraw_type" property="withdrawType" jdbcType="VARCHAR"/>
+        <result column="withdraw_account" property="withdrawAccount" jdbcType="VARCHAR"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="withdraw_status" property="withdrawStatus" jdbcType="TINYINT"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="apply_money" property="applyMoney" jdbcType="DECIMAL"/>
+        <result column="withdraw_money" property="withdrawMoney" jdbcType="DECIMAL"/>
+        <result column="apply_time" property="applyTime" jdbcType="VARCHAR"/>
+        <result column="withdraw_time" property="withdrawTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT withdraw_id, user_id, withdraw_type, withdraw_account, account_name, 
+        withdraw_status, remarks, apply_money, withdraw_money, apply_time, 
+        withdraw_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReWithdrawDetail">
+        <include refid="re_withdraw_detail.SELECT_All_Column"/>
+        FROM re_withdraw_detail
+        WHERE withdraw_id = #{withdrawId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawDetail">
+        DELETE FROM re_withdraw_detail
+        WHERE withdraw_id = #{withdrawId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReWithdrawDetail">
+        INSERT INTO re_withdraw_detail ( user_id, 
+          withdraw_type, withdraw_account, account_name, 
+          withdraw_status, remarks, apply_money, 
+          withdraw_money, apply_time, withdraw_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{withdrawType,jdbcType=VARCHAR}, #{withdrawAccount,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
+          #{withdrawStatus,jdbcType=TINYINT}, #{remarks,jdbcType=VARCHAR}, #{applyMoney,jdbcType=DECIMAL}, 
+          #{withdrawMoney,jdbcType=DECIMAL}, #{applyTime,jdbcType=VARCHAR}, #{withdrawTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="withdrawId" resultType="long">
+            SELECT LAST_INSERT_ID() AS withdrawId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReWithdrawDetail">
+        INSERT INTO re_withdraw_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="withdrawType != null">
+                withdraw_type,
+            </if>
+            <if test="withdrawAccount != null">
+                withdraw_account,
+            </if>
+            <if test="accountName != null">
+                account_name,
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="applyMoney != null">
+                apply_money,
+            </if>
+            <if test="withdrawMoney != null">
+                withdraw_money,
+            </if>
+            <if test="applyTime != null">
+                apply_time,
+            </if>
+            <if test="withdrawTime != null">
+                withdraw_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="withdrawType != null">
+                #{withdrawType,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawAccount != null">
+                #{withdrawAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null">
+                #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawStatus != null">
+                #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="applyMoney != null">
+                #{applyMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="withdrawMoney != null">
+                #{withdrawMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="applyTime != null">
+                #{applyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawTime != null">
+                #{withdrawTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="withdrawId" resultType="long">
+            SELECT LAST_INSERT_ID() AS withdrawId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_withdraw_detail ( user_id, 
+          withdraw_type, withdraw_account, account_name, 
+          withdraw_status, remarks, apply_money, 
+          withdraw_money, apply_time, withdraw_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.withdrawType,jdbcType=VARCHAR}, #{item.withdrawAccount,jdbcType=VARCHAR}, #{item.accountName,jdbcType=VARCHAR}, 
+            #{item.withdrawStatus,jdbcType=TINYINT}, #{item.remarks,jdbcType=VARCHAR}, #{item.applyMoney,jdbcType=DECIMAL}, 
+            #{item.withdrawMoney,jdbcType=DECIMAL}, #{item.applyTime,jdbcType=VARCHAR}, #{item.withdrawTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReWithdrawDetail">
+        UPDATE re_withdraw_detail
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="withdrawType != null">
+                withdraw_type = #{withdrawType,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawAccount != null">
+                withdraw_account = #{withdrawAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null">
+                account_name = #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status = #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="applyMoney != null">
+                apply_money = #{applyMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="withdrawMoney != null">
+                withdraw_money = #{withdrawMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="applyTime != null">
+                apply_time = #{applyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawTime != null">
+                withdraw_time = #{withdrawTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE withdraw_id = #{withdrawId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawDetail">
+        UPDATE re_withdraw_detail
+        SET user_id = #{userId,jdbcType=INTEGER},
+            withdraw_type = #{withdrawType,jdbcType=VARCHAR},
+            withdraw_account = #{withdrawAccount,jdbcType=VARCHAR},
+            account_name = #{accountName,jdbcType=VARCHAR},
+            withdraw_status = #{withdrawStatus,jdbcType=TINYINT},
+            remarks = #{remarks,jdbcType=VARCHAR},
+            apply_money = #{applyMoney,jdbcType=DECIMAL},
+            withdraw_money = #{withdrawMoney,jdbcType=DECIMAL},
+            apply_time = #{applyTime,jdbcType=VARCHAR},
+            withdraw_time = #{withdrawTime,jdbcType=VARCHAR}
+        WHERE withdraw_id = #{withdrawId,jdbcType=BIGINT}
+    </update>
+</mapper>

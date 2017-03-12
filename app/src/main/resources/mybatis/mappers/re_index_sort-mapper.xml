@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_index_sort">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReIndexSort">
+        <id column="sort_id" property="sortId" jdbcType="INTEGER"/>
+        <result column="sort_name" property="sortName" jdbcType="VARCHAR"/>
+        <result column="sort_desc" property="sortDesc" jdbcType="VARCHAR"/>
+        <result column="sort_status" property="sortStatus" jdbcType="TINYINT"/>
+        <result column="sort_order" property="sortOrder" jdbcType="TINYINT"/>
+        <result column="limit_version" property="limitVersion" jdbcType="VARCHAR"/>
+        <result column="limit_channel_name" property="limitChannelName" jdbcType="VARCHAR"/>
+        <result column="limit_package_name" property="limitPackageName" jdbcType="VARCHAR"/>
+        <result column="verify_version" property="verifyVersion" jdbcType="VARCHAR"/>
+        <result column="verify_channel_package" property="verifyChannelPackage" jdbcType="VARCHAR"/>
+        <result column="sort_img" property="sortImg" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT sort_id, sort_name, sort_desc, sort_status, sort_order, 
+        limit_version, limit_channel_name, limit_package_name, verify_version, verify_channel_package, 
+        sort_img
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReIndexSort">
+        <include refid="re_index_sort.SELECT_All_Column"/>
+        FROM re_index_sort
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReIndexSort">
+        DELETE FROM re_index_sort
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReIndexSort">
+        INSERT INTO re_index_sort ( sort_name, 
+          sort_desc, sort_status, sort_order, 
+          limit_version, limit_channel_name, limit_package_name, 
+          verify_version, verify_channel_package, sort_img )
+        VALUES ( #{sortName,jdbcType=VARCHAR}, 
+          #{sortDesc,jdbcType=VARCHAR}, #{sortStatus,jdbcType=TINYINT}, #{sortOrder,jdbcType=TINYINT}, 
+          #{limitVersion,jdbcType=VARCHAR}, #{limitChannelName,jdbcType=VARCHAR}, #{limitPackageName,jdbcType=VARCHAR}, 
+          #{verifyVersion,jdbcType=VARCHAR}, #{verifyChannelPackage,jdbcType=VARCHAR}, #{sortImg,jdbcType=VARCHAR} )
+        <selectKey keyProperty="sortId" resultType="int">
+            SELECT LAST_INSERT_ID() AS sortId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReIndexSort">
+        INSERT INTO re_index_sort
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="sortName != null">
+                sort_name,
+            </if>
+            <if test="sortDesc != null">
+                sort_desc,
+            </if>
+            <if test="sortStatus != null">
+                sort_status,
+            </if>
+            <if test="sortOrder != null">
+                sort_order,
+            </if>
+            <if test="limitVersion != null">
+                limit_version,
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name,
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name,
+            </if>
+            <if test="verifyVersion != null">
+                verify_version,
+            </if>
+            <if test="verifyChannelPackage != null">
+                verify_channel_package,
+            </if>
+            <if test="sortImg != null">
+                sort_img,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="sortName != null">
+                #{sortName,jdbcType=VARCHAR},
+            </if>
+            <if test="sortDesc != null">
+                #{sortDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="sortStatus != null">
+                #{sortStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sortOrder != null">
+                #{sortOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyVersion != null">
+                #{verifyVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyChannelPackage != null">
+                #{verifyChannelPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="sortImg != null">
+                #{sortImg,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="sortId" resultType="int">
+            SELECT LAST_INSERT_ID() AS sortId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_index_sort ( sort_name, 
+          sort_desc, sort_status, sort_order, 
+          limit_version, limit_channel_name, limit_package_name, 
+          verify_version, verify_channel_package, sort_img )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.sortName,jdbcType=VARCHAR}, 
+            #{item.sortDesc,jdbcType=VARCHAR}, #{item.sortStatus,jdbcType=TINYINT}, #{item.sortOrder,jdbcType=TINYINT}, 
+            #{item.limitVersion,jdbcType=VARCHAR}, #{item.limitChannelName,jdbcType=VARCHAR}, #{item.limitPackageName,jdbcType=VARCHAR}, 
+            #{item.verifyVersion,jdbcType=VARCHAR}, #{item.verifyChannelPackage,jdbcType=VARCHAR}, #{item.sortImg,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReIndexSort">
+        UPDATE re_index_sort
+        <set>
+            <if test="sortName != null">
+                sort_name = #{sortName,jdbcType=VARCHAR},
+            </if>
+            <if test="sortDesc != null">
+                sort_desc = #{sortDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="sortStatus != null">
+                sort_status = #{sortStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                limit_version = #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyVersion != null">
+                verify_version = #{verifyVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyChannelPackage != null">
+                verify_channel_package = #{verifyChannelPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="sortImg != null">
+                sort_img = #{sortImg,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReIndexSort">
+        UPDATE re_index_sort
+        SET sort_name = #{sortName,jdbcType=VARCHAR},
+            sort_desc = #{sortDesc,jdbcType=VARCHAR},
+            sort_status = #{sortStatus,jdbcType=TINYINT},
+            sort_order = #{sortOrder,jdbcType=TINYINT},
+            limit_version = #{limitVersion,jdbcType=VARCHAR},
+            limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            verify_version = #{verifyVersion,jdbcType=VARCHAR},
+            verify_channel_package = #{verifyChannelPackage,jdbcType=VARCHAR},
+            sort_img = #{sortImg,jdbcType=VARCHAR}
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </update>
+</mapper>

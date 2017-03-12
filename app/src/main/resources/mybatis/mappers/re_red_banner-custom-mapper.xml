@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_red_banner">
+
+    <resultMap id="BannerMap" type="com.hongbao.api.model.dto.ReBannerInfo">
+        <result column="banner_img" property="bannerImg" jdbcType="VARCHAR"/>
+        <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectNormalBanner" resultMap="BaseResultMap" parameterType="map">
+        SELECT banner_img, banner_url
+        FROM re_red_banner
+        WHERE ( banner_status = 2 OR banner_status = #{platform,jdbcType=INTEGER} )
+        AND min_version_code <![CDATA[ <= ]]> #{versioncode,jdbcType=INTEGER}
+        AND max_version_code >= #{versioncode,jdbcType=INTEGER}
+        AND ( show_channel_name = '0' OR instr(show_channel_name, #{channelName,jdbcType=VARCHAR}) )
+        AND ( show_package_name = '0' OR instr(show_package_name, #{packageName,jdbcType=VARCHAR}) )
+        ORDER BY banner_weight DESC
+    </select>
+
+    <select id="selectVerifyingBanner" resultMap="BaseResultMap" parameterType="map">
+        SELECT banner_img, banner_url
+        FROM re_red_banner
+        WHERE ( banner_status = 2 OR banner_status = #{platform,jdbcType=INTEGER} )
+        AND min_version_code <![CDATA[ <= ]]> #{versioncode,jdbcType=INTEGER}
+        AND max_version_code >= #{versioncode,jdbcType=INTEGER}
+        AND ( show_channel_name = '0' OR instr(show_channel_name, #{channelName,jdbcType=VARCHAR}) )
+        AND ( show_package_name = '0' OR instr(show_package_name, #{packageName,jdbcType=VARCHAR}) )
+        AND is_show = 1
+        ORDER BY banner_weight ASC
+    </select>
+
+</mapper>

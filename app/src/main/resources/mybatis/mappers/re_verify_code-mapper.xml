@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_verify_code">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReVerifyCode">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="cellphone" property="cellphone" jdbcType="VARCHAR"/>
+        <result column="generate_time" property="generateTime" jdbcType="BIGINT"/>
+        <result column="code_verify_status" property="codeVerifyStatus" jdbcType="TINYINT"/>
+        <result column="code_verify_time" property="codeVerifyTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, code, cellphone, generate_time, code_verify_status, 
+        code_verify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReVerifyCode">
+        <include refid="re_verify_code.SELECT_All_Column"/>
+        FROM re_verify_code
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReVerifyCode">
+        DELETE FROM re_verify_code
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReVerifyCode">
+        INSERT INTO re_verify_code ( code, 
+          cellphone, generate_time, code_verify_status, 
+          code_verify_time )
+        VALUES ( #{code,jdbcType=VARCHAR}, 
+          #{cellphone,jdbcType=VARCHAR}, #{generateTime,jdbcType=BIGINT}, #{codeVerifyStatus,jdbcType=TINYINT}, 
+          #{codeVerifyTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReVerifyCode">
+        INSERT INTO re_verify_code
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="cellphone != null">
+                cellphone,
+            </if>
+            <if test="generateTime != null">
+                generate_time,
+            </if>
+            <if test="codeVerifyStatus != null">
+                code_verify_status,
+            </if>
+            <if test="codeVerifyTime != null">
+                code_verify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="cellphone != null">
+                #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="generateTime != null">
+                #{generateTime,jdbcType=BIGINT},
+            </if>
+            <if test="codeVerifyStatus != null">
+                #{codeVerifyStatus,jdbcType=TINYINT},
+            </if>
+            <if test="codeVerifyTime != null">
+                #{codeVerifyTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_verify_code ( code, 
+          cellphone, generate_time, code_verify_status, 
+          code_verify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.code,jdbcType=VARCHAR}, 
+            #{item.cellphone,jdbcType=VARCHAR}, #{item.generateTime,jdbcType=BIGINT}, #{item.codeVerifyStatus,jdbcType=TINYINT}, 
+            #{item.codeVerifyTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReVerifyCode">
+        UPDATE re_verify_code
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="cellphone != null">
+                cellphone = #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="generateTime != null">
+                generate_time = #{generateTime,jdbcType=BIGINT},
+            </if>
+            <if test="codeVerifyStatus != null">
+                code_verify_status = #{codeVerifyStatus,jdbcType=TINYINT},
+            </if>
+            <if test="codeVerifyTime != null">
+                code_verify_time = #{codeVerifyTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReVerifyCode">
+        UPDATE re_verify_code
+        SET code = #{code,jdbcType=VARCHAR},
+            cellphone = #{cellphone,jdbcType=VARCHAR},
+            generate_time = #{generateTime,jdbcType=BIGINT},
+            code_verify_status = #{codeVerifyStatus,jdbcType=TINYINT},
+            code_verify_time = #{codeVerifyTime,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app_task">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAppTask">
+        <id column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="keyword_id" property="keywordId" jdbcType="BIGINT"/>
+        <result column="app_id" property="appId" jdbcType="BIGINT"/>
+        <result column="task_step" property="taskStep" jdbcType="TINYINT"/>
+        <result column="task_status" property="taskStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT task_id, user_id, device_id, keyword_id, app_id, 
+        task_step, task_status, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAppTask">
+        <include refid="re_app_task.SELECT_All_Column"/>
+        FROM re_app_task
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAppTask">
+        DELETE FROM re_app_task
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAppTask">
+        INSERT INTO re_app_task ( user_id, 
+          device_id, keyword_id, app_id, 
+          task_step, task_status, create_time, 
+          update_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{deviceId,jdbcType=VARCHAR}, #{keywordId,jdbcType=BIGINT}, #{appId,jdbcType=BIGINT}, 
+          #{taskStep,jdbcType=TINYINT}, #{taskStatus,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}, 
+          #{updateTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="taskId" resultType="long">
+            SELECT LAST_INSERT_ID() AS taskId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAppTask">
+        INSERT INTO re_app_task
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="keywordId != null">
+                keyword_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="taskStep != null">
+                task_step,
+            </if>
+            <if test="taskStatus != null">
+                task_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="keywordId != null">
+                #{keywordId,jdbcType=BIGINT},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=BIGINT},
+            </if>
+            <if test="taskStep != null">
+                #{taskStep,jdbcType=TINYINT},
+            </if>
+            <if test="taskStatus != null">
+                #{taskStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="taskId" resultType="long">
+            SELECT LAST_INSERT_ID() AS taskId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_app_task ( user_id, 
+          device_id, keyword_id, app_id, 
+          task_step, task_status, create_time, 
+          update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.deviceId,jdbcType=VARCHAR}, #{item.keywordId,jdbcType=BIGINT}, #{item.appId,jdbcType=BIGINT}, 
+            #{item.taskStep,jdbcType=TINYINT}, #{item.taskStatus,jdbcType=TINYINT}, #{item.createTime,jdbcType=BIGINT}, 
+            #{item.updateTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAppTask">
+        UPDATE re_app_task
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="keywordId != null">
+                keyword_id = #{keywordId,jdbcType=BIGINT},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=BIGINT},
+            </if>
+            <if test="taskStep != null">
+                task_step = #{taskStep,jdbcType=TINYINT},
+            </if>
+            <if test="taskStatus != null">
+                task_status = #{taskStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAppTask">
+        UPDATE re_app_task
+        SET user_id = #{userId,jdbcType=INTEGER},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            keyword_id = #{keywordId,jdbcType=BIGINT},
+            app_id = #{appId,jdbcType=BIGINT},
+            task_step = #{taskStep,jdbcType=TINYINT},
+            task_status = #{taskStatus,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=BIGINT}
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </update>
+</mapper>

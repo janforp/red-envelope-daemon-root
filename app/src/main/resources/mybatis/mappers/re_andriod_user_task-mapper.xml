@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_andriod_user_task">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAndriodUserTask">
+        <id column="wall_id" property="wallId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="info_id" property="infoId" jdbcType="BIGINT"/>
+        <result column="task_status" property="taskStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="release_time" property="releaseTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT wall_id, user_id, info_id, task_status, create_time, 
+        update_time, release_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAndriodUserTask">
+        <include refid="re_andriod_user_task.SELECT_All_Column"/>
+        FROM re_andriod_user_task
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAndriodUserTask">
+        DELETE FROM re_andriod_user_task
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAndriodUserTask">
+        INSERT INTO re_andriod_user_task ( wall_id, 
+          user_id, info_id, task_status, 
+          create_time, update_time, release_time )
+        VALUES ( #{wallId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{infoId,jdbcType=BIGINT}, #{taskStatus,jdbcType=TINYINT}, 
+          #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{releaseTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAndriodUserTask">
+        INSERT INTO re_andriod_user_task
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                wall_id,
+                user_id,
+            <if test="infoId != null">
+                info_id,
+            </if>
+            <if test="taskStatus != null">
+                task_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="releaseTime != null">
+                release_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{wallId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="infoId != null">
+                #{infoId,jdbcType=BIGINT},
+            </if>
+            <if test="taskStatus != null">
+                #{taskStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseTime != null">
+                #{releaseTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_andriod_user_task ( wall_id, 
+          user_id, info_id, task_status, 
+          create_time, update_time, release_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.wallId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.infoId,jdbcType=BIGINT}, #{item.taskStatus,jdbcType=TINYINT}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}, #{item.releaseTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAndriodUserTask">
+        UPDATE re_andriod_user_task
+        <set>
+            <if test="infoId != null">
+                info_id = #{infoId,jdbcType=BIGINT},
+            </if>
+            <if test="taskStatus != null">
+                task_status = #{taskStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseTime != null">
+                release_time = #{releaseTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAndriodUserTask">
+        UPDATE re_andriod_user_task
+        SET info_id = #{infoId,jdbcType=BIGINT},
+            task_status = #{taskStatus,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR},
+            release_time = #{releaseTime,jdbcType=VARCHAR}
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

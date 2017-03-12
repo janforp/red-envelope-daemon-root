@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_umeng_push">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUmengPush">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="platform" property="platform" jdbcType="TINYINT"/>
+        <result column="device_token" property="deviceToken" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT user_id, platform, device_token
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUmengPush">
+        <include refid="re_umeng_push.SELECT_All_Column"/>
+        FROM re_umeng_push
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUmengPush">
+        DELETE FROM re_umeng_push
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUmengPush">
+        INSERT INTO re_umeng_push ( user_id, 
+          platform, device_token )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{platform,jdbcType=TINYINT}, #{deviceToken,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUmengPush">
+        INSERT INTO re_umeng_push
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                user_id,
+            <if test="platform != null">
+                platform,
+            </if>
+            <if test="deviceToken != null">
+                device_token,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{userId,jdbcType=INTEGER},
+            <if test="platform != null">
+                #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="deviceToken != null">
+                #{deviceToken,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_umeng_push ( user_id, 
+          platform, device_token )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.platform,jdbcType=TINYINT}, #{item.deviceToken,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUmengPush">
+        UPDATE re_umeng_push
+        <set>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="deviceToken != null">
+                device_token = #{deviceToken,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUmengPush">
+        UPDATE re_umeng_push
+        SET platform = #{platform,jdbcType=TINYINT},
+            device_token = #{deviceToken,jdbcType=VARCHAR}
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

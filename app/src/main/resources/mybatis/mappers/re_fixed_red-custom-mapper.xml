@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_fixed_red">
+
+    <select id="selectIosFixedRed" resultMap="BaseResultMap" >
+        <include refid="re_fixed_red.SELECT_All_Column"/>
+        FROM re_fixed_red
+        WHERE fixed_status = 0 OR fixed_status = 2
+        ORDER BY fixed_hour ASC
+    </select>
+
+    <select id="selectAndriodFixedRed" resultMap="BaseResultMap" >
+        <include refid="re_fixed_red.SELECT_All_Column"/>
+        FROM re_fixed_red
+        WHERE fixed_status = 1 OR fixed_status = 2
+        ORDER BY fixed_hour ASC
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" >
+        <include refid="re_fixed_red.SELECT_All_Column"/>
+        FROM re_fixed_red
+    </select>
+
+    <select id="selectRemainder" resultType="Integer" parameterType="INTEGER" >
+        SELECT fixed_remainder
+        FROM re_fixed_red
+        WHERE fixed_id = #{fixedId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectNumLockById" resultMap="BaseResultMap" parameterType="INTEGER" >
+        SELECT fixed_amount, fixed_remainder
+        FROM re_fixed_red
+        WHERE fixed_id = #{fixedId,jdbcType=INTEGER} FOR UPDATE
+    </select>
+
+    <update id="updateRemainder" parameterType="map">
+        UPDATE re_fixed_red
+        SET fixed_remainder = #{remainderNum,jdbcType=INTEGER}
+        WHERE fixed_id = #{fixedId,jdbcType=INTEGER}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_coin_item">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReCoinItem">
+        <id column="item_id" property="itemId" jdbcType="BIGINT"/>
+        <result column="item_title" property="itemTitle" jdbcType="VARCHAR"/>
+        <result column="item_img" property="itemImg" jdbcType="VARCHAR"/>
+        <result column="item_coin" property="itemCoin" jdbcType="INTEGER"/>
+        <result column="item_desc" property="itemDesc" jdbcType="VARCHAR"/>
+        <result column="item_type" property="itemType" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT item_id, item_title, item_img, item_coin, item_desc, 
+        item_type
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReCoinItem">
+        <include refid="re_coin_item.SELECT_All_Column"/>
+        FROM re_coin_item
+        WHERE item_id = #{itemId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReCoinItem">
+        DELETE FROM re_coin_item
+        WHERE item_id = #{itemId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReCoinItem">
+        INSERT INTO re_coin_item ( item_title, 
+          item_img, item_coin, item_desc, 
+          item_type )
+        VALUES ( #{itemTitle,jdbcType=VARCHAR}, 
+          #{itemImg,jdbcType=VARCHAR}, #{itemCoin,jdbcType=INTEGER}, #{itemDesc,jdbcType=VARCHAR}, 
+          #{itemType,jdbcType=INTEGER} )
+        <selectKey keyProperty="itemId" resultType="long">
+            SELECT LAST_INSERT_ID() AS itemId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReCoinItem">
+        INSERT INTO re_coin_item
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="itemTitle != null">
+                item_title,
+            </if>
+            <if test="itemImg != null">
+                item_img,
+            </if>
+            <if test="itemCoin != null">
+                item_coin,
+            </if>
+            <if test="itemDesc != null">
+                item_desc,
+            </if>
+            <if test="itemType != null">
+                item_type,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="itemTitle != null">
+                #{itemTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="itemImg != null">
+                #{itemImg,jdbcType=VARCHAR},
+            </if>
+            <if test="itemCoin != null">
+                #{itemCoin,jdbcType=INTEGER},
+            </if>
+            <if test="itemDesc != null">
+                #{itemDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="itemType != null">
+                #{itemType,jdbcType=INTEGER},
+            </if>
+        </trim>
+        <selectKey keyProperty="itemId" resultType="long">
+            SELECT LAST_INSERT_ID() AS itemId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_coin_item ( item_title, 
+          item_img, item_coin, item_desc, 
+          item_type )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.itemTitle,jdbcType=VARCHAR}, 
+            #{item.itemImg,jdbcType=VARCHAR}, #{item.itemCoin,jdbcType=INTEGER}, #{item.itemDesc,jdbcType=VARCHAR}, 
+            #{item.itemType,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReCoinItem">
+        UPDATE re_coin_item
+        <set>
+            <if test="itemTitle != null">
+                item_title = #{itemTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="itemImg != null">
+                item_img = #{itemImg,jdbcType=VARCHAR},
+            </if>
+            <if test="itemCoin != null">
+                item_coin = #{itemCoin,jdbcType=INTEGER},
+            </if>
+            <if test="itemDesc != null">
+                item_desc = #{itemDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="itemType != null">
+                item_type = #{itemType,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE item_id = #{itemId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReCoinItem">
+        UPDATE re_coin_item
+        SET item_title = #{itemTitle,jdbcType=VARCHAR},
+            item_img = #{itemImg,jdbcType=VARCHAR},
+            item_coin = #{itemCoin,jdbcType=INTEGER},
+            item_desc = #{itemDesc,jdbcType=VARCHAR},
+            item_type = #{itemType,jdbcType=INTEGER}
+        WHERE item_id = #{itemId,jdbcType=BIGINT}
+    </update>
+</mapper>

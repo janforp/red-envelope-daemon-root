@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_commission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserCommission">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="current_money" property="currentMoney" jdbcType="DECIMAL"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT user_id, current_money, total_money
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserCommission">
+        <include refid="re_user_commission.SELECT_All_Column"/>
+        FROM re_user_commission
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserCommission">
+        DELETE FROM re_user_commission
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserCommission">
+        INSERT INTO re_user_commission ( user_id, 
+          current_money, total_money )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{currentMoney,jdbcType=DECIMAL}, #{totalMoney,jdbcType=DECIMAL} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserCommission">
+        INSERT INTO re_user_commission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                user_id,
+            <if test="currentMoney != null">
+                current_money,
+            </if>
+            <if test="totalMoney != null">
+                total_money,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{userId,jdbcType=INTEGER},
+            <if test="currentMoney != null">
+                #{currentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalMoney != null">
+                #{totalMoney,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_commission ( user_id, 
+          current_money, total_money )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.currentMoney,jdbcType=DECIMAL}, #{item.totalMoney,jdbcType=DECIMAL}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserCommission">
+        UPDATE re_user_commission
+        <set>
+            <if test="currentMoney != null">
+                current_money = #{currentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalMoney != null">
+                total_money = #{totalMoney,jdbcType=DECIMAL},
+            </if>
+        </set>
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserCommission">
+        UPDATE re_user_commission
+        SET current_money = #{currentMoney,jdbcType=DECIMAL},
+            total_money = #{totalMoney,jdbcType=DECIMAL}
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

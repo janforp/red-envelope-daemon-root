@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_andriod_integral_wall">
+
+    <resultMap id="TrialMap" type="com.hongbao.api.model.dto.TrialInfo">
+        <id column="missionId" property="missionId" jdbcType="BIGINT"/>
+        <result column="missionType" property="missionType" jdbcType="INTEGER"/>
+        <result column="missionTitle" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="missionIcon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="missionDesc" property="missionDesc" jdbcType="VARCHAR"/>
+        <result column="missionMoney" property="missionMoney" jdbcType="DECIMAL"/>
+        <result column="appPackage" property="appPackage" jdbcType="VARCHAR"/>
+        <result column="appUrl" property="appUrl" jdbcType="VARCHAR"/>
+        <result column="appMarket" property="appMarket" jdbcType="VARCHAR"/>
+        <result column="marketUrl" property="marketUrl" jdbcType="VARCHAR"/>
+        <result column="marketPackage" property="marketPackage" jdbcType="VARCHAR"/>
+        <result column="appLabel" property="appLabel" jdbcType="VARCHAR"/>
+        <result column="leftNum" property="leftNum" jdbcType="INTEGER"/>
+        <result column="startTime" property="startTime" jdbcType="VARCHAR"/>
+        <result column="appId" property="appId" jdbcType="BIGINT"/>
+        <result column="openSecond" property="openSecond" jdbcType="INTEGER"/>
+        <result column="stepOneDesc" property="stepOneDesc" jdbcType="VARCHAR"/>
+        <result column="stepOneMoney" property="stepOneMoney" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="selectByWallId" resultMap="TrialMap" parameterType="Long">
+        SELECT wall_id as missionId, 1 as missionType, app_name as missionTitle, app_icon as missionIcon, app_desc as missionDesc, total_money as missionMoney,
+          app_package as appPackage, app_url as appUrl, app_label as appLabel, left_num as leftNum, step_one_second as openSecond, step_one_money as stepOneMoney,
+          step_one_desc as stepOneDesc
+        FROM re_andriod_integral_wall
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectAllByLeftAndTime" resultMap="TrialMap" parameterType="map">
+
+        SELECT f.* FROM (
+
+            SELECT e.wall_id as missionId, 1 as missionType, e.app_name as missionTitle, e.app_icon as missionIcon, e.app_desc as missionDesc,
+              e.total_money as missionMoney, e.app_package as appPackage, e.app_url as appUrl, null as appMarket, null as marketUrl,
+              null as marketPackage, e.app_label as appLabel, e.left_num as leftNum, e.wall_weight as missionWeight, NULL AS appId,
+              e.step_one_second as openSecond, e.step_one_money as stepOneMoney, e.step_one_desc as stepOneDesc
+            FROM re_andriod_integral_wall e
+            where e.start_time <![CDATA[ <= ]]> #{startTime,jdbcType=VARCHAR}
+            AND e.end_time >= #{startTime,jdbcType=VARCHAR}
+            AND e.is_end = 1
+            AND (e.left_num is NULL OR e.left_num > 0)
+            <if test="sim == 0">
+                AND e.is_sim = 0
+            </if>
+
+            UNION
+
+            SELECT t.* FROM (
+
+              SELECT a.keyword_id as missionId, 0 as missionType, a.keyword as missionTitle, b.app_icon as missionIcon, b.app_desc as missionDesc, a.money as missionMoney,
+                b.app_package as appPackage, NULL as appUrl, c.market_name as appMarket, c.market_url as marketUrl, c.market_package as marketPackage, a.task_label as appLabel,
+                a.left_num as leftNum, a.keyword_weight as missionWeight, a.app_id AS appId, NULL as openSecond, NULL as stepOneMoney, NULL as stepOneDesc
+              FROM re_app_keywords a, re_app b, re_app_market c
+              WHERE a.left_num > 0
+              AND a.release_time <![CDATA[ <= ]]> #{startTime,jdbcType=VARCHAR}
+              AND a.end_time >= #{startTime,jdbcType=VARCHAR}
+              AND b.app_id = a.app_id
+              AND c.market_id = b.market_id
+              ORDER BY rand()
+
+            ) t
+            GROUP BY t.appMarket, t.missionTitle
+
+        ) f
+
+        ORDER BY f.missionWeight DESC
+
+    </select>
+
+    <select id="selectLockByWallId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_andriod_integral_wall.SELECT_All_Column"/>
+        FROM re_andriod_integral_wall
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND start_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+        AND end_time >= #{nowTime,jdbcType=VARCHAR}
+        FOR UPDATE
+    </select>
+
+</mapper>

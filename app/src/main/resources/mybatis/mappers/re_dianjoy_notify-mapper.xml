@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_dianjoy_notify">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReDianjoyNotify">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="userid" property="userid" jdbcType="INTEGER"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="currency" property="currency" jdbcType="INTEGER"/>
+        <result column="app_ratio" property="appRatio" jdbcType="INTEGER"/>
+        <result column="time_stamp" property="timeStamp" jdbcType="VARCHAR"/>
+        <result column="ad_name" property="adName" jdbcType="VARCHAR"/>
+        <result column="pack_name" property="packName" jdbcType="VARCHAR"/>
+        <result column="task_id" property="taskId" jdbcType="VARCHAR"/>
+        <result column="trade_type" property="tradeType" jdbcType="VARCHAR"/>
+        <result column="notify_time" property="notifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, userid, device_id, app_id, currency, 
+        app_ratio, time_stamp, ad_name, pack_name, task_id, 
+        trade_type, notify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReDianjoyNotify">
+        <include refid="re_dianjoy_notify.SELECT_All_Column"/>
+        FROM re_dianjoy_notify
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReDianjoyNotify">
+        DELETE FROM re_dianjoy_notify
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReDianjoyNotify">
+        INSERT INTO re_dianjoy_notify ( userid, 
+          device_id, app_id, currency, 
+          app_ratio, time_stamp, ad_name, 
+          pack_name, task_id, trade_type, 
+          notify_time )
+        VALUES ( #{userid,jdbcType=INTEGER}, 
+          #{deviceId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{currency,jdbcType=INTEGER}, 
+          #{appRatio,jdbcType=INTEGER}, #{timeStamp,jdbcType=VARCHAR}, #{adName,jdbcType=VARCHAR}, 
+          #{packName,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR}, 
+          #{notifyTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReDianjoyNotify">
+        INSERT INTO re_dianjoy_notify
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userid != null">
+                userid,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="appRatio != null">
+                app_ratio,
+            </if>
+            <if test="timeStamp != null">
+                time_stamp,
+            </if>
+            <if test="adName != null">
+                ad_name,
+            </if>
+            <if test="packName != null">
+                pack_name,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="tradeType != null">
+                trade_type,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=INTEGER},
+            </if>
+            <if test="appRatio != null">
+                #{appRatio,jdbcType=INTEGER},
+            </if>
+            <if test="timeStamp != null">
+                #{timeStamp,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="packName != null">
+                #{packName,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeType != null">
+                #{tradeType,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_dianjoy_notify ( userid, 
+          device_id, app_id, currency, 
+          app_ratio, time_stamp, ad_name, 
+          pack_name, task_id, trade_type, 
+          notify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userid,jdbcType=INTEGER}, 
+            #{item.deviceId,jdbcType=VARCHAR}, #{item.appId,jdbcType=VARCHAR}, #{item.currency,jdbcType=INTEGER}, 
+            #{item.appRatio,jdbcType=INTEGER}, #{item.timeStamp,jdbcType=VARCHAR}, #{item.adName,jdbcType=VARCHAR}, 
+            #{item.packName,jdbcType=VARCHAR}, #{item.taskId,jdbcType=VARCHAR}, #{item.tradeType,jdbcType=VARCHAR}, 
+            #{item.notifyTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReDianjoyNotify">
+        UPDATE re_dianjoy_notify
+        <set>
+            <if test="userid != null">
+                userid = #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=INTEGER},
+            </if>
+            <if test="appRatio != null">
+                app_ratio = #{appRatio,jdbcType=INTEGER},
+            </if>
+            <if test="timeStamp != null">
+                time_stamp = #{timeStamp,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                ad_name = #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="packName != null">
+                pack_name = #{packName,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeType != null">
+                trade_type = #{tradeType,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReDianjoyNotify">
+        UPDATE re_dianjoy_notify
+        SET userid = #{userid,jdbcType=INTEGER},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            app_id = #{appId,jdbcType=VARCHAR},
+            currency = #{currency,jdbcType=INTEGER},
+            app_ratio = #{appRatio,jdbcType=INTEGER},
+            time_stamp = #{timeStamp,jdbcType=VARCHAR},
+            ad_name = #{adName,jdbcType=VARCHAR},
+            pack_name = #{packName,jdbcType=VARCHAR},
+            task_id = #{taskId,jdbcType=VARCHAR},
+            trade_type = #{tradeType,jdbcType=VARCHAR},
+            notify_time = #{notifyTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

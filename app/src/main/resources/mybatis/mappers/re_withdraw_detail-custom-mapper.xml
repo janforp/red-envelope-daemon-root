@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_withdraw_detail">
+
+    <select id="selectTimesByUserId" resultType="Integer" parameterType="map">
+        SELECT COUNT(withdraw_id)
+        FROM re_withdraw_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND date_format(apply_time,'%Y-%m') = #{monthTime,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectWithdrawList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_withdraw_detail.SELECT_All_Column"/>
+        FROM re_withdraw_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        <if test="withdrawStatus != null">
+            AND withdraw_status = #{withdrawStatus,jdbcType=TINYINT} 
+        </if>
+        <if test="withdrawId != null">
+            AND withdraw_id <![CDATA[ < ]]> #{withdrawId, jdbcType=BIGINT}
+        </if>
+        ORDER BY withdraw_id DESC
+        LIMIT 0, 20
+    </select>
+
+
+</mapper>

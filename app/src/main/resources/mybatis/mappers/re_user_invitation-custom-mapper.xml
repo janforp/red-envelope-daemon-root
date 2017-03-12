@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_invitation">
+
+    <select id="selectIsInvited" resultMap="BaseResultMap" parameterType="INTEGER">
+        <include refid="re_user_invitation.SELECT_All_Column"/>
+        FROM re_user_invitation
+        WHERE invited_user_id = #{invitedUserId,jdbcType=INTEGER}
+        Limit 1
+    </select>
+
+    <select id="selectUserId" resultType="INTEGER" parameterType="INTEGER">
+        SELECT user_id
+        FROM re_user_invitation
+        WHERE invited_user_id = #{invitedUserId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

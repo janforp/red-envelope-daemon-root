@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_withdraw_sort">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReWithdrawSort">
+        <id column="withdraw_id" property="withdrawId" jdbcType="INTEGER"/>
+        <result column="withdraw_type" property="withdrawType" jdbcType="VARCHAR"/>
+        <result column="withdraw_name" property="withdrawName" jdbcType="VARCHAR"/>
+        <result column="withdraw_img" property="withdrawImg" jdbcType="VARCHAR"/>
+        <result column="withdraw_explain" property="withdrawExplain" jdbcType="VARCHAR"/>
+        <result column="withdraw_url" property="withdrawUrl" jdbcType="VARCHAR"/>
+        <result column="withdraw_money" property="withdrawMoney" jdbcType="VARCHAR"/>
+        <result column="to_account_money" property="toAccountMoney" jdbcType="VARCHAR"/>
+        <result column="withdraw_desc" property="withdrawDesc" jdbcType="VARCHAR"/>
+        <result column="withdraw_times" property="withdrawTimes" jdbcType="TINYINT"/>
+        <result column="withdraw_status" property="withdrawStatus" jdbcType="TINYINT"/>
+        <result column="withdraw_order" property="withdrawOrder" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT withdraw_id, withdraw_type, withdraw_name, withdraw_img, withdraw_explain, 
+        withdraw_url, withdraw_money, to_account_money, withdraw_desc, withdraw_times, 
+        withdraw_status, withdraw_order
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReWithdrawSort">
+        <include refid="re_withdraw_sort.SELECT_All_Column"/>
+        FROM re_withdraw_sort
+        WHERE withdraw_id = #{withdrawId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawSort">
+        DELETE FROM re_withdraw_sort
+        WHERE withdraw_id = #{withdrawId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReWithdrawSort">
+        INSERT INTO re_withdraw_sort ( withdraw_type, 
+          withdraw_name, withdraw_img, withdraw_explain, 
+          withdraw_url, withdraw_money, to_account_money, 
+          withdraw_desc, withdraw_times, withdraw_status, 
+          withdraw_order )
+        VALUES ( #{withdrawType,jdbcType=VARCHAR}, 
+          #{withdrawName,jdbcType=VARCHAR}, #{withdrawImg,jdbcType=VARCHAR}, #{withdrawExplain,jdbcType=VARCHAR}, 
+          #{withdrawUrl,jdbcType=VARCHAR}, #{withdrawMoney,jdbcType=VARCHAR}, #{toAccountMoney,jdbcType=VARCHAR}, 
+          #{withdrawDesc,jdbcType=VARCHAR}, #{withdrawTimes,jdbcType=TINYINT}, #{withdrawStatus,jdbcType=TINYINT}, 
+          #{withdrawOrder,jdbcType=TINYINT} )
+        <selectKey keyProperty="withdrawId" resultType="int">
+            SELECT LAST_INSERT_ID() AS withdrawId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReWithdrawSort">
+        INSERT INTO re_withdraw_sort
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="withdrawType != null">
+                withdraw_type,
+            </if>
+            <if test="withdrawName != null">
+                withdraw_name,
+            </if>
+            <if test="withdrawImg != null">
+                withdraw_img,
+            </if>
+            <if test="withdrawExplain != null">
+                withdraw_explain,
+            </if>
+            <if test="withdrawUrl != null">
+                withdraw_url,
+            </if>
+            <if test="withdrawMoney != null">
+                withdraw_money,
+            </if>
+            <if test="toAccountMoney != null">
+                to_account_money,
+            </if>
+            <if test="withdrawDesc != null">
+                withdraw_desc,
+            </if>
+            <if test="withdrawTimes != null">
+                withdraw_times,
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status,
+            </if>
+            <if test="withdrawOrder != null">
+                withdraw_order,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="withdrawType != null">
+                #{withdrawType,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawName != null">
+                #{withdrawName,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawImg != null">
+                #{withdrawImg,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawExplain != null">
+                #{withdrawExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawUrl != null">
+                #{withdrawUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawMoney != null">
+                #{withdrawMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="toAccountMoney != null">
+                #{toAccountMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawDesc != null">
+                #{withdrawDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawTimes != null">
+                #{withdrawTimes,jdbcType=TINYINT},
+            </if>
+            <if test="withdrawStatus != null">
+                #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="withdrawOrder != null">
+                #{withdrawOrder,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="withdrawId" resultType="int">
+            SELECT LAST_INSERT_ID() AS withdrawId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_withdraw_sort ( withdraw_type, 
+          withdraw_name, withdraw_img, withdraw_explain, 
+          withdraw_url, withdraw_money, to_account_money, 
+          withdraw_desc, withdraw_times, withdraw_status, 
+          withdraw_order )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.withdrawType,jdbcType=VARCHAR}, 
+            #{item.withdrawName,jdbcType=VARCHAR}, #{item.withdrawImg,jdbcType=VARCHAR}, #{item.withdrawExplain,jdbcType=VARCHAR}, 
+            #{item.withdrawUrl,jdbcType=VARCHAR}, #{item.withdrawMoney,jdbcType=VARCHAR}, #{item.toAccountMoney,jdbcType=VARCHAR}, 
+            #{item.withdrawDesc,jdbcType=VARCHAR}, #{item.withdrawTimes,jdbcType=TINYINT}, #{item.withdrawStatus,jdbcType=TINYINT}, 
+            #{item.withdrawOrder,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReWithdrawSort">
+        UPDATE re_withdraw_sort
+        <set>
+            <if test="withdrawType != null">
+                withdraw_type = #{withdrawType,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawName != null">
+                withdraw_name = #{withdrawName,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawImg != null">
+                withdraw_img = #{withdrawImg,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawExplain != null">
+                withdraw_explain = #{withdrawExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawUrl != null">
+                withdraw_url = #{withdrawUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawMoney != null">
+                withdraw_money = #{withdrawMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="toAccountMoney != null">
+                to_account_money = #{toAccountMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawDesc != null">
+                withdraw_desc = #{withdrawDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawTimes != null">
+                withdraw_times = #{withdrawTimes,jdbcType=TINYINT},
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status = #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="withdrawOrder != null">
+                withdraw_order = #{withdrawOrder,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE withdraw_id = #{withdrawId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawSort">
+        UPDATE re_withdraw_sort
+        SET withdraw_type = #{withdrawType,jdbcType=VARCHAR},
+            withdraw_name = #{withdrawName,jdbcType=VARCHAR},
+            withdraw_img = #{withdrawImg,jdbcType=VARCHAR},
+            withdraw_explain = #{withdrawExplain,jdbcType=VARCHAR},
+            withdraw_url = #{withdrawUrl,jdbcType=VARCHAR},
+            withdraw_money = #{withdrawMoney,jdbcType=VARCHAR},
+            to_account_money = #{toAccountMoney,jdbcType=VARCHAR},
+            withdraw_desc = #{withdrawDesc,jdbcType=VARCHAR},
+            withdraw_times = #{withdrawTimes,jdbcType=TINYINT},
+            withdraw_status = #{withdrawStatus,jdbcType=TINYINT},
+            withdraw_order = #{withdrawOrder,jdbcType=TINYINT}
+        WHERE withdraw_id = #{withdrawId,jdbcType=INTEGER}
+    </update>
+</mapper>

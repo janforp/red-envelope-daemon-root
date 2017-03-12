@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_fixed_red">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReFixedRed">
+        <id column="fixed_id" property="fixedId" jdbcType="INTEGER"/>
+        <result column="fixed_title" property="fixedTitle" jdbcType="VARCHAR"/>
+        <result column="fixed_amount" property="fixedAmount" jdbcType="INTEGER"/>
+        <result column="fixed_remainder" property="fixedRemainder" jdbcType="INTEGER"/>
+        <result column="fixed_url" property="fixedUrl" jdbcType="VARCHAR"/>
+        <result column="fixed_hour" property="fixedHour" jdbcType="VARCHAR"/>
+        <result column="fixed_minute" property="fixedMinute" jdbcType="VARCHAR"/>
+        <result column="fixed_second" property="fixedSecond" jdbcType="VARCHAR"/>
+        <result column="fixed_status" property="fixedStatus" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT fixed_id, fixed_title, fixed_amount, fixed_remainder, fixed_url, 
+        fixed_hour, fixed_minute, fixed_second, fixed_status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReFixedRed">
+        <include refid="re_fixed_red.SELECT_All_Column"/>
+        FROM re_fixed_red
+        WHERE fixed_id = #{fixedId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReFixedRed">
+        DELETE FROM re_fixed_red
+        WHERE fixed_id = #{fixedId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReFixedRed">
+        INSERT INTO re_fixed_red ( fixed_title, 
+          fixed_amount, fixed_remainder, fixed_url, 
+          fixed_hour, fixed_minute, fixed_second, 
+          fixed_status )
+        VALUES ( #{fixedTitle,jdbcType=VARCHAR}, 
+          #{fixedAmount,jdbcType=INTEGER}, #{fixedRemainder,jdbcType=INTEGER}, #{fixedUrl,jdbcType=VARCHAR}, 
+          #{fixedHour,jdbcType=VARCHAR}, #{fixedMinute,jdbcType=VARCHAR}, #{fixedSecond,jdbcType=VARCHAR}, 
+          #{fixedStatus,jdbcType=TINYINT} )
+        <selectKey keyProperty="fixedId" resultType="int">
+            SELECT LAST_INSERT_ID() AS fixedId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReFixedRed">
+        INSERT INTO re_fixed_red
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="fixedTitle != null">
+                fixed_title,
+            </if>
+            <if test="fixedAmount != null">
+                fixed_amount,
+            </if>
+            <if test="fixedRemainder != null">
+                fixed_remainder,
+            </if>
+            <if test="fixedUrl != null">
+                fixed_url,
+            </if>
+            <if test="fixedHour != null">
+                fixed_hour,
+            </if>
+            <if test="fixedMinute != null">
+                fixed_minute,
+            </if>
+            <if test="fixedSecond != null">
+                fixed_second,
+            </if>
+            <if test="fixedStatus != null">
+                fixed_status,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="fixedTitle != null">
+                #{fixedTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedAmount != null">
+                #{fixedAmount,jdbcType=INTEGER},
+            </if>
+            <if test="fixedRemainder != null">
+                #{fixedRemainder,jdbcType=INTEGER},
+            </if>
+            <if test="fixedUrl != null">
+                #{fixedUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedHour != null">
+                #{fixedHour,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedMinute != null">
+                #{fixedMinute,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedSecond != null">
+                #{fixedSecond,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedStatus != null">
+                #{fixedStatus,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="fixedId" resultType="int">
+            SELECT LAST_INSERT_ID() AS fixedId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_fixed_red ( fixed_title, 
+          fixed_amount, fixed_remainder, fixed_url, 
+          fixed_hour, fixed_minute, fixed_second, 
+          fixed_status )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.fixedTitle,jdbcType=VARCHAR}, 
+            #{item.fixedAmount,jdbcType=INTEGER}, #{item.fixedRemainder,jdbcType=INTEGER}, #{item.fixedUrl,jdbcType=VARCHAR}, 
+            #{item.fixedHour,jdbcType=VARCHAR}, #{item.fixedMinute,jdbcType=VARCHAR}, #{item.fixedSecond,jdbcType=VARCHAR}, 
+            #{item.fixedStatus,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReFixedRed">
+        UPDATE re_fixed_red
+        <set>
+            <if test="fixedTitle != null">
+                fixed_title = #{fixedTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedAmount != null">
+                fixed_amount = #{fixedAmount,jdbcType=INTEGER},
+            </if>
+            <if test="fixedRemainder != null">
+                fixed_remainder = #{fixedRemainder,jdbcType=INTEGER},
+            </if>
+            <if test="fixedUrl != null">
+                fixed_url = #{fixedUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedHour != null">
+                fixed_hour = #{fixedHour,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedMinute != null">
+                fixed_minute = #{fixedMinute,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedSecond != null">
+                fixed_second = #{fixedSecond,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedStatus != null">
+                fixed_status = #{fixedStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE fixed_id = #{fixedId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReFixedRed">
+        UPDATE re_fixed_red
+        SET fixed_title = #{fixedTitle,jdbcType=VARCHAR},
+            fixed_amount = #{fixedAmount,jdbcType=INTEGER},
+            fixed_remainder = #{fixedRemainder,jdbcType=INTEGER},
+            fixed_url = #{fixedUrl,jdbcType=VARCHAR},
+            fixed_hour = #{fixedHour,jdbcType=VARCHAR},
+            fixed_minute = #{fixedMinute,jdbcType=VARCHAR},
+            fixed_second = #{fixedSecond,jdbcType=VARCHAR},
+            fixed_status = #{fixedStatus,jdbcType=TINYINT}
+        WHERE fixed_id = #{fixedId,jdbcType=INTEGER}
+    </update>
+</mapper>

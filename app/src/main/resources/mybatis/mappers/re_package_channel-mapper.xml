@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_package_channel">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.RePackageChannel">
+        <id column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <id column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="notes" property="notes" jdbcType="VARCHAR"/>
+        <result column="upload_time" property="uploadTime" jdbcType="VARCHAR"/>
+        <result column="version_code" property="versionCode" jdbcType="INTEGER"/>
+        <result column="apk_url" property="apkUrl" jdbcType="VARCHAR"/>
+        <result column="update_remark" property="updateRemark" jdbcType="VARCHAR"/>
+        <result column="is_force" property="isForce" jdbcType="TINYINT"/>
+        <result column="app_id" property="appId" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT channel_name, package_name, app_name, app_version, app_icon, 
+        status, notes, upload_time, version_code, apk_url, 
+        update_remark, is_force, app_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.RePackageChannel">
+        <include refid="re_package_channel.SELECT_All_Column"/>
+        FROM re_package_channel
+        WHERE channel_name = #{channelName,jdbcType=VARCHAR}
+        AND package_name = #{packageName,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.RePackageChannel">
+        DELETE FROM re_package_channel
+        WHERE channel_name = #{channelName,jdbcType=VARCHAR}
+        AND package_name = #{packageName,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.RePackageChannel">
+        INSERT INTO re_package_channel ( channel_name, 
+          package_name, app_name, app_version, 
+          app_icon, status, notes, 
+          upload_time, version_code, apk_url, 
+          update_remark, is_force, app_id )
+        VALUES ( #{channelName,jdbcType=VARCHAR}, 
+          #{packageName,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, 
+          #{appIcon,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{notes,jdbcType=VARCHAR}, 
+          #{uploadTime,jdbcType=VARCHAR}, #{versionCode,jdbcType=INTEGER}, #{apkUrl,jdbcType=VARCHAR}, 
+          #{updateRemark,jdbcType=VARCHAR}, #{isForce,jdbcType=TINYINT}, #{appId,jdbcType=TINYINT} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.RePackageChannel">
+        INSERT INTO re_package_channel
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                channel_name,
+                package_name,
+            <if test="appName != null">
+                app_name,
+            </if>
+            <if test="appVersion != null">
+                app_version,
+            </if>
+            <if test="appIcon != null">
+                app_icon,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="notes != null">
+                notes,
+            </if>
+            <if test="uploadTime != null">
+                upload_time,
+            </if>
+            <if test="versionCode != null">
+                version_code,
+            </if>
+            <if test="apkUrl != null">
+                apk_url,
+            </if>
+            <if test="updateRemark != null">
+                update_remark,
+            </if>
+            <if test="isForce != null">
+                is_force,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{channelName,jdbcType=VARCHAR},
+                #{packageName,jdbcType=VARCHAR},
+            <if test="appName != null">
+                #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="notes != null">
+                #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime,jdbcType=VARCHAR},
+            </if>
+            <if test="versionCode != null">
+                #{versionCode,jdbcType=INTEGER},
+            </if>
+            <if test="apkUrl != null">
+                #{apkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updateRemark != null">
+                #{updateRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="isForce != null">
+                #{isForce,jdbcType=TINYINT},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_package_channel ( channel_name, 
+          package_name, app_name, app_version, 
+          app_icon, status, notes, 
+          upload_time, version_code, apk_url, 
+          update_remark, is_force, app_id )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.channelName,jdbcType=VARCHAR}, 
+            #{item.packageName,jdbcType=VARCHAR}, #{item.appName,jdbcType=VARCHAR}, #{item.appVersion,jdbcType=VARCHAR}, 
+            #{item.appIcon,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, #{item.notes,jdbcType=VARCHAR}, 
+            #{item.uploadTime,jdbcType=VARCHAR}, #{item.versionCode,jdbcType=INTEGER}, #{item.apkUrl,jdbcType=VARCHAR}, 
+            #{item.updateRemark,jdbcType=VARCHAR}, #{item.isForce,jdbcType=TINYINT}, #{item.appId,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.RePackageChannel">
+        UPDATE re_package_channel
+        <set>
+            <if test="appName != null">
+                app_name = #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                app_version = #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                app_icon = #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="notes != null">
+                notes = #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                upload_time = #{uploadTime,jdbcType=VARCHAR},
+            </if>
+            <if test="versionCode != null">
+                version_code = #{versionCode,jdbcType=INTEGER},
+            </if>
+            <if test="apkUrl != null">
+                apk_url = #{apkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updateRemark != null">
+                update_remark = #{updateRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="isForce != null">
+                is_force = #{isForce,jdbcType=TINYINT},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE channel_name = #{channelName,jdbcType=VARCHAR}
+        AND package_name = #{packageName,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.RePackageChannel">
+        UPDATE re_package_channel
+        SET app_name = #{appName,jdbcType=VARCHAR},
+            app_version = #{appVersion,jdbcType=VARCHAR},
+            app_icon = #{appIcon,jdbcType=VARCHAR},
+            status = #{status,jdbcType=TINYINT},
+            notes = #{notes,jdbcType=VARCHAR},
+            upload_time = #{uploadTime,jdbcType=VARCHAR},
+            version_code = #{versionCode,jdbcType=INTEGER},
+            apk_url = #{apkUrl,jdbcType=VARCHAR},
+            update_remark = #{updateRemark,jdbcType=VARCHAR},
+            is_force = #{isForce,jdbcType=TINYINT},
+            app_id = #{appId,jdbcType=TINYINT}
+        WHERE channel_name = #{channelName,jdbcType=VARCHAR}
+        AND package_name = #{packageName,jdbcType=VARCHAR}
+    </update>
+</mapper>

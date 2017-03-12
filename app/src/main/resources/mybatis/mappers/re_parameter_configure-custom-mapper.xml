@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_parameter_configure">
+
+    <select id="getPasswordRedIntroduction" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReParameterConfigure">
+        <include refid="re_parameter_configure.SELECT_All_Column"/>
+        FROM re_parameter_configure
+        WHERE configure_id = 'koulin'
+        LIMIT 1
+    </select>
+
+</mapper>

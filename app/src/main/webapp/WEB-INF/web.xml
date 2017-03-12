@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2013 Raycloud.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>red-envelope-daemon</display-name>
+    <!-- Spring ApplicationContext配置文件的路径,可使用通配符，用于后面的Spring Context Loader -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/spring/spring-profile.xml
+        </param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>development</param-value>
+        <!--<param-value>production</param-value>-->
+    </context-param>
+
+    <context-param>
+        <param-name>defaultHtmlEscape</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <!--Spring ApplicationContext 载入 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--在Spring启动后 载入 -->
+    <listener>
+        <listener-class>com.hongbao.api.listener.HbServletContextListener</listener-class>
+    </listener>
+
+    <!-- Spring MVC Servlet -->
+    <servlet>
+        <servlet-name>springServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springServlet</servlet-name>
+        <!--对应com.aigou.api.web.controller下的所有Controller-->
+        <url-pattern>/c/*</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Filter 定义 -->
+    <filter>
+        <filter-name>baseFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>jettyGzipFilter</filter-name>
+        <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
+        <init-param>
+            <param-name>mimeTypes</param-name>
+            <param-value>
+                audio/x-mpeg,application/json,text/javascript,application/x-javascript,text/html,text/css,image/gif,image/png,image/jpeg
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>methods</param-name>
+            <param-value>GET,POST</param-value>
+        </init-param>
+        <init-param>
+            <param-name>minGzipSize</param-name>
+            <param-value>256</param-value>
+        </init-param>
+    </filter>
+
+    <!-- Character Encoding filter -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <description>所有的page请求，均会经过这个Filter</description>
+        <filter-name>pageFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <description>所有的rest请求，均会经过这个Filter</description>
+        <filter-name>restFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <description>pub rest请求，请求和响应均为明文</description>
+        <filter-name>restPubFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <description>rsa rest请求，请求和响应，双向加密（请求是RSA+AES，响应是AES）</description>
+        <filter-name>restRsaAesDecryptFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <description>aes rest请求，请求一定AES加密(响应有可能原文)</description>
+        <filter-name>restAesDecryptFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <description>aes rest请求，指明响应也应当采用Aes加密(发生某些异常时，响应也会是明文)</description>
+        <filter-name>restAesFullFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <description>aes rest请求，指明响应应当采用明文方式</description>
+        <filter-name>restAesSemiFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <!--filter-mapping-->
+    <filter-mapping>
+        <filter-name>baseFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>jettyGzipFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>pageFilter</filter-name>
+        <url-pattern>/c/page/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>restFilter</filter-name>
+        <url-pattern>/c/rest/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>restPubFilter</filter-name>
+        <url-pattern>/c/rest/p/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>restRsaAesDecryptFilter</filter-name>
+        <url-pattern>/c/rest/r/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>restAesDecryptFilter</filter-name>
+        <url-pattern>/c/rest/a/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>restAesFullFilter</filter-name>
+        <url-pattern>/c/rest/a/f/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>restAesSemiFilter</filter-name>
+        <url-pattern>/c/rest/a/s/*</url-pattern>
+    </filter-mapping>
+
+
+    <error-page>
+        <error-code>400</error-code>
+        <location>/c/page/error/400.do</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/403.json</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.json</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.json</location>
+    </error-page>
+</web-app>

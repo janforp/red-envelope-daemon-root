@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_login_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserLoginDetail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="platfrom" property="platfrom" jdbcType="TINYINT"/>
+        <result column="version" property="version" jdbcType="VARCHAR"/>
+        <result column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="device_name" property="deviceName" jdbcType="VARCHAR"/>
+        <result column="login_ip" property="loginIp" jdbcType="VARCHAR"/>
+        <result column="login_address" property="loginAddress" jdbcType="VARCHAR"/>
+        <result column="login_longitude" property="loginLongitude" jdbcType="VARCHAR"/>
+        <result column="login_latitude" property="loginLatitude" jdbcType="VARCHAR"/>
+        <result column="login_time" property="loginTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_id, platfrom, version, package_name, 
+        channel_name, device_id, device_name, login_ip, login_address, 
+        login_longitude, login_latitude, login_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserLoginDetail">
+        <include refid="re_user_login_detail.SELECT_All_Column"/>
+        FROM re_user_login_detail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserLoginDetail">
+        DELETE FROM re_user_login_detail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserLoginDetail">
+        INSERT INTO re_user_login_detail ( user_id, 
+          platfrom, version, package_name, 
+          channel_name, device_id, device_name, 
+          login_ip, login_address, login_longitude, 
+          login_latitude, login_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{platfrom,jdbcType=TINYINT}, #{version,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, 
+          #{channelName,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+          #{loginIp,jdbcType=VARCHAR}, #{loginAddress,jdbcType=VARCHAR}, #{loginLongitude,jdbcType=VARCHAR}, 
+          #{loginLatitude,jdbcType=VARCHAR}, #{loginTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserLoginDetail">
+        INSERT INTO re_user_login_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="platfrom != null">
+                platfrom,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="packageName != null">
+                package_name,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="deviceName != null">
+                device_name,
+            </if>
+            <if test="loginIp != null">
+                login_ip,
+            </if>
+            <if test="loginAddress != null">
+                login_address,
+            </if>
+            <if test="loginLongitude != null">
+                login_longitude,
+            </if>
+            <if test="loginLatitude != null">
+                login_latitude,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="platfrom != null">
+                #{platfrom,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="packageName != null">
+                #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null">
+                #{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginIp != null">
+                #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="loginAddress != null">
+                #{loginAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="loginLongitude != null">
+                #{loginLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="loginLatitude != null">
+                #{loginLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_login_detail ( user_id, 
+          platfrom, version, package_name, 
+          channel_name, device_id, device_name, 
+          login_ip, login_address, login_longitude, 
+          login_latitude, login_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.platfrom,jdbcType=TINYINT}, #{item.version,jdbcType=VARCHAR}, #{item.packageName,jdbcType=VARCHAR}, 
+            #{item.channelName,jdbcType=VARCHAR}, #{item.deviceId,jdbcType=VARCHAR}, #{item.deviceName,jdbcType=VARCHAR}, 
+            #{item.loginIp,jdbcType=VARCHAR}, #{item.loginAddress,jdbcType=VARCHAR}, #{item.loginLongitude,jdbcType=VARCHAR}, 
+            #{item.loginLatitude,jdbcType=VARCHAR}, #{item.loginTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserLoginDetail">
+        UPDATE re_user_login_detail
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="platfrom != null">
+                platfrom = #{platfrom,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="packageName != null">
+                package_name = #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null">
+                device_name = #{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginIp != null">
+                login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="loginAddress != null">
+                login_address = #{loginAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="loginLongitude != null">
+                login_longitude = #{loginLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="loginLatitude != null">
+                login_latitude = #{loginLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserLoginDetail">
+        UPDATE re_user_login_detail
+        SET user_id = #{userId,jdbcType=INTEGER},
+            platfrom = #{platfrom,jdbcType=TINYINT},
+            version = #{version,jdbcType=VARCHAR},
+            package_name = #{packageName,jdbcType=VARCHAR},
+            channel_name = #{channelName,jdbcType=VARCHAR},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            device_name = #{deviceName,jdbcType=VARCHAR},
+            login_ip = #{loginIp,jdbcType=VARCHAR},
+            login_address = #{loginAddress,jdbcType=VARCHAR},
+            login_longitude = #{loginLongitude,jdbcType=VARCHAR},
+            login_latitude = #{loginLatitude,jdbcType=VARCHAR},
+            login_time = #{loginTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_load_html">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReLoadHtml">
+        <id column="html_id" property="htmlId" jdbcType="BIGINT"/>
+        <result column="html_url" property="htmlUrl" jdbcType="VARCHAR"/>
+        <result column="html_status" property="htmlStatus" jdbcType="TINYINT"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="complete_num" property="completeNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT html_id, html_url, html_status, total_num, complete_num, 
+        create_time, update_time, start_time, end_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReLoadHtml">
+        <include refid="re_load_html.SELECT_All_Column"/>
+        FROM re_load_html
+        WHERE html_id = #{htmlId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReLoadHtml">
+        DELETE FROM re_load_html
+        WHERE html_id = #{htmlId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReLoadHtml">
+        INSERT INTO re_load_html ( html_url, 
+          html_status, total_num, complete_num, 
+          create_time, update_time, start_time, 
+          end_time )
+        VALUES ( #{htmlUrl,jdbcType=VARCHAR}, 
+          #{htmlStatus,jdbcType=TINYINT}, #{totalNum,jdbcType=INTEGER}, #{completeNum,jdbcType=INTEGER}, 
+          #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+          #{endTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="htmlId" resultType="long">
+            SELECT LAST_INSERT_ID() AS htmlId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReLoadHtml">
+        INSERT INTO re_load_html
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="htmlUrl != null">
+                html_url,
+            </if>
+            <if test="htmlStatus != null">
+                html_status,
+            </if>
+            <if test="totalNum != null">
+                total_num,
+            </if>
+            <if test="completeNum != null">
+                complete_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="htmlUrl != null">
+                #{htmlUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="htmlStatus != null">
+                #{htmlStatus,jdbcType=TINYINT},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="completeNum != null">
+                #{completeNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="htmlId" resultType="long">
+            SELECT LAST_INSERT_ID() AS htmlId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_load_html ( html_url, 
+          html_status, total_num, complete_num, 
+          create_time, update_time, start_time, 
+          end_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.htmlUrl,jdbcType=VARCHAR}, 
+            #{item.htmlStatus,jdbcType=TINYINT}, #{item.totalNum,jdbcType=INTEGER}, #{item.completeNum,jdbcType=INTEGER}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}, #{item.startTime,jdbcType=VARCHAR}, 
+            #{item.endTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReLoadHtml">
+        UPDATE re_load_html
+        <set>
+            <if test="htmlUrl != null">
+                html_url = #{htmlUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="htmlStatus != null">
+                html_status = #{htmlStatus,jdbcType=TINYINT},
+            </if>
+            <if test="totalNum != null">
+                total_num = #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="completeNum != null">
+                complete_num = #{completeNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE html_id = #{htmlId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReLoadHtml">
+        UPDATE re_load_html
+        SET html_url = #{htmlUrl,jdbcType=VARCHAR},
+            html_status = #{htmlStatus,jdbcType=TINYINT},
+            total_num = #{totalNum,jdbcType=INTEGER},
+            complete_num = #{completeNum,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=VARCHAR},
+            end_time = #{endTime,jdbcType=VARCHAR}
+        WHERE html_id = #{htmlId,jdbcType=BIGINT}
+    </update>
+</mapper>

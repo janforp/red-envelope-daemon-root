@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_article_read">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReArticleRead">
+        <id column="article_id" property="articleId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="read_time" property="readTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT article_id, user_id, read_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReArticleRead">
+        <include refid="re_article_read.SELECT_All_Column"/>
+        FROM re_article_read
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReArticleRead">
+        DELETE FROM re_article_read
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReArticleRead">
+        INSERT INTO re_article_read ( article_id, 
+          user_id, read_time )
+        VALUES ( #{articleId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{readTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReArticleRead">
+        INSERT INTO re_article_read
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                article_id,
+                user_id,
+            <if test="readTime != null">
+                read_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{articleId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="readTime != null">
+                #{readTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_article_read ( article_id, 
+          user_id, read_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.articleId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.readTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReArticleRead">
+        UPDATE re_article_read
+        <set>
+            <if test="readTime != null">
+                read_time = #{readTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReArticleRead">
+        UPDATE re_article_read
+        SET read_time = #{readTime,jdbcType=VARCHAR}
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

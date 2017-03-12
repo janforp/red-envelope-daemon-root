@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_andriod_integral_wall">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAndriodIntegralWall">
+        <id column="wall_id" property="wallId" jdbcType="BIGINT"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="app_url" property="appUrl" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="app_package" property="appPackage" jdbcType="VARCHAR"/>
+        <result column="app_desc" property="appDesc" jdbcType="VARCHAR"/>
+        <result column="app_size" property="appSize" jdbcType="VARCHAR"/>
+        <result column="app_label" property="appLabel" jdbcType="VARCHAR"/>
+        <result column="app_introduce" property="appIntroduce" jdbcType="VARCHAR"/>
+        <result column="app_img" property="appImg" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="is_limit_num" property="isLimitNum" jdbcType="TINYINT"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="step_one_money" property="stepOneMoney" jdbcType="DECIMAL"/>
+        <result column="step_one_desc" property="stepOneDesc" jdbcType="VARCHAR"/>
+        <result column="step_one_second" property="stepOneSecond" jdbcType="INTEGER"/>
+        <result column="step_two_money" property="stepTwoMoney" jdbcType="DECIMAL"/>
+        <result column="step_two_day" property="stepTwoDay" jdbcType="INTEGER"/>
+        <result column="step_two_second" property="stepTwoSecond" jdbcType="INTEGER"/>
+        <result column="wall_weight" property="wallWeight" jdbcType="TINYINT"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="is_sim" property="isSim" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT wall_id, app_name, app_url, app_icon, app_package, 
+        app_desc, app_size, app_label, app_introduce, app_img, 
+        start_time, end_time, is_limit_num, total_num, left_num, 
+        total_money, step_one_money, step_one_desc, step_one_second, step_two_money, 
+        step_two_day, step_two_second, wall_weight, is_end, is_sim, 
+        create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAndriodIntegralWall">
+        <include refid="re_andriod_integral_wall.SELECT_All_Column"/>
+        FROM re_andriod_integral_wall
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAndriodIntegralWall">
+        DELETE FROM re_andriod_integral_wall
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAndriodIntegralWall">
+        INSERT INTO re_andriod_integral_wall ( app_name, 
+          app_url, app_icon, app_package, 
+          app_desc, app_size, app_label, 
+          app_introduce, app_img, start_time, 
+          end_time, is_limit_num, total_num, 
+          left_num, total_money, step_one_money, 
+          step_one_desc, step_one_second, step_two_money, 
+          step_two_day, step_two_second, wall_weight, 
+          is_end, is_sim, create_time, 
+          update_time )
+        VALUES ( #{appName,jdbcType=VARCHAR}, 
+          #{appUrl,jdbcType=VARCHAR}, #{appIcon,jdbcType=VARCHAR}, #{appPackage,jdbcType=VARCHAR}, 
+          #{appDesc,jdbcType=VARCHAR}, #{appSize,jdbcType=VARCHAR}, #{appLabel,jdbcType=VARCHAR}, 
+          #{appIntroduce,jdbcType=VARCHAR}, #{appImg,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+          #{endTime,jdbcType=VARCHAR}, #{isLimitNum,jdbcType=TINYINT}, #{totalNum,jdbcType=INTEGER}, 
+          #{leftNum,jdbcType=INTEGER}, #{totalMoney,jdbcType=DECIMAL}, #{stepOneMoney,jdbcType=DECIMAL}, 
+          #{stepOneDesc,jdbcType=VARCHAR}, #{stepOneSecond,jdbcType=INTEGER}, #{stepTwoMoney,jdbcType=DECIMAL}, 
+          #{stepTwoDay,jdbcType=INTEGER}, #{stepTwoSecond,jdbcType=INTEGER}, #{wallWeight,jdbcType=TINYINT}, 
+          #{isEnd,jdbcType=TINYINT}, #{isSim,jdbcType=TINYINT}, #{createTime,jdbcType=VARCHAR}, 
+          #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="wallId" resultType="long">
+            SELECT LAST_INSERT_ID() AS wallId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAndriodIntegralWall">
+        INSERT INTO re_andriod_integral_wall
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appName != null">
+                app_name,
+            </if>
+            <if test="appUrl != null">
+                app_url,
+            </if>
+            <if test="appIcon != null">
+                app_icon,
+            </if>
+            <if test="appPackage != null">
+                app_package,
+            </if>
+            <if test="appDesc != null">
+                app_desc,
+            </if>
+            <if test="appSize != null">
+                app_size,
+            </if>
+            <if test="appLabel != null">
+                app_label,
+            </if>
+            <if test="appIntroduce != null">
+                app_introduce,
+            </if>
+            <if test="appImg != null">
+                app_img,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="isLimitNum != null">
+                is_limit_num,
+            </if>
+            <if test="totalNum != null">
+                total_num,
+            </if>
+            <if test="leftNum != null">
+                left_num,
+            </if>
+            <if test="totalMoney != null">
+                total_money,
+            </if>
+            <if test="stepOneMoney != null">
+                step_one_money,
+            </if>
+            <if test="stepOneDesc != null">
+                step_one_desc,
+            </if>
+            <if test="stepOneSecond != null">
+                step_one_second,
+            </if>
+            <if test="stepTwoMoney != null">
+                step_two_money,
+            </if>
+            <if test="stepTwoDay != null">
+                step_two_day,
+            </if>
+            <if test="stepTwoSecond != null">
+                step_two_second,
+            </if>
+            <if test="wallWeight != null">
+                wall_weight,
+            </if>
+            <if test="isEnd != null">
+                is_end,
+            </if>
+            <if test="isSim != null">
+                is_sim,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appName != null">
+                #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appUrl != null">
+                #{appUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="appPackage != null">
+                #{appPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="appSize != null">
+                #{appSize,jdbcType=VARCHAR},
+            </if>
+            <if test="appLabel != null">
+                #{appLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="appIntroduce != null">
+                #{appIntroduce,jdbcType=VARCHAR},
+            </if>
+            <if test="appImg != null">
+                #{appImg,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isLimitNum != null">
+                #{isLimitNum,jdbcType=TINYINT},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftNum != null">
+                #{leftNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalMoney != null">
+                #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="stepOneMoney != null">
+                #{stepOneMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="stepOneDesc != null">
+                #{stepOneDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="stepOneSecond != null">
+                #{stepOneSecond,jdbcType=INTEGER},
+            </if>
+            <if test="stepTwoMoney != null">
+                #{stepTwoMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="stepTwoDay != null">
+                #{stepTwoDay,jdbcType=INTEGER},
+            </if>
+            <if test="stepTwoSecond != null">
+                #{stepTwoSecond,jdbcType=INTEGER},
+            </if>
+            <if test="wallWeight != null">
+                #{wallWeight,jdbcType=TINYINT},
+            </if>
+            <if test="isEnd != null">
+                #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="isSim != null">
+                #{isSim,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="wallId" resultType="long">
+            SELECT LAST_INSERT_ID() AS wallId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_andriod_integral_wall ( app_name, 
+          app_url, app_icon, app_package, 
+          app_desc, app_size, app_label, 
+          app_introduce, app_img, start_time, 
+          end_time, is_limit_num, total_num, 
+          left_num, total_money, step_one_money, 
+          step_one_desc, step_one_second, step_two_money, 
+          step_two_day, step_two_second, wall_weight, 
+          is_end, is_sim, create_time, 
+          update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.appName,jdbcType=VARCHAR}, 
+            #{item.appUrl,jdbcType=VARCHAR}, #{item.appIcon,jdbcType=VARCHAR}, #{item.appPackage,jdbcType=VARCHAR}, 
+            #{item.appDesc,jdbcType=VARCHAR}, #{item.appSize,jdbcType=VARCHAR}, #{item.appLabel,jdbcType=VARCHAR}, 
+            #{item.appIntroduce,jdbcType=VARCHAR}, #{item.appImg,jdbcType=VARCHAR}, #{item.startTime,jdbcType=VARCHAR}, 
+            #{item.endTime,jdbcType=VARCHAR}, #{item.isLimitNum,jdbcType=TINYINT}, #{item.totalNum,jdbcType=INTEGER}, 
+            #{item.leftNum,jdbcType=INTEGER}, #{item.totalMoney,jdbcType=DECIMAL}, #{item.stepOneMoney,jdbcType=DECIMAL}, 
+            #{item.stepOneDesc,jdbcType=VARCHAR}, #{item.stepOneSecond,jdbcType=INTEGER}, #{item.stepTwoMoney,jdbcType=DECIMAL}, 
+            #{item.stepTwoDay,jdbcType=INTEGER}, #{item.stepTwoSecond,jdbcType=INTEGER}, #{item.wallWeight,jdbcType=TINYINT}, 
+            #{item.isEnd,jdbcType=TINYINT}, #{item.isSim,jdbcType=TINYINT}, #{item.createTime,jdbcType=VARCHAR}, 
+            #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAndriodIntegralWall">
+        UPDATE re_andriod_integral_wall
+        <set>
+            <if test="appName != null">
+                app_name = #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appUrl != null">
+                app_url = #{appUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                app_icon = #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="appPackage != null">
+                app_package = #{appPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                app_desc = #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="appSize != null">
+                app_size = #{appSize,jdbcType=VARCHAR},
+            </if>
+            <if test="appLabel != null">
+                app_label = #{appLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="appIntroduce != null">
+                app_introduce = #{appIntroduce,jdbcType=VARCHAR},
+            </if>
+            <if test="appImg != null">
+                app_img = #{appImg,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isLimitNum != null">
+                is_limit_num = #{isLimitNum,jdbcType=TINYINT},
+            </if>
+            <if test="totalNum != null">
+                total_num = #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftNum != null">
+                left_num = #{leftNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalMoney != null">
+                total_money = #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="stepOneMoney != null">
+                step_one_money = #{stepOneMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="stepOneDesc != null">
+                step_one_desc = #{stepOneDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="stepOneSecond != null">
+                step_one_second = #{stepOneSecond,jdbcType=INTEGER},
+            </if>
+            <if test="stepTwoMoney != null">
+                step_two_money = #{stepTwoMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="stepTwoDay != null">
+                step_two_day = #{stepTwoDay,jdbcType=INTEGER},
+            </if>
+            <if test="stepTwoSecond != null">
+                step_two_second = #{stepTwoSecond,jdbcType=INTEGER},
+            </if>
+            <if test="wallWeight != null">
+                wall_weight = #{wallWeight,jdbcType=TINYINT},
+            </if>
+            <if test="isEnd != null">
+                is_end = #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="isSim != null">
+                is_sim = #{isSim,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAndriodIntegralWall">
+        UPDATE re_andriod_integral_wall
+        SET app_name = #{appName,jdbcType=VARCHAR},
+            app_url = #{appUrl,jdbcType=VARCHAR},
+            app_icon = #{appIcon,jdbcType=VARCHAR},
+            app_package = #{appPackage,jdbcType=VARCHAR},
+            app_desc = #{appDesc,jdbcType=VARCHAR},
+            app_size = #{appSize,jdbcType=VARCHAR},
+            app_label = #{appLabel,jdbcType=VARCHAR},
+            app_introduce = #{appIntroduce,jdbcType=VARCHAR},
+            app_img = #{appImg,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=VARCHAR},
+            end_time = #{endTime,jdbcType=VARCHAR},
+            is_limit_num = #{isLimitNum,jdbcType=TINYINT},
+            total_num = #{totalNum,jdbcType=INTEGER},
+            left_num = #{leftNum,jdbcType=INTEGER},
+            total_money = #{totalMoney,jdbcType=DECIMAL},
+            step_one_money = #{stepOneMoney,jdbcType=DECIMAL},
+            step_one_desc = #{stepOneDesc,jdbcType=VARCHAR},
+            step_one_second = #{stepOneSecond,jdbcType=INTEGER},
+            step_two_money = #{stepTwoMoney,jdbcType=DECIMAL},
+            step_two_day = #{stepTwoDay,jdbcType=INTEGER},
+            step_two_second = #{stepTwoSecond,jdbcType=INTEGER},
+            wall_weight = #{wallWeight,jdbcType=TINYINT},
+            is_end = #{isEnd,jdbcType=TINYINT},
+            is_sim = #{isSim,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_welfare">
+
+    <select id="selectSelectionListByPlatform" resultMap="BaseResultMap" parameterType="int">
+        <include refid="re_welfare.SELECT_All_Column"/>
+        FROM re_welfare
+        WHERE ( welfare_status = 2 OR welfare_status = #{platform,jdbcType=INTEGER} )
+        AND is_selection = 1
+        ORDER BY welfare_weight DESC, welfare_id DESC
+    </select>
+
+    <select id="selectListByPlatform" resultMap="BaseResultMap" parameterType="map">
+        SELECT t.*
+        FROM (
+            SELECT (@rowNO:=@rowNo + 1) AS rowno, a.*
+            FROM re_welfare a, (SELECT @rowNO:=0) b
+            WHERE ( a.welfare_status = 2 OR a.welfare_status = #{platform,jdbcType=INTEGER} )
+            <if test="welfareType != null">
+                AND welfare_type = #{welfareType,jdbcType=TINYINT}
+            </if>
+            ORDER BY a.welfare_weight DESC, a.welfare_id DESC
+        ) t
+        <if test="welfareId != null">
+        WHERE
+          t.rowno > (
+            SELECT t.rowno
+            FROM (
+                SELECT (@rowNO:=@rowNo + 1) AS rowno, a.*
+                FROM re_welfare a, (SELECT @rowNO:=0) b
+                WHERE ( a.welfare_status = 2 OR a.welfare_status = #{platform,jdbcType=INTEGER} )
+                <if test="welfareType != null">
+                    AND welfare_type = #{welfareType,jdbcType=TINYINT}
+                </if>
+                ORDER BY a.welfare_weight DESC, a.welfare_id DESC
+            ) t
+            WHERE t.welfare_id = #{welfareId,jdbcType=BIGINT}
+          )
+        </if>
+        limit 0, 20
+    </select>
+
+    <select id="selectWelfareIdListOrderByUpdateTimeDesc" resultType="long" parameterType="map">
+        SELECT welfare_id
+        FROM re_welfare
+        WHERE ( welfare_status = 2 OR welfare_status = #{platform,jdbcType=INTEGER} )
+        <if test="welfareType != null">
+            AND welfare_type = #{welfareType,jdbcType=INTEGER}
+        </if>
+        ORDER BY update_time DESC ,welfare_weight DESC, welfare_id DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_score_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReScoreDetail">
+        <id column="score_id" property="scoreId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="score_type" property="scoreType" jdbcType="TINYINT"/>
+        <result column="score_content" property="scoreContent" jdbcType="VARCHAR"/>
+        <result column="score_time" property="scoreTime" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT score_id, user_id, score, score_type, score_content, 
+        score_time, app_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReScoreDetail">
+        <include refid="re_score_detail.SELECT_All_Column"/>
+        FROM re_score_detail
+        WHERE score_id = #{scoreId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReScoreDetail">
+        DELETE FROM re_score_detail
+        WHERE score_id = #{scoreId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReScoreDetail">
+        INSERT INTO re_score_detail ( user_id, 
+          score, score_type, score_content, 
+          score_time, app_id )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{score,jdbcType=INTEGER}, #{scoreType,jdbcType=TINYINT}, #{scoreContent,jdbcType=VARCHAR}, 
+          #{scoreTime,jdbcType=VARCHAR}, #{appId,jdbcType=TINYINT} )
+        <selectKey keyProperty="scoreId" resultType="int">
+            SELECT LAST_INSERT_ID() AS scoreId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReScoreDetail">
+        INSERT INTO re_score_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="scoreType != null">
+                score_type,
+            </if>
+            <if test="scoreContent != null">
+                score_content,
+            </if>
+            <if test="scoreTime != null">
+                score_time,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="scoreType != null">
+                #{scoreType,jdbcType=TINYINT},
+            </if>
+            <if test="scoreContent != null">
+                #{scoreContent,jdbcType=VARCHAR},
+            </if>
+            <if test="scoreTime != null">
+                #{scoreTime,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="scoreId" resultType="int">
+            SELECT LAST_INSERT_ID() AS scoreId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_score_detail ( user_id, 
+          score, score_type, score_content, 
+          score_time, app_id )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.score,jdbcType=INTEGER}, #{item.scoreType,jdbcType=TINYINT}, #{item.scoreContent,jdbcType=VARCHAR}, 
+            #{item.scoreTime,jdbcType=VARCHAR}, #{item.appId,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReScoreDetail">
+        UPDATE re_score_detail
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="scoreType != null">
+                score_type = #{scoreType,jdbcType=TINYINT},
+            </if>
+            <if test="scoreContent != null">
+                score_content = #{scoreContent,jdbcType=VARCHAR},
+            </if>
+            <if test="scoreTime != null">
+                score_time = #{scoreTime,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE score_id = #{scoreId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReScoreDetail">
+        UPDATE re_score_detail
+        SET user_id = #{userId,jdbcType=INTEGER},
+            score = #{score,jdbcType=INTEGER},
+            score_type = #{scoreType,jdbcType=TINYINT},
+            score_content = #{scoreContent,jdbcType=VARCHAR},
+            score_time = #{scoreTime,jdbcType=VARCHAR},
+            app_id = #{appId,jdbcType=TINYINT}
+        WHERE score_id = #{scoreId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUser">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="re_id" property="reId" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="portrait" property="portrait" jdbcType="VARCHAR"/>
+        <result column="user_key" property="userKey" jdbcType="VARCHAR"/>
+        <result column="user_secret" property="userSecret" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="birthday" property="birthday" jdbcType="VARCHAR"/>
+        <result column="profession" property="profession" jdbcType="VARCHAR"/>
+        <result column="hobby" property="hobby" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="user_money" property="userMoney" jdbcType="DECIMAL"/>
+        <result column="today_money" property="todayMoney" jdbcType="DECIMAL"/>
+        <result column="user_score" property="userScore" jdbcType="INTEGER"/>
+        <result column="sign_time" property="signTime" jdbcType="BIGINT"/>
+        <result column="sign_count" property="signCount" jdbcType="INTEGER"/>
+        <result column="bind_type" property="bindType" jdbcType="TINYINT"/>
+        <result column="user_status" property="userStatus" jdbcType="TINYINT"/>
+        <result column="user_type" property="userType" jdbcType="TINYINT"/>
+        <result column="invitation_code" property="invitationCode" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="TINYINT"/>
+        <result column="free_times" property="freeTimes" jdbcType="TINYINT"/>
+        <result column="gain_times" property="gainTimes" jdbcType="INTEGER"/>
+        <result column="mission_times" property="missionTimes" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT user_id, re_id, nickname, real_name, portrait, 
+        user_key, user_secret, mobile, password, gender, 
+        birthday, profession, hobby, address, user_money, 
+        today_money, user_score, sign_time, sign_count, bind_type, 
+        user_status, user_type, invitation_code, app_id, free_times, 
+        gain_times, mission_times, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUser">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUser">
+        DELETE FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUser">
+        INSERT INTO re_user ( re_id, 
+          nickname, real_name, portrait, 
+          user_key, user_secret, mobile, 
+          password, gender, birthday, 
+          profession, hobby, address, 
+          user_money, today_money, user_score, 
+          sign_time, sign_count, bind_type, 
+          user_status, user_type, invitation_code, 
+          app_id, free_times, gain_times, 
+          mission_times, create_time, update_time )
+        VALUES ( #{reId,jdbcType=VARCHAR}, 
+          #{nickname,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{portrait,jdbcType=VARCHAR}, 
+          #{userKey,jdbcType=VARCHAR}, #{userSecret,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+          #{password,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=VARCHAR}, 
+          #{profession,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+          #{userMoney,jdbcType=DECIMAL}, #{todayMoney,jdbcType=DECIMAL}, #{userScore,jdbcType=INTEGER}, 
+          #{signTime,jdbcType=BIGINT}, #{signCount,jdbcType=INTEGER}, #{bindType,jdbcType=TINYINT}, 
+          #{userStatus,jdbcType=TINYINT}, #{userType,jdbcType=TINYINT}, #{invitationCode,jdbcType=VARCHAR}, 
+          #{appId,jdbcType=TINYINT}, #{freeTimes,jdbcType=TINYINT}, #{gainTimes,jdbcType=INTEGER}, 
+          #{missionTimes,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="userId" resultType="int">
+            SELECT LAST_INSERT_ID() AS userId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUser">
+        INSERT INTO re_user
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="reId != null">
+                re_id,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="portrait != null">
+                portrait,
+            </if>
+            <if test="userKey != null">
+                user_key,
+            </if>
+            <if test="userSecret != null">
+                user_secret,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="profession != null">
+                profession,
+            </if>
+            <if test="hobby != null">
+                hobby,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="userMoney != null">
+                user_money,
+            </if>
+            <if test="todayMoney != null">
+                today_money,
+            </if>
+            <if test="userScore != null">
+                user_score,
+            </if>
+            <if test="signTime != null">
+                sign_time,
+            </if>
+            <if test="signCount != null">
+                sign_count,
+            </if>
+            <if test="bindType != null">
+                bind_type,
+            </if>
+            <if test="userStatus != null">
+                user_status,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="invitationCode != null">
+                invitation_code,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="freeTimes != null">
+                free_times,
+            </if>
+            <if test="gainTimes != null">
+                gain_times,
+            </if>
+            <if test="missionTimes != null">
+                mission_times,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="reId != null">
+                #{reId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="portrait != null">
+                #{portrait,jdbcType=VARCHAR},
+            </if>
+            <if test="userKey != null">
+                #{userKey,jdbcType=VARCHAR},
+            </if>
+            <if test="userSecret != null">
+                #{userSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="profession != null">
+                #{profession,jdbcType=VARCHAR},
+            </if>
+            <if test="hobby != null">
+                #{hobby,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="userMoney != null">
+                #{userMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayMoney != null">
+                #{todayMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="userScore != null">
+                #{userScore,jdbcType=INTEGER},
+            </if>
+            <if test="signTime != null">
+                #{signTime,jdbcType=BIGINT},
+            </if>
+            <if test="signCount != null">
+                #{signCount,jdbcType=INTEGER},
+            </if>
+            <if test="bindType != null">
+                #{bindType,jdbcType=TINYINT},
+            </if>
+            <if test="userStatus != null">
+                #{userStatus,jdbcType=TINYINT},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=TINYINT},
+            </if>
+            <if test="invitationCode != null">
+                #{invitationCode,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=TINYINT},
+            </if>
+            <if test="freeTimes != null">
+                #{freeTimes,jdbcType=TINYINT},
+            </if>
+            <if test="gainTimes != null">
+                #{gainTimes,jdbcType=INTEGER},
+            </if>
+            <if test="missionTimes != null">
+                #{missionTimes,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="userId" resultType="int">
+            SELECT LAST_INSERT_ID() AS userId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user ( re_id, 
+          nickname, real_name, portrait, 
+          user_key, user_secret, mobile, 
+          password, gender, birthday, 
+          profession, hobby, address, 
+          user_money, today_money, user_score, 
+          sign_time, sign_count, bind_type, 
+          user_status, user_type, invitation_code, 
+          app_id, free_times, gain_times, 
+          mission_times, create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.reId,jdbcType=VARCHAR}, 
+            #{item.nickname,jdbcType=VARCHAR}, #{item.realName,jdbcType=VARCHAR}, #{item.portrait,jdbcType=VARCHAR}, 
+            #{item.userKey,jdbcType=VARCHAR}, #{item.userSecret,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, 
+            #{item.password,jdbcType=VARCHAR}, #{item.gender,jdbcType=TINYINT}, #{item.birthday,jdbcType=VARCHAR}, 
+            #{item.profession,jdbcType=VARCHAR}, #{item.hobby,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR}, 
+            #{item.userMoney,jdbcType=DECIMAL}, #{item.todayMoney,jdbcType=DECIMAL}, #{item.userScore,jdbcType=INTEGER}, 
+            #{item.signTime,jdbcType=BIGINT}, #{item.signCount,jdbcType=INTEGER}, #{item.bindType,jdbcType=TINYINT}, 
+            #{item.userStatus,jdbcType=TINYINT}, #{item.userType,jdbcType=TINYINT}, #{item.invitationCode,jdbcType=VARCHAR}, 
+            #{item.appId,jdbcType=TINYINT}, #{item.freeTimes,jdbcType=TINYINT}, #{item.gainTimes,jdbcType=INTEGER}, 
+            #{item.missionTimes,jdbcType=INTEGER}, #{item.createTime,jdbcType=BIGINT}, #{item.updateTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUser">
+        UPDATE re_user
+        <set>
+            <if test="reId != null">
+                re_id = #{reId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="portrait != null">
+                portrait = #{portrait,jdbcType=VARCHAR},
+            </if>
+            <if test="userKey != null">
+                user_key = #{userKey,jdbcType=VARCHAR},
+            </if>
+            <if test="userSecret != null">
+                user_secret = #{userSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="profession != null">
+                profession = #{profession,jdbcType=VARCHAR},
+            </if>
+            <if test="hobby != null">
+                hobby = #{hobby,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="userMoney != null">
+                user_money = #{userMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayMoney != null">
+                today_money = #{todayMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="userScore != null">
+                user_score = #{userScore,jdbcType=INTEGER},
+            </if>
+            <if test="signTime != null">
+                sign_time = #{signTime,jdbcType=BIGINT},
+            </if>
+            <if test="signCount != null">
+                sign_count = #{signCount,jdbcType=INTEGER},
+            </if>
+            <if test="bindType != null">
+                bind_type = #{bindType,jdbcType=TINYINT},
+            </if>
+            <if test="userStatus != null">
+                user_status = #{userStatus,jdbcType=TINYINT},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=TINYINT},
+            </if>
+            <if test="invitationCode != null">
+                invitation_code = #{invitationCode,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=TINYINT},
+            </if>
+            <if test="freeTimes != null">
+                free_times = #{freeTimes,jdbcType=TINYINT},
+            </if>
+            <if test="gainTimes != null">
+                gain_times = #{gainTimes,jdbcType=INTEGER},
+            </if>
+            <if test="missionTimes != null">
+                mission_times = #{missionTimes,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUser">
+        UPDATE re_user
+        SET re_id = #{reId,jdbcType=VARCHAR},
+            nickname = #{nickname,jdbcType=VARCHAR},
+            real_name = #{realName,jdbcType=VARCHAR},
+            portrait = #{portrait,jdbcType=VARCHAR},
+            user_key = #{userKey,jdbcType=VARCHAR},
+            user_secret = #{userSecret,jdbcType=VARCHAR},
+            mobile = #{mobile,jdbcType=VARCHAR},
+            password = #{password,jdbcType=VARCHAR},
+            gender = #{gender,jdbcType=TINYINT},
+            birthday = #{birthday,jdbcType=VARCHAR},
+            profession = #{profession,jdbcType=VARCHAR},
+            hobby = #{hobby,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            user_money = #{userMoney,jdbcType=DECIMAL},
+            today_money = #{todayMoney,jdbcType=DECIMAL},
+            user_score = #{userScore,jdbcType=INTEGER},
+            sign_time = #{signTime,jdbcType=BIGINT},
+            sign_count = #{signCount,jdbcType=INTEGER},
+            bind_type = #{bindType,jdbcType=TINYINT},
+            user_status = #{userStatus,jdbcType=TINYINT},
+            user_type = #{userType,jdbcType=TINYINT},
+            invitation_code = #{invitationCode,jdbcType=VARCHAR},
+            app_id = #{appId,jdbcType=TINYINT},
+            free_times = #{freeTimes,jdbcType=TINYINT},
+            gain_times = #{gainTimes,jdbcType=INTEGER},
+            mission_times = #{missionTimes,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=BIGINT}
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

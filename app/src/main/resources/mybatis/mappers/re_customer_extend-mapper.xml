@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_customer_extend">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReCustomerExtend">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="customer_id" property="customerId" jdbcType="INTEGER"/>
+        <result column="is_redirect" property="isRedirect" jdbcType="TINYINT"/>
+        <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR"/>
+        <result column="wait_time" property="waitTime" jdbcType="INTEGER"/>
+        <result column="extend_desc" property="extendDesc" jdbcType="VARCHAR"/>
+        <result column="customer_banner" property="customerBanner" jdbcType="VARCHAR"/>
+        <result column="customer_banner_url" property="customerBannerUrl" jdbcType="VARCHAR"/>
+        <result column="customer_advert" property="customerAdvert" jdbcType="VARCHAR"/>
+        <result column="customer_advert_url" property="customerAdvertUrl" jdbcType="VARCHAR"/>
+        <result column="red_num_total" property="redNumTotal" jdbcType="INTEGER"/>
+        <result column="red_num_left" property="redNumLeft" jdbcType="INTEGER"/>
+        <result column="red_num_day_total" property="redNumDayTotal" jdbcType="INTEGER"/>
+        <result column="red_num_day_left" property="redNumDayLeft" jdbcType="INTEGER"/>
+        <result column="customer_status" property="customerStatus" jdbcType="TINYINT"/>
+        <result column="start_time" property="startTime" jdbcType="INTEGER"/>
+        <result column="end_time" property="endTime" jdbcType="INTEGER"/>
+        <result column="is_hot" property="isHot" jdbcType="TINYINT"/>
+        <result column="red_chance" property="redChance" jdbcType="TINYINT"/>
+        <result column="extend_status" property="extendStatus" jdbcType="TINYINT"/>
+        <result column="award_desc" property="awardDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, customer_id, is_redirect, redirect_url, wait_time, 
+        extend_desc, customer_banner, customer_banner_url, customer_advert, customer_advert_url, 
+        red_num_total, red_num_left, red_num_day_total, red_num_day_left, customer_status, 
+        start_time, end_time, is_hot, red_chance, extend_status, 
+        award_desc
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReCustomerExtend">
+        <include refid="re_customer_extend.SELECT_All_Column"/>
+        FROM re_customer_extend
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReCustomerExtend">
+        DELETE FROM re_customer_extend
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReCustomerExtend">
+        INSERT INTO re_customer_extend ( customer_id, 
+          is_redirect, redirect_url, wait_time, 
+          extend_desc, customer_banner, customer_banner_url, 
+          customer_advert, customer_advert_url, red_num_total, 
+          red_num_left, red_num_day_total, red_num_day_left, 
+          customer_status, start_time, end_time, 
+          is_hot, red_chance, extend_status, 
+          award_desc )
+        VALUES ( #{customerId,jdbcType=INTEGER}, 
+          #{isRedirect,jdbcType=TINYINT}, #{redirectUrl,jdbcType=VARCHAR}, #{waitTime,jdbcType=INTEGER}, 
+          #{extendDesc,jdbcType=VARCHAR}, #{customerBanner,jdbcType=VARCHAR}, #{customerBannerUrl,jdbcType=VARCHAR}, 
+          #{customerAdvert,jdbcType=VARCHAR}, #{customerAdvertUrl,jdbcType=VARCHAR}, #{redNumTotal,jdbcType=INTEGER}, 
+          #{redNumLeft,jdbcType=INTEGER}, #{redNumDayTotal,jdbcType=INTEGER}, #{redNumDayLeft,jdbcType=INTEGER}, 
+          #{customerStatus,jdbcType=TINYINT}, #{startTime,jdbcType=INTEGER}, #{endTime,jdbcType=INTEGER}, 
+          #{isHot,jdbcType=TINYINT}, #{redChance,jdbcType=TINYINT}, #{extendStatus,jdbcType=TINYINT}, 
+          #{awardDesc,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReCustomerExtend">
+        INSERT INTO re_customer_extend
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="isRedirect != null">
+                is_redirect,
+            </if>
+            <if test="redirectUrl != null">
+                redirect_url,
+            </if>
+            <if test="waitTime != null">
+                wait_time,
+            </if>
+            <if test="extendDesc != null">
+                extend_desc,
+            </if>
+            <if test="customerBanner != null">
+                customer_banner,
+            </if>
+            <if test="customerBannerUrl != null">
+                customer_banner_url,
+            </if>
+            <if test="customerAdvert != null">
+                customer_advert,
+            </if>
+            <if test="customerAdvertUrl != null">
+                customer_advert_url,
+            </if>
+            <if test="redNumTotal != null">
+                red_num_total,
+            </if>
+            <if test="redNumLeft != null">
+                red_num_left,
+            </if>
+            <if test="redNumDayTotal != null">
+                red_num_day_total,
+            </if>
+            <if test="redNumDayLeft != null">
+                red_num_day_left,
+            </if>
+            <if test="customerStatus != null">
+                customer_status,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="isHot != null">
+                is_hot,
+            </if>
+            <if test="redChance != null">
+                red_chance,
+            </if>
+            <if test="extendStatus != null">
+                extend_status,
+            </if>
+            <if test="awardDesc != null">
+                award_desc,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="customerId != null">
+                #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="isRedirect != null">
+                #{isRedirect,jdbcType=TINYINT},
+            </if>
+            <if test="redirectUrl != null">
+                #{redirectUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="waitTime != null">
+                #{waitTime,jdbcType=INTEGER},
+            </if>
+            <if test="extendDesc != null">
+                #{extendDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBanner != null">
+                #{customerBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBannerUrl != null">
+                #{customerBannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAdvert != null">
+                #{customerAdvert,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAdvertUrl != null">
+                #{customerAdvertUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="redNumTotal != null">
+                #{redNumTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumLeft != null">
+                #{redNumLeft,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayTotal != null">
+                #{redNumDayTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayLeft != null">
+                #{redNumDayLeft,jdbcType=INTEGER},
+            </if>
+            <if test="customerStatus != null">
+                #{customerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=INTEGER},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=INTEGER},
+            </if>
+            <if test="isHot != null">
+                #{isHot,jdbcType=TINYINT},
+            </if>
+            <if test="redChance != null">
+                #{redChance,jdbcType=TINYINT},
+            </if>
+            <if test="extendStatus != null">
+                #{extendStatus,jdbcType=TINYINT},
+            </if>
+            <if test="awardDesc != null">
+                #{awardDesc,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_customer_extend ( customer_id, 
+          is_redirect, redirect_url, wait_time, 
+          extend_desc, customer_banner, customer_banner_url, 
+          customer_advert, customer_advert_url, red_num_total, 
+          red_num_left, red_num_day_total, red_num_day_left, 
+          customer_status, start_time, end_time, 
+          is_hot, red_chance, extend_status, 
+          award_desc )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.customerId,jdbcType=INTEGER}, 
+            #{item.isRedirect,jdbcType=TINYINT}, #{item.redirectUrl,jdbcType=VARCHAR}, #{item.waitTime,jdbcType=INTEGER}, 
+            #{item.extendDesc,jdbcType=VARCHAR}, #{item.customerBanner,jdbcType=VARCHAR}, #{item.customerBannerUrl,jdbcType=VARCHAR}, 
+            #{item.customerAdvert,jdbcType=VARCHAR}, #{item.customerAdvertUrl,jdbcType=VARCHAR}, #{item.redNumTotal,jdbcType=INTEGER}, 
+            #{item.redNumLeft,jdbcType=INTEGER}, #{item.redNumDayTotal,jdbcType=INTEGER}, #{item.redNumDayLeft,jdbcType=INTEGER}, 
+            #{item.customerStatus,jdbcType=TINYINT}, #{item.startTime,jdbcType=INTEGER}, #{item.endTime,jdbcType=INTEGER}, 
+            #{item.isHot,jdbcType=TINYINT}, #{item.redChance,jdbcType=TINYINT}, #{item.extendStatus,jdbcType=TINYINT}, 
+            #{item.awardDesc,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReCustomerExtend">
+        UPDATE re_customer_extend
+        <set>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="isRedirect != null">
+                is_redirect = #{isRedirect,jdbcType=TINYINT},
+            </if>
+            <if test="redirectUrl != null">
+                redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="waitTime != null">
+                wait_time = #{waitTime,jdbcType=INTEGER},
+            </if>
+            <if test="extendDesc != null">
+                extend_desc = #{extendDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBanner != null">
+                customer_banner = #{customerBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBannerUrl != null">
+                customer_banner_url = #{customerBannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAdvert != null">
+                customer_advert = #{customerAdvert,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAdvertUrl != null">
+                customer_advert_url = #{customerAdvertUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="redNumTotal != null">
+                red_num_total = #{redNumTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumLeft != null">
+                red_num_left = #{redNumLeft,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayTotal != null">
+                red_num_day_total = #{redNumDayTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayLeft != null">
+                red_num_day_left = #{redNumDayLeft,jdbcType=INTEGER},
+            </if>
+            <if test="customerStatus != null">
+                customer_status = #{customerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=INTEGER},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=INTEGER},
+            </if>
+            <if test="isHot != null">
+                is_hot = #{isHot,jdbcType=TINYINT},
+            </if>
+            <if test="redChance != null">
+                red_chance = #{redChance,jdbcType=TINYINT},
+            </if>
+            <if test="extendStatus != null">
+                extend_status = #{extendStatus,jdbcType=TINYINT},
+            </if>
+            <if test="awardDesc != null">
+                award_desc = #{awardDesc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReCustomerExtend">
+        UPDATE re_customer_extend
+        SET customer_id = #{customerId,jdbcType=INTEGER},
+            is_redirect = #{isRedirect,jdbcType=TINYINT},
+            redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+            wait_time = #{waitTime,jdbcType=INTEGER},
+            extend_desc = #{extendDesc,jdbcType=VARCHAR},
+            customer_banner = #{customerBanner,jdbcType=VARCHAR},
+            customer_banner_url = #{customerBannerUrl,jdbcType=VARCHAR},
+            customer_advert = #{customerAdvert,jdbcType=VARCHAR},
+            customer_advert_url = #{customerAdvertUrl,jdbcType=VARCHAR},
+            red_num_total = #{redNumTotal,jdbcType=INTEGER},
+            red_num_left = #{redNumLeft,jdbcType=INTEGER},
+            red_num_day_total = #{redNumDayTotal,jdbcType=INTEGER},
+            red_num_day_left = #{redNumDayLeft,jdbcType=INTEGER},
+            customer_status = #{customerStatus,jdbcType=TINYINT},
+            start_time = #{startTime,jdbcType=INTEGER},
+            end_time = #{endTime,jdbcType=INTEGER},
+            is_hot = #{isHot,jdbcType=TINYINT},
+            red_chance = #{redChance,jdbcType=TINYINT},
+            extend_status = #{extendStatus,jdbcType=TINYINT},
+            award_desc = #{awardDesc,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

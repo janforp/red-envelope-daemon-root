@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_code_exchange_detail">
+
+    <resultMap id="MissionMap" type="com.hongbao.api.model.ReRecommendMission">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="mission_icon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="mission_title" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="mission_label" property="missionLabel" jdbcType="VARCHAR"/>
+        <result column="min_money" property="minMoney" jdbcType="DECIMAL"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_code_exchange_detail.SELECT_All_Column"/>
+        FROM re_code_exchange_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND exchange_status = 1
+        Limit 1
+    </select>
+
+    <select id="selectFinishAttentionList" resultMap="MissionMap" parameterType="Integer">
+        SELECT a.mission_id, b.mission_icon, b.mission_title, b.mission_label, b.min_money, b.left_num
+        FROM re_code_exchange_detail a, re_recommend_mission b
+        WHERE b.mission_id = a.mission_id
+        AND a.user_id = #{userId,jdbcType=INTEGER}
+        AND a.exchange_status = 1
+        ORDER BY a.exchange_time DESC
+    </select>
+
+</mapper>

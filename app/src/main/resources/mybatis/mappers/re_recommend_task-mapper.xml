@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_task">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReRecommendTask">
+        <id column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="commit_text" property="commitText" jdbcType="VARCHAR"/>
+        <result column="commit_img" property="commitImg" jdbcType="VARCHAR"/>
+        <result column="commit_require" property="commitRequire" jdbcType="VARCHAR"/>
+        <result column="task_status" property="taskStatus" jdbcType="TINYINT"/>
+        <result column="verify_remarks" property="verifyRemarks" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="release_time" property="releaseTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT task_id, user_id, mission_id, commit_text, commit_img, 
+        commit_require, task_status, verify_remarks, create_time, update_time, 
+        release_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReRecommendTask">
+        <include refid="re_recommend_task.SELECT_All_Column"/>
+        FROM re_recommend_task
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReRecommendTask">
+        DELETE FROM re_recommend_task
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReRecommendTask">
+        INSERT INTO re_recommend_task ( user_id, 
+          mission_id, commit_text, commit_img, 
+          commit_require, task_status, verify_remarks, 
+          create_time, update_time, release_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{missionId,jdbcType=BIGINT}, #{commitText,jdbcType=VARCHAR}, #{commitImg,jdbcType=VARCHAR}, 
+          #{commitRequire,jdbcType=VARCHAR}, #{taskStatus,jdbcType=TINYINT}, #{verifyRemarks,jdbcType=VARCHAR}, 
+          #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{releaseTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="taskId" resultType="long">
+            SELECT LAST_INSERT_ID() AS taskId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReRecommendTask">
+        INSERT INTO re_recommend_task
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="missionId != null">
+                mission_id,
+            </if>
+            <if test="commitText != null">
+                commit_text,
+            </if>
+            <if test="commitImg != null">
+                commit_img,
+            </if>
+            <if test="commitRequire != null">
+                commit_require,
+            </if>
+            <if test="taskStatus != null">
+                task_status,
+            </if>
+            <if test="verifyRemarks != null">
+                verify_remarks,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="releaseTime != null">
+                release_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="missionId != null">
+                #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="commitText != null">
+                #{commitText,jdbcType=VARCHAR},
+            </if>
+            <if test="commitImg != null">
+                #{commitImg,jdbcType=VARCHAR},
+            </if>
+            <if test="commitRequire != null">
+                #{commitRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="taskStatus != null">
+                #{taskStatus,jdbcType=TINYINT},
+            </if>
+            <if test="verifyRemarks != null">
+                #{verifyRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="releaseTime != null">
+                #{releaseTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="taskId" resultType="long">
+            SELECT LAST_INSERT_ID() AS taskId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_recommend_task ( user_id, 
+          mission_id, commit_text, commit_img, 
+          commit_require, task_status, verify_remarks, 
+          create_time, update_time, release_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.missionId,jdbcType=BIGINT}, #{item.commitText,jdbcType=VARCHAR}, #{item.commitImg,jdbcType=VARCHAR}, 
+            #{item.commitRequire,jdbcType=VARCHAR}, #{item.taskStatus,jdbcType=TINYINT}, #{item.verifyRemarks,jdbcType=VARCHAR}, 
+            #{item.createTime,jdbcType=BIGINT}, #{item.updateTime,jdbcType=BIGINT}, #{item.releaseTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReRecommendTask">
+        UPDATE re_recommend_task
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="missionId != null">
+                mission_id = #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="commitText != null">
+                commit_text = #{commitText,jdbcType=VARCHAR},
+            </if>
+            <if test="commitImg != null">
+                commit_img = #{commitImg,jdbcType=VARCHAR},
+            </if>
+            <if test="commitRequire != null">
+                commit_require = #{commitRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="taskStatus != null">
+                task_status = #{taskStatus,jdbcType=TINYINT},
+            </if>
+            <if test="verifyRemarks != null">
+                verify_remarks = #{verifyRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="releaseTime != null">
+                release_time = #{releaseTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReRecommendTask">
+        UPDATE re_recommend_task
+        SET user_id = #{userId,jdbcType=INTEGER},
+            mission_id = #{missionId,jdbcType=BIGINT},
+            commit_text = #{commitText,jdbcType=VARCHAR},
+            commit_img = #{commitImg,jdbcType=VARCHAR},
+            commit_require = #{commitRequire,jdbcType=VARCHAR},
+            task_status = #{taskStatus,jdbcType=TINYINT},
+            verify_remarks = #{verifyRemarks,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=BIGINT},
+            release_time = #{releaseTime,jdbcType=BIGINT}
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+    </update>
+</mapper>

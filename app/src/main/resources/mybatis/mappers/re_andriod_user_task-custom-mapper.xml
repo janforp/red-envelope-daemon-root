@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_andriod_user_task">
+
+    <select id="selectByUserIdAndStatus" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_andriod_user_task.SELECT_All_Column"/>
+        FROM re_andriod_user_task
+        WHERE task_status = 0
+        AND user_id = #{userId,jdbcType=INTEGER}
+        Limit 1
+    </select>
+
+    <select id="selectByUserIdAndWallIdAndStatus" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_andriod_user_task.SELECT_All_Column"/>
+        FROM re_andriod_user_task
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND wall_id = #{wallId,jdbcType=BIGINT}
+        <if test="taskStatus != null">
+            AND task_status = #{taskStatus,jdbcType=TINYINT}
+        </if>
+    </select>
+
+    <select id="selectLockByUserIdAndWallId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_andriod_user_task.SELECT_All_Column"/>
+        FROM re_andriod_user_task
+        WHERE task_status = 0
+        AND user_id = #{userId,jdbcType=INTEGER}
+        AND wall_id = #{wallId,jdbcType=BIGINT}
+        FOR UPDATE
+    </select>
+
+    <select id="selectFinishByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_andriod_user_task.SELECT_All_Column"/>
+        FROM re_andriod_user_task
+        WHERE task_status = 1
+        AND user_id = #{userId,jdbcType=INTEGER}
+        Limit 1
+    </select>
+
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_dc_notify">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReDcNotify">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="DECIMAL"/>
+        <result column="rate" property="rate" jdbcType="DECIMAL"/>
+        <result column="trade_type" property="tradeType" jdbcType="TINYINT"/>
+        <result column="ad_name" property="adName" jdbcType="VARCHAR"/>
+        <result column="ad_packname" property="adPackname" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="notify_time" property="notifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT order_id, device_id, app_id, score, rate, 
+        trade_type, ad_name, ad_packname, user_id, notify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReDcNotify">
+        <include refid="re_dc_notify.SELECT_All_Column"/>
+        FROM re_dc_notify
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReDcNotify">
+        DELETE FROM re_dc_notify
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReDcNotify">
+        INSERT INTO re_dc_notify ( order_id, 
+          device_id, app_id, score, 
+          rate, trade_type, ad_name, 
+          ad_packname, user_id, notify_time )
+        VALUES ( #{orderId,jdbcType=VARCHAR}, 
+          #{deviceId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
+          #{rate,jdbcType=DECIMAL}, #{tradeType,jdbcType=TINYINT}, #{adName,jdbcType=VARCHAR}, 
+          #{adPackname,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{notifyTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReDcNotify">
+        INSERT INTO re_dc_notify
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                order_id,
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="rate != null">
+                rate,
+            </if>
+            <if test="tradeType != null">
+                trade_type,
+            </if>
+            <if test="adName != null">
+                ad_name,
+            </if>
+            <if test="adPackname != null">
+                ad_packname,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{orderId,jdbcType=VARCHAR},
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="rate != null">
+                #{rate,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeType != null">
+                #{tradeType,jdbcType=TINYINT},
+            </if>
+            <if test="adName != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="adPackname != null">
+                #{adPackname,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_dc_notify ( order_id, 
+          device_id, app_id, score, 
+          rate, trade_type, ad_name, 
+          ad_packname, user_id, notify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.orderId,jdbcType=VARCHAR}, 
+            #{item.deviceId,jdbcType=VARCHAR}, #{item.appId,jdbcType=VARCHAR}, #{item.score,jdbcType=DECIMAL}, 
+            #{item.rate,jdbcType=DECIMAL}, #{item.tradeType,jdbcType=TINYINT}, #{item.adName,jdbcType=VARCHAR}, 
+            #{item.adPackname,jdbcType=VARCHAR}, #{item.userId,jdbcType=INTEGER}, #{item.notifyTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReDcNotify">
+        UPDATE re_dc_notify
+        <set>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="rate != null">
+                rate = #{rate,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeType != null">
+                trade_type = #{tradeType,jdbcType=TINYINT},
+            </if>
+            <if test="adName != null">
+                ad_name = #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="adPackname != null">
+                ad_packname = #{adPackname,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReDcNotify">
+        UPDATE re_dc_notify
+        SET device_id = #{deviceId,jdbcType=VARCHAR},
+            app_id = #{appId,jdbcType=VARCHAR},
+            score = #{score,jdbcType=DECIMAL},
+            rate = #{rate,jdbcType=DECIMAL},
+            trade_type = #{tradeType,jdbcType=TINYINT},
+            ad_name = #{adName,jdbcType=VARCHAR},
+            ad_packname = #{adPackname,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=INTEGER},
+            notify_time = #{notifyTime,jdbcType=VARCHAR}
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app_keywords">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAppKeywords">
+        <id column="keyword_id" property="keywordId" jdbcType="BIGINT"/>
+        <result column="app_id" property="appId" jdbcType="BIGINT"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+        <result column="task_label" property="taskLabel" jdbcType="VARCHAR"/>
+        <result column="keyword_weight" property="keywordWeight" jdbcType="TINYINT"/>
+        <result column="release_time" property="releaseTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT keyword_id, app_id, keyword, money, total_num, 
+        left_num, task_label, keyword_weight, release_time, end_time, 
+        create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAppKeywords">
+        <include refid="re_app_keywords.SELECT_All_Column"/>
+        FROM re_app_keywords
+        WHERE keyword_id = #{keywordId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAppKeywords">
+        DELETE FROM re_app_keywords
+        WHERE keyword_id = #{keywordId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAppKeywords">
+        INSERT INTO re_app_keywords ( app_id, 
+          keyword, money, total_num, 
+          left_num, task_label, keyword_weight, 
+          release_time, end_time, create_time, 
+          update_time )
+        VALUES ( #{appId,jdbcType=BIGINT}, 
+          #{keyword,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{totalNum,jdbcType=INTEGER}, 
+          #{leftNum,jdbcType=INTEGER}, #{taskLabel,jdbcType=VARCHAR}, #{keywordWeight,jdbcType=TINYINT}, 
+          #{releaseTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+          #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="keywordId" resultType="long">
+            SELECT LAST_INSERT_ID() AS keywordId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAppKeywords">
+        INSERT INTO re_app_keywords
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="keyword != null">
+                keyword,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="totalNum != null">
+                total_num,
+            </if>
+            <if test="leftNum != null">
+                left_num,
+            </if>
+            <if test="taskLabel != null">
+                task_label,
+            </if>
+            <if test="keywordWeight != null">
+                keyword_weight,
+            </if>
+            <if test="releaseTime != null">
+                release_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appId != null">
+                #{appId,jdbcType=BIGINT},
+            </if>
+            <if test="keyword != null">
+                #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftNum != null">
+                #{leftNum,jdbcType=INTEGER},
+            </if>
+            <if test="taskLabel != null">
+                #{taskLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="keywordWeight != null">
+                #{keywordWeight,jdbcType=TINYINT},
+            </if>
+            <if test="releaseTime != null">
+                #{releaseTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="keywordId" resultType="long">
+            SELECT LAST_INSERT_ID() AS keywordId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_app_keywords ( app_id, 
+          keyword, money, total_num, 
+          left_num, task_label, keyword_weight, 
+          release_time, end_time, create_time, 
+          update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.appId,jdbcType=BIGINT}, 
+            #{item.keyword,jdbcType=VARCHAR}, #{item.money,jdbcType=DECIMAL}, #{item.totalNum,jdbcType=INTEGER}, 
+            #{item.leftNum,jdbcType=INTEGER}, #{item.taskLabel,jdbcType=VARCHAR}, #{item.keywordWeight,jdbcType=TINYINT}, 
+            #{item.releaseTime,jdbcType=VARCHAR}, #{item.endTime,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}, 
+            #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAppKeywords">
+        UPDATE re_app_keywords
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=BIGINT},
+            </if>
+            <if test="keyword != null">
+                keyword = #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="totalNum != null">
+                total_num = #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftNum != null">
+                left_num = #{leftNum,jdbcType=INTEGER},
+            </if>
+            <if test="taskLabel != null">
+                task_label = #{taskLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="keywordWeight != null">
+                keyword_weight = #{keywordWeight,jdbcType=TINYINT},
+            </if>
+            <if test="releaseTime != null">
+                release_time = #{releaseTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE keyword_id = #{keywordId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAppKeywords">
+        UPDATE re_app_keywords
+        SET app_id = #{appId,jdbcType=BIGINT},
+            keyword = #{keyword,jdbcType=VARCHAR},
+            money = #{money,jdbcType=DECIMAL},
+            total_num = #{totalNum,jdbcType=INTEGER},
+            left_num = #{leftNum,jdbcType=INTEGER},
+            task_label = #{taskLabel,jdbcType=VARCHAR},
+            keyword_weight = #{keywordWeight,jdbcType=TINYINT},
+            release_time = #{releaseTime,jdbcType=VARCHAR},
+            end_time = #{endTime,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE keyword_id = #{keywordId,jdbcType=BIGINT}
+    </update>
+</mapper>

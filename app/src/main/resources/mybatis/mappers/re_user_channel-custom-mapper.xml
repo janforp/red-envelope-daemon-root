@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_channel">
+
+    <select id="selectUserIdByDeviceId" resultType="Integer" parameterType="String" >
+        SELECT user_id
+        FROM re_user_channel
+        WHERE device_id = #{deviceId,jdbcType=VARCHAR}
+        ORDER BY id DESC limit 1
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="Integer" >
+        <include refid="re_user_channel.SELECT_All_Column"/>
+        FROM re_user_channel
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_withdraw_bind">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReWithdrawBind">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="open_id" property="openId" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT user_id, open_id, nickname
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReWithdrawBind">
+        <include refid="re_withdraw_bind.SELECT_All_Column"/>
+        FROM re_withdraw_bind
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawBind">
+        DELETE FROM re_withdraw_bind
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReWithdrawBind">
+        INSERT INTO re_withdraw_bind ( user_id, 
+          open_id, nickname )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{openId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReWithdrawBind">
+        INSERT INTO re_withdraw_bind
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                user_id,
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{userId,jdbcType=INTEGER},
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_withdraw_bind ( user_id, 
+          open_id, nickname )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.openId,jdbcType=VARCHAR}, #{item.nickname,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReWithdrawBind">
+        UPDATE re_withdraw_bind
+        <set>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawBind">
+        UPDATE re_withdraw_bind
+        SET open_id = #{openId,jdbcType=VARCHAR},
+            nickname = #{nickname,jdbcType=VARCHAR}
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

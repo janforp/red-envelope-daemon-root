@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_coin_item">
+
+    <select id="selectIndexPage" resultMap="BaseResultMap">
+        <include refid="re_coin_item.SELECT_All_Column"/>
+        FROM re_coin_item
+        ORDER BY item_id DESC
+        LIMIT 0, 6
+    </select>
+
+
+</mapper>

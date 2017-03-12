@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_article_mission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReArticleMission">
+        <id column="article_id" property="articleId" jdbcType="BIGINT"/>
+        <result column="article_type" property="articleType" jdbcType="TINYINT"/>
+        <result column="article_url" property="articleUrl" jdbcType="VARCHAR"/>
+        <result column="is_directly_go_ad" property="isDirectlyGoAd" jdbcType="TINYINT"/>
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR"/>
+        <result column="article_content" property="articleContent" jdbcType="VARCHAR"/>
+        <result column="article_icon" property="articleIcon" jdbcType="VARCHAR"/>
+        <result column="article_display_time" property="articleDisplayTime" jdbcType="VARCHAR"/>
+        <result column="article_author" property="articleAuthor" jdbcType="VARCHAR"/>
+        <result column="app_read_money" property="appReadMoney" jdbcType="DECIMAL"/>
+        <result column="wx_click_money" property="wxClickMoney" jdbcType="DECIMAL"/>
+        <result column="total_click_times" property="totalClickTimes" jdbcType="INTEGER"/>
+        <result column="left_click_times" property="leftClickTimes" jdbcType="INTEGER"/>
+        <result column="start_mission_time" property="startMissionTime" jdbcType="VARCHAR"/>
+        <result column="end_mission_time" property="endMissionTime" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="article_weight" property="articleWeight" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT article_id, article_type, article_url, is_directly_go_ad, article_title, 
+        article_content, article_icon, article_display_time, article_author, app_read_money, 
+        wx_click_money, total_click_times, left_click_times, start_mission_time, end_mission_time, 
+        create_time, update_time, is_end, article_weight
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReArticleMission">
+        <include refid="re_article_mission.SELECT_All_Column"/>
+        FROM re_article_mission
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReArticleMission">
+        DELETE FROM re_article_mission
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReArticleMission">
+        INSERT INTO re_article_mission ( article_type, 
+          article_url, is_directly_go_ad, article_title, 
+          article_content, article_icon, article_display_time, 
+          article_author, app_read_money, wx_click_money, 
+          total_click_times, left_click_times, start_mission_time, 
+          end_mission_time, create_time, update_time, 
+          is_end, article_weight )
+        VALUES ( #{articleType,jdbcType=TINYINT}, 
+          #{articleUrl,jdbcType=VARCHAR}, #{isDirectlyGoAd,jdbcType=TINYINT}, #{articleTitle,jdbcType=VARCHAR}, 
+          #{articleContent,jdbcType=VARCHAR}, #{articleIcon,jdbcType=VARCHAR}, #{articleDisplayTime,jdbcType=VARCHAR}, 
+          #{articleAuthor,jdbcType=VARCHAR}, #{appReadMoney,jdbcType=DECIMAL}, #{wxClickMoney,jdbcType=DECIMAL}, 
+          #{totalClickTimes,jdbcType=INTEGER}, #{leftClickTimes,jdbcType=INTEGER}, #{startMissionTime,jdbcType=VARCHAR}, 
+          #{endMissionTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+          #{isEnd,jdbcType=TINYINT}, #{articleWeight,jdbcType=TINYINT} )
+        <selectKey keyProperty="articleId" resultType="long">
+            SELECT LAST_INSERT_ID() AS articleId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReArticleMission">
+        INSERT INTO re_article_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="articleType != null">
+                article_type,
+            </if>
+            <if test="articleUrl != null">
+                article_url,
+            </if>
+            <if test="isDirectlyGoAd != null">
+                is_directly_go_ad,
+            </if>
+            <if test="articleTitle != null">
+                article_title,
+            </if>
+            <if test="articleContent != null">
+                article_content,
+            </if>
+            <if test="articleIcon != null">
+                article_icon,
+            </if>
+            <if test="articleDisplayTime != null">
+                article_display_time,
+            </if>
+            <if test="articleAuthor != null">
+                article_author,
+            </if>
+            <if test="appReadMoney != null">
+                app_read_money,
+            </if>
+            <if test="wxClickMoney != null">
+                wx_click_money,
+            </if>
+            <if test="totalClickTimes != null">
+                total_click_times,
+            </if>
+            <if test="leftClickTimes != null">
+                left_click_times,
+            </if>
+            <if test="startMissionTime != null">
+                start_mission_time,
+            </if>
+            <if test="endMissionTime != null">
+                end_mission_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isEnd != null">
+                is_end,
+            </if>
+            <if test="articleWeight != null">
+                article_weight,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="articleType != null">
+                #{articleType,jdbcType=TINYINT},
+            </if>
+            <if test="articleUrl != null">
+                #{articleUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isDirectlyGoAd != null">
+                #{isDirectlyGoAd,jdbcType=TINYINT},
+            </if>
+            <if test="articleTitle != null">
+                #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articleContent != null">
+                #{articleContent,jdbcType=VARCHAR},
+            </if>
+            <if test="articleIcon != null">
+                #{articleIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="articleDisplayTime != null">
+                #{articleDisplayTime,jdbcType=VARCHAR},
+            </if>
+            <if test="articleAuthor != null">
+                #{articleAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="appReadMoney != null">
+                #{appReadMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="wxClickMoney != null">
+                #{wxClickMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalClickTimes != null">
+                #{totalClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leftClickTimes != null">
+                #{leftClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="startMissionTime != null">
+                #{startMissionTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endMissionTime != null">
+                #{endMissionTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="articleWeight != null">
+                #{articleWeight,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="articleId" resultType="long">
+            SELECT LAST_INSERT_ID() AS articleId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_article_mission ( article_type, 
+          article_url, is_directly_go_ad, article_title, 
+          article_content, article_icon, article_display_time, 
+          article_author, app_read_money, wx_click_money, 
+          total_click_times, left_click_times, start_mission_time, 
+          end_mission_time, create_time, update_time, 
+          is_end, article_weight )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.articleType,jdbcType=TINYINT}, 
+            #{item.articleUrl,jdbcType=VARCHAR}, #{item.isDirectlyGoAd,jdbcType=TINYINT}, #{item.articleTitle,jdbcType=VARCHAR}, 
+            #{item.articleContent,jdbcType=VARCHAR}, #{item.articleIcon,jdbcType=VARCHAR}, #{item.articleDisplayTime,jdbcType=VARCHAR}, 
+            #{item.articleAuthor,jdbcType=VARCHAR}, #{item.appReadMoney,jdbcType=DECIMAL}, #{item.wxClickMoney,jdbcType=DECIMAL}, 
+            #{item.totalClickTimes,jdbcType=INTEGER}, #{item.leftClickTimes,jdbcType=INTEGER}, #{item.startMissionTime,jdbcType=VARCHAR}, 
+            #{item.endMissionTime,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}, 
+            #{item.isEnd,jdbcType=TINYINT}, #{item.articleWeight,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReArticleMission">
+        UPDATE re_article_mission
+        <set>
+            <if test="articleType != null">
+                article_type = #{articleType,jdbcType=TINYINT},
+            </if>
+            <if test="articleUrl != null">
+                article_url = #{articleUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isDirectlyGoAd != null">
+                is_directly_go_ad = #{isDirectlyGoAd,jdbcType=TINYINT},
+            </if>
+            <if test="articleTitle != null">
+                article_title = #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articleContent != null">
+                article_content = #{articleContent,jdbcType=VARCHAR},
+            </if>
+            <if test="articleIcon != null">
+                article_icon = #{articleIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="articleDisplayTime != null">
+                article_display_time = #{articleDisplayTime,jdbcType=VARCHAR},
+            </if>
+            <if test="articleAuthor != null">
+                article_author = #{articleAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="appReadMoney != null">
+                app_read_money = #{appReadMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="wxClickMoney != null">
+                wx_click_money = #{wxClickMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalClickTimes != null">
+                total_click_times = #{totalClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leftClickTimes != null">
+                left_click_times = #{leftClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="startMissionTime != null">
+                start_mission_time = #{startMissionTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endMissionTime != null">
+                end_mission_time = #{endMissionTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                is_end = #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="articleWeight != null">
+                article_weight = #{articleWeight,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReArticleMission">
+        UPDATE re_article_mission
+        SET article_type = #{articleType,jdbcType=TINYINT},
+            article_url = #{articleUrl,jdbcType=VARCHAR},
+            is_directly_go_ad = #{isDirectlyGoAd,jdbcType=TINYINT},
+            article_title = #{articleTitle,jdbcType=VARCHAR},
+            article_content = #{articleContent,jdbcType=VARCHAR},
+            article_icon = #{articleIcon,jdbcType=VARCHAR},
+            article_display_time = #{articleDisplayTime,jdbcType=VARCHAR},
+            article_author = #{articleAuthor,jdbcType=VARCHAR},
+            app_read_money = #{appReadMoney,jdbcType=DECIMAL},
+            wx_click_money = #{wxClickMoney,jdbcType=DECIMAL},
+            total_click_times = #{totalClickTimes,jdbcType=INTEGER},
+            left_click_times = #{leftClickTimes,jdbcType=INTEGER},
+            start_mission_time = #{startMissionTime,jdbcType=VARCHAR},
+            end_mission_time = #{endMissionTime,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR},
+            is_end = #{isEnd,jdbcType=TINYINT},
+            article_weight = #{articleWeight,jdbcType=TINYINT}
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+    </update>
+</mapper>

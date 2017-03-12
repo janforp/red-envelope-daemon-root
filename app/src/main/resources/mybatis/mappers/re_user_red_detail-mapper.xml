@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_red_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserRedDetail">
+        <id column="detail_id" property="detailId" jdbcType="BIGINT"/>
+        <result column="red_id" property="redId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="red_money" property="redMoney" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT detail_id, red_id, user_id, red_money, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserRedDetail">
+        <include refid="re_user_red_detail.SELECT_All_Column"/>
+        FROM re_user_red_detail
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserRedDetail">
+        DELETE FROM re_user_red_detail
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserRedDetail">
+        INSERT INTO re_user_red_detail ( red_id, 
+          user_id, red_money, create_time )
+        VALUES ( #{redId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{redMoney,jdbcType=DECIMAL}, #{createTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="detailId" resultType="long">
+            SELECT LAST_INSERT_ID() AS detailId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserRedDetail">
+        INSERT INTO re_user_red_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="redId != null">
+                red_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="redMoney != null">
+                red_money,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="redId != null">
+                #{redId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="redMoney != null">
+                #{redMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="detailId" resultType="long">
+            SELECT LAST_INSERT_ID() AS detailId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_red_detail ( red_id, 
+          user_id, red_money, create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.redId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.redMoney,jdbcType=DECIMAL}, #{item.createTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserRedDetail">
+        UPDATE re_user_red_detail
+        <set>
+            <if test="redId != null">
+                red_id = #{redId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="redMoney != null">
+                red_money = #{redMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserRedDetail">
+        UPDATE re_user_red_detail
+        SET red_id = #{redId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=INTEGER},
+            red_money = #{redMoney,jdbcType=DECIMAL},
+            create_time = #{createTime,jdbcType=VARCHAR}
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </update>
+</mapper>

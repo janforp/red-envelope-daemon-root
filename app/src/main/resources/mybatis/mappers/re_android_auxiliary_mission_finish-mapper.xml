@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_auxiliary_mission_finish">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAndroidAuxiliaryMissionFinish">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="mission_no" property="missionNo" jdbcType="TINYINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="data_day" property="dataDay" jdbcType="VARCHAR"/>
+        <result column="mission_status" property="missionStatus" jdbcType="TINYINT"/>
+        <result column="commit_text" property="commitText" jdbcType="VARCHAR"/>
+        <result column="commit_img" property="commitImg" jdbcType="VARCHAR"/>
+        <result column="check_text" property="checkText" jdbcType="VARCHAR"/>
+        <result column="abandon_time" property="abandonTime" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, mission_no, user_id, data_day, mission_status, 
+        commit_text, commit_img, check_text, abandon_time, create_time, 
+        update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAndroidAuxiliaryMissionFinish">
+        <include refid="re_android_auxiliary_mission_finish.SELECT_All_Column"/>
+        FROM re_android_auxiliary_mission_finish
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND mission_no = #{missionNo,jdbcType=TINYINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidAuxiliaryMissionFinish">
+        DELETE FROM re_android_auxiliary_mission_finish
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND mission_no = #{missionNo,jdbcType=TINYINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAndroidAuxiliaryMissionFinish">
+        INSERT INTO re_android_auxiliary_mission_finish ( mission_id, 
+          mission_no, user_id, data_day, 
+          mission_status, commit_text, commit_img, 
+          check_text, abandon_time, create_time, 
+          update_time )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{missionNo,jdbcType=TINYINT}, #{userId,jdbcType=INTEGER}, #{dataDay,jdbcType=VARCHAR}, 
+          #{missionStatus,jdbcType=TINYINT}, #{commitText,jdbcType=VARCHAR}, #{commitImg,jdbcType=VARCHAR}, 
+          #{checkText,jdbcType=VARCHAR}, #{abandonTime,jdbcType=BIGINT}, #{createTime,jdbcType=VARCHAR}, 
+          #{updateTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAndroidAuxiliaryMissionFinish">
+        INSERT INTO re_android_auxiliary_mission_finish
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                mission_no,
+                user_id,
+            <if test="dataDay != null">
+                data_day,
+            </if>
+            <if test="missionStatus != null">
+                mission_status,
+            </if>
+            <if test="commitText != null">
+                commit_text,
+            </if>
+            <if test="commitImg != null">
+                commit_img,
+            </if>
+            <if test="checkText != null">
+                check_text,
+            </if>
+            <if test="abandonTime != null">
+                abandon_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{missionNo,jdbcType=TINYINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="dataDay != null">
+                #{dataDay,jdbcType=VARCHAR},
+            </if>
+            <if test="missionStatus != null">
+                #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="commitText != null">
+                #{commitText,jdbcType=VARCHAR},
+            </if>
+            <if test="commitImg != null">
+                #{commitImg,jdbcType=VARCHAR},
+            </if>
+            <if test="checkText != null">
+                #{checkText,jdbcType=VARCHAR},
+            </if>
+            <if test="abandonTime != null">
+                #{abandonTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_android_auxiliary_mission_finish ( mission_id, 
+          mission_no, user_id, data_day, 
+          mission_status, commit_text, commit_img, 
+          check_text, abandon_time, create_time, 
+          update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.missionNo,jdbcType=TINYINT}, #{item.userId,jdbcType=INTEGER}, #{item.dataDay,jdbcType=VARCHAR}, 
+            #{item.missionStatus,jdbcType=TINYINT}, #{item.commitText,jdbcType=VARCHAR}, #{item.commitImg,jdbcType=VARCHAR}, 
+            #{item.checkText,jdbcType=VARCHAR}, #{item.abandonTime,jdbcType=BIGINT}, #{item.createTime,jdbcType=VARCHAR}, 
+            #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAndroidAuxiliaryMissionFinish">
+        UPDATE re_android_auxiliary_mission_finish
+        <set>
+            <if test="dataDay != null">
+                data_day = #{dataDay,jdbcType=VARCHAR},
+            </if>
+            <if test="missionStatus != null">
+                mission_status = #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="commitText != null">
+                commit_text = #{commitText,jdbcType=VARCHAR},
+            </if>
+            <if test="commitImg != null">
+                commit_img = #{commitImg,jdbcType=VARCHAR},
+            </if>
+            <if test="checkText != null">
+                check_text = #{checkText,jdbcType=VARCHAR},
+            </if>
+            <if test="abandonTime != null">
+                abandon_time = #{abandonTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND mission_no = #{missionNo,jdbcType=TINYINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidAuxiliaryMissionFinish">
+        UPDATE re_android_auxiliary_mission_finish
+        SET data_day = #{dataDay,jdbcType=VARCHAR},
+            mission_status = #{missionStatus,jdbcType=TINYINT},
+            commit_text = #{commitText,jdbcType=VARCHAR},
+            commit_img = #{commitImg,jdbcType=VARCHAR},
+            check_text = #{checkText,jdbcType=VARCHAR},
+            abandon_time = #{abandonTime,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND mission_no = #{missionNo,jdbcType=TINYINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

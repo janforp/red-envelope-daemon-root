@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_ym_andriod">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReYmAndriod">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="ad_name" property="adName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <result column="points" property="points" jdbcType="DECIMAL"/>
+        <result column="ad_id" property="adId" jdbcType="INTEGER"/>
+        <result column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="trade_type" property="tradeType" jdbcType="VARCHAR"/>
+        <result column="notify_time" property="notifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT order_id, app_id, ad_name, user_id, channel_name, 
+        points, ad_id, package_name, device_id, price, 
+        trade_type, notify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReYmAndriod">
+        <include refid="re_ym_andriod.SELECT_All_Column"/>
+        FROM re_ym_andriod
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReYmAndriod">
+        DELETE FROM re_ym_andriod
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReYmAndriod">
+        INSERT INTO re_ym_andriod ( order_id, 
+          app_id, ad_name, user_id, 
+          channel_name, points, ad_id, 
+          package_name, device_id, price, 
+          trade_type, notify_time )
+        VALUES ( #{orderId,jdbcType=VARCHAR}, 
+          #{appId,jdbcType=VARCHAR}, #{adName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+          #{channelName,jdbcType=VARCHAR}, #{points,jdbcType=DECIMAL}, #{adId,jdbcType=INTEGER}, 
+          #{packageName,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+          #{tradeType,jdbcType=VARCHAR}, #{notifyTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReYmAndriod">
+        INSERT INTO re_ym_andriod
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                order_id,
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="adName != null">
+                ad_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="points != null">
+                points,
+            </if>
+            <if test="adId != null">
+                ad_id,
+            </if>
+            <if test="packageName != null">
+                package_name,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="tradeType != null">
+                trade_type,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{orderId,jdbcType=VARCHAR},
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="points != null">
+                #{points,jdbcType=DECIMAL},
+            </if>
+            <if test="adId != null">
+                #{adId,jdbcType=INTEGER},
+            </if>
+            <if test="packageName != null">
+                #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeType != null">
+                #{tradeType,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_ym_andriod ( order_id, 
+          app_id, ad_name, user_id, 
+          channel_name, points, ad_id, 
+          package_name, device_id, price, 
+          trade_type, notify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.orderId,jdbcType=VARCHAR}, 
+            #{item.appId,jdbcType=VARCHAR}, #{item.adName,jdbcType=VARCHAR}, #{item.userId,jdbcType=INTEGER}, 
+            #{item.channelName,jdbcType=VARCHAR}, #{item.points,jdbcType=DECIMAL}, #{item.adId,jdbcType=INTEGER}, 
+            #{item.packageName,jdbcType=VARCHAR}, #{item.deviceId,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL}, 
+            #{item.tradeType,jdbcType=VARCHAR}, #{item.notifyTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReYmAndriod">
+        UPDATE re_ym_andriod
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                ad_name = #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="points != null">
+                points = #{points,jdbcType=DECIMAL},
+            </if>
+            <if test="adId != null">
+                ad_id = #{adId,jdbcType=INTEGER},
+            </if>
+            <if test="packageName != null">
+                package_name = #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeType != null">
+                trade_type = #{tradeType,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReYmAndriod">
+        UPDATE re_ym_andriod
+        SET app_id = #{appId,jdbcType=VARCHAR},
+            ad_name = #{adName,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=INTEGER},
+            channel_name = #{channelName,jdbcType=VARCHAR},
+            points = #{points,jdbcType=DECIMAL},
+            ad_id = #{adId,jdbcType=INTEGER},
+            package_name = #{packageName,jdbcType=VARCHAR},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            price = #{price,jdbcType=DECIMAL},
+            trade_type = #{tradeType,jdbcType=VARCHAR},
+            notify_time = #{notifyTime,jdbcType=VARCHAR}
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_andriod_app_history">
+
+    <select id="selectByAppPackage" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_user_andriod_app_history.SELECT_All_Column"/>
+        FROM re_user_andriod_app_history
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND app_package = #{appPackage,jdbcType=VARCHAR}
+        Limit 1
+    </select>
+
+</mapper>

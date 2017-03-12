@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_xuanshang_banner">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReXuanshangBanner">
+        <id column="banner_id" property="bannerId" jdbcType="BIGINT"/>
+        <result column="banner_title" property="bannerTitle" jdbcType="VARCHAR"/>
+        <result column="banner_img" property="bannerImg" jdbcType="VARCHAR"/>
+        <result column="banner_status" property="bannerStatus" jdbcType="TINYINT"/>
+        <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR"/>
+        <result column="banner_weight" property="bannerWeight" jdbcType="TINYINT"/>
+        <result column="min_version_code" property="minVersionCode" jdbcType="INTEGER"/>
+        <result column="max_version_code" property="maxVersionCode" jdbcType="INTEGER"/>
+        <result column="show_channel_name" property="showChannelName" jdbcType="VARCHAR"/>
+        <result column="show_package_name" property="showPackageName" jdbcType="VARCHAR"/>
+        <result column="is_show" property="isShow" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT banner_id, banner_title, banner_img, banner_status, banner_url, 
+        banner_weight, min_version_code, max_version_code, show_channel_name, show_package_name, 
+        is_show, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReXuanshangBanner">
+        <include refid="re_xuanshang_banner.SELECT_All_Column"/>
+        FROM re_xuanshang_banner
+        WHERE banner_id = #{bannerId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReXuanshangBanner">
+        DELETE FROM re_xuanshang_banner
+        WHERE banner_id = #{bannerId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReXuanshangBanner">
+        INSERT INTO re_xuanshang_banner ( banner_title, 
+          banner_img, banner_status, banner_url, 
+          banner_weight, min_version_code, max_version_code, 
+          show_channel_name, show_package_name, is_show, 
+          create_time, update_time )
+        VALUES ( #{bannerTitle,jdbcType=VARCHAR}, 
+          #{bannerImg,jdbcType=VARCHAR}, #{bannerStatus,jdbcType=TINYINT}, #{bannerUrl,jdbcType=VARCHAR}, 
+          #{bannerWeight,jdbcType=TINYINT}, #{minVersionCode,jdbcType=INTEGER}, #{maxVersionCode,jdbcType=INTEGER}, 
+          #{showChannelName,jdbcType=VARCHAR}, #{showPackageName,jdbcType=VARCHAR}, #{isShow,jdbcType=TINYINT}, 
+          #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="bannerId" resultType="long">
+            SELECT LAST_INSERT_ID() AS bannerId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReXuanshangBanner">
+        INSERT INTO re_xuanshang_banner
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="bannerTitle != null">
+                banner_title,
+            </if>
+            <if test="bannerImg != null">
+                banner_img,
+            </if>
+            <if test="bannerStatus != null">
+                banner_status,
+            </if>
+            <if test="bannerUrl != null">
+                banner_url,
+            </if>
+            <if test="bannerWeight != null">
+                banner_weight,
+            </if>
+            <if test="minVersionCode != null">
+                min_version_code,
+            </if>
+            <if test="maxVersionCode != null">
+                max_version_code,
+            </if>
+            <if test="showChannelName != null">
+                show_channel_name,
+            </if>
+            <if test="showPackageName != null">
+                show_package_name,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="bannerTitle != null">
+                #{bannerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerImg != null">
+                #{bannerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerStatus != null">
+                #{bannerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="bannerUrl != null">
+                #{bannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerWeight != null">
+                #{bannerWeight,jdbcType=TINYINT},
+            </if>
+            <if test="minVersionCode != null">
+                #{minVersionCode,jdbcType=INTEGER},
+            </if>
+            <if test="maxVersionCode != null">
+                #{maxVersionCode,jdbcType=INTEGER},
+            </if>
+            <if test="showChannelName != null">
+                #{showChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="showPackageName != null">
+                #{showPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="bannerId" resultType="long">
+            SELECT LAST_INSERT_ID() AS bannerId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_xuanshang_banner ( banner_title, 
+          banner_img, banner_status, banner_url, 
+          banner_weight, min_version_code, max_version_code, 
+          show_channel_name, show_package_name, is_show, 
+          create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.bannerTitle,jdbcType=VARCHAR}, 
+            #{item.bannerImg,jdbcType=VARCHAR}, #{item.bannerStatus,jdbcType=TINYINT}, #{item.bannerUrl,jdbcType=VARCHAR}, 
+            #{item.bannerWeight,jdbcType=TINYINT}, #{item.minVersionCode,jdbcType=INTEGER}, #{item.maxVersionCode,jdbcType=INTEGER}, 
+            #{item.showChannelName,jdbcType=VARCHAR}, #{item.showPackageName,jdbcType=VARCHAR}, #{item.isShow,jdbcType=TINYINT}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReXuanshangBanner">
+        UPDATE re_xuanshang_banner
+        <set>
+            <if test="bannerTitle != null">
+                banner_title = #{bannerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerImg != null">
+                banner_img = #{bannerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerStatus != null">
+                banner_status = #{bannerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="bannerUrl != null">
+                banner_url = #{bannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerWeight != null">
+                banner_weight = #{bannerWeight,jdbcType=TINYINT},
+            </if>
+            <if test="minVersionCode != null">
+                min_version_code = #{minVersionCode,jdbcType=INTEGER},
+            </if>
+            <if test="maxVersionCode != null">
+                max_version_code = #{maxVersionCode,jdbcType=INTEGER},
+            </if>
+            <if test="showChannelName != null">
+                show_channel_name = #{showChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="showPackageName != null">
+                show_package_name = #{showPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE banner_id = #{bannerId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReXuanshangBanner">
+        UPDATE re_xuanshang_banner
+        SET banner_title = #{bannerTitle,jdbcType=VARCHAR},
+            banner_img = #{bannerImg,jdbcType=VARCHAR},
+            banner_status = #{bannerStatus,jdbcType=TINYINT},
+            banner_url = #{bannerUrl,jdbcType=VARCHAR},
+            banner_weight = #{bannerWeight,jdbcType=TINYINT},
+            min_version_code = #{minVersionCode,jdbcType=INTEGER},
+            max_version_code = #{maxVersionCode,jdbcType=INTEGER},
+            show_channel_name = #{showChannelName,jdbcType=VARCHAR},
+            show_package_name = #{showPackageName,jdbcType=VARCHAR},
+            is_show = #{isShow,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE banner_id = #{bannerId,jdbcType=BIGINT}
+    </update>
+</mapper>

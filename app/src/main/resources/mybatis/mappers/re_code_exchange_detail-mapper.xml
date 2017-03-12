@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_code_exchange_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReCodeExchangeDetail">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="exchange_code" property="exchangeCode" jdbcType="VARCHAR"/>
+        <result column="exchange_status" property="exchangeStatus" jdbcType="TINYINT"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="exchange_time" property="exchangeTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, user_id, exchange_code, exchange_status, money, 
+        create_time, exchange_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReCodeExchangeDetail">
+        <include refid="re_code_exchange_detail.SELECT_All_Column"/>
+        FROM re_code_exchange_detail
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReCodeExchangeDetail">
+        DELETE FROM re_code_exchange_detail
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReCodeExchangeDetail">
+        INSERT INTO re_code_exchange_detail ( mission_id, 
+          user_id, exchange_code, exchange_status, 
+          money, create_time, exchange_time )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{exchangeCode,jdbcType=VARCHAR}, #{exchangeStatus,jdbcType=TINYINT}, 
+          #{money,jdbcType=DECIMAL}, #{createTime,jdbcType=VARCHAR}, #{exchangeTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReCodeExchangeDetail">
+        INSERT INTO re_code_exchange_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                user_id,
+            <if test="exchangeCode != null">
+                exchange_code,
+            </if>
+            <if test="exchangeStatus != null">
+                exchange_status,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="exchangeTime != null">
+                exchange_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="exchangeCode != null">
+                #{exchangeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeStatus != null">
+                #{exchangeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeTime != null">
+                #{exchangeTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_code_exchange_detail ( mission_id, 
+          user_id, exchange_code, exchange_status, 
+          money, create_time, exchange_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.exchangeCode,jdbcType=VARCHAR}, #{item.exchangeStatus,jdbcType=TINYINT}, 
+            #{item.money,jdbcType=DECIMAL}, #{item.createTime,jdbcType=VARCHAR}, #{item.exchangeTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReCodeExchangeDetail">
+        UPDATE re_code_exchange_detail
+        <set>
+            <if test="exchangeCode != null">
+                exchange_code = #{exchangeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeStatus != null">
+                exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeTime != null">
+                exchange_time = #{exchangeTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReCodeExchangeDetail">
+        UPDATE re_code_exchange_detail
+        SET exchange_code = #{exchangeCode,jdbcType=VARCHAR},
+            exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+            money = #{money,jdbcType=DECIMAL},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            exchange_time = #{exchangeTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

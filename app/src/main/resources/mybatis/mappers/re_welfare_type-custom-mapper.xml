@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_welfare_type">
+
+    <select id="selectByPlatform" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_welfare_type.SELECT_All_Column"/>
+        FROM re_welfare_type
+        WHERE ( type_status = 2 OR type_status = #{platform,jdbcType=INTEGER} )
+        ORDER BY type_id ASC
+    </select>
+
+    <select id="getWelfareTypeList" resultType="INTEGER">
+        SELECT type_id
+        FROM re_welfare_type
+    </select>
+
+</mapper>

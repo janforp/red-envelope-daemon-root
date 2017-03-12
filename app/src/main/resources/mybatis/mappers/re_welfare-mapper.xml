@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_welfare">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReWelfare">
+        <id column="welfare_id" property="welfareId" jdbcType="BIGINT"/>
+        <result column="welfare_title" property="welfareTitle" jdbcType="VARCHAR"/>
+        <result column="welfare_icon" property="welfareIcon" jdbcType="VARCHAR"/>
+        <result column="welfare_reward" property="welfareReward" jdbcType="VARCHAR"/>
+        <result column="welfare_type" property="welfareType" jdbcType="TINYINT"/>
+        <result column="sub_type_name" property="subTypeName" jdbcType="VARCHAR"/>
+        <result column="is_selection" property="isSelection" jdbcType="TINYINT"/>
+        <result column="merchant_icon" property="merchantIcon" jdbcType="VARCHAR"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="participants_num" property="participantsNum" jdbcType="INTEGER"/>
+        <result column="welfare_banner" property="welfareBanner" jdbcType="VARCHAR"/>
+        <result column="welfare_detail" property="welfareDetail" jdbcType="VARCHAR"/>
+        <result column="welfare_status" property="welfareStatus" jdbcType="TINYINT"/>
+        <result column="button_name" property="buttonName" jdbcType="VARCHAR"/>
+        <result column="button_url" property="buttonUrl" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="welfare_weight" property="welfareWeight" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT welfare_id, welfare_title, welfare_icon, welfare_reward, welfare_type, 
+        sub_type_name, is_selection, merchant_icon, merchant_name, participants_num, 
+        welfare_banner, welfare_detail, welfare_status, button_name, button_url, 
+        end_time, create_time, update_time, welfare_weight
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReWelfare">
+        <include refid="re_welfare.SELECT_All_Column"/>
+        FROM re_welfare
+        WHERE welfare_id = #{welfareId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReWelfare">
+        DELETE FROM re_welfare
+        WHERE welfare_id = #{welfareId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReWelfare">
+        INSERT INTO re_welfare ( welfare_title, 
+          welfare_icon, welfare_reward, welfare_type, 
+          sub_type_name, is_selection, merchant_icon, 
+          merchant_name, participants_num, welfare_banner, 
+          welfare_detail, welfare_status, button_name, 
+          button_url, end_time, create_time, 
+          update_time, welfare_weight )
+        VALUES ( #{welfareTitle,jdbcType=VARCHAR}, 
+          #{welfareIcon,jdbcType=VARCHAR}, #{welfareReward,jdbcType=VARCHAR}, #{welfareType,jdbcType=TINYINT}, 
+          #{subTypeName,jdbcType=VARCHAR}, #{isSelection,jdbcType=TINYINT}, #{merchantIcon,jdbcType=VARCHAR}, 
+          #{merchantName,jdbcType=VARCHAR}, #{participantsNum,jdbcType=INTEGER}, #{welfareBanner,jdbcType=VARCHAR}, 
+          #{welfareDetail,jdbcType=VARCHAR}, #{welfareStatus,jdbcType=TINYINT}, #{buttonName,jdbcType=VARCHAR}, 
+          #{buttonUrl,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+          #{updateTime,jdbcType=VARCHAR}, #{welfareWeight,jdbcType=TINYINT} )
+        <selectKey keyProperty="welfareId" resultType="long">
+            SELECT LAST_INSERT_ID() AS welfareId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReWelfare">
+        INSERT INTO re_welfare
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="welfareTitle != null">
+                welfare_title,
+            </if>
+            <if test="welfareIcon != null">
+                welfare_icon,
+            </if>
+            <if test="welfareReward != null">
+                welfare_reward,
+            </if>
+            <if test="welfareType != null">
+                welfare_type,
+            </if>
+            <if test="subTypeName != null">
+                sub_type_name,
+            </if>
+            <if test="isSelection != null">
+                is_selection,
+            </if>
+            <if test="merchantIcon != null">
+                merchant_icon,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="participantsNum != null">
+                participants_num,
+            </if>
+            <if test="welfareBanner != null">
+                welfare_banner,
+            </if>
+            <if test="welfareDetail != null">
+                welfare_detail,
+            </if>
+            <if test="welfareStatus != null">
+                welfare_status,
+            </if>
+            <if test="buttonName != null">
+                button_name,
+            </if>
+            <if test="buttonUrl != null">
+                button_url,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="welfareWeight != null">
+                welfare_weight,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="welfareTitle != null">
+                #{welfareTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareIcon != null">
+                #{welfareIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareReward != null">
+                #{welfareReward,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareType != null">
+                #{welfareType,jdbcType=TINYINT},
+            </if>
+            <if test="subTypeName != null">
+                #{subTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="isSelection != null">
+                #{isSelection,jdbcType=TINYINT},
+            </if>
+            <if test="merchantIcon != null">
+                #{merchantIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="participantsNum != null">
+                #{participantsNum,jdbcType=INTEGER},
+            </if>
+            <if test="welfareBanner != null">
+                #{welfareBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareDetail != null">
+                #{welfareDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareStatus != null">
+                #{welfareStatus,jdbcType=TINYINT},
+            </if>
+            <if test="buttonName != null">
+                #{buttonName,jdbcType=VARCHAR},
+            </if>
+            <if test="buttonUrl != null">
+                #{buttonUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareWeight != null">
+                #{welfareWeight,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="welfareId" resultType="long">
+            SELECT LAST_INSERT_ID() AS welfareId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_welfare ( welfare_title, 
+          welfare_icon, welfare_reward, welfare_type, 
+          sub_type_name, is_selection, merchant_icon, 
+          merchant_name, participants_num, welfare_banner, 
+          welfare_detail, welfare_status, button_name, 
+          button_url, end_time, create_time, 
+          update_time, welfare_weight )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.welfareTitle,jdbcType=VARCHAR}, 
+            #{item.welfareIcon,jdbcType=VARCHAR}, #{item.welfareReward,jdbcType=VARCHAR}, #{item.welfareType,jdbcType=TINYINT}, 
+            #{item.subTypeName,jdbcType=VARCHAR}, #{item.isSelection,jdbcType=TINYINT}, #{item.merchantIcon,jdbcType=VARCHAR}, 
+            #{item.merchantName,jdbcType=VARCHAR}, #{item.participantsNum,jdbcType=INTEGER}, #{item.welfareBanner,jdbcType=VARCHAR}, 
+            #{item.welfareDetail,jdbcType=VARCHAR}, #{item.welfareStatus,jdbcType=TINYINT}, #{item.buttonName,jdbcType=VARCHAR}, 
+            #{item.buttonUrl,jdbcType=VARCHAR}, #{item.endTime,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}, 
+            #{item.updateTime,jdbcType=VARCHAR}, #{item.welfareWeight,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReWelfare">
+        UPDATE re_welfare
+        <set>
+            <if test="welfareTitle != null">
+                welfare_title = #{welfareTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareIcon != null">
+                welfare_icon = #{welfareIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareReward != null">
+                welfare_reward = #{welfareReward,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareType != null">
+                welfare_type = #{welfareType,jdbcType=TINYINT},
+            </if>
+            <if test="subTypeName != null">
+                sub_type_name = #{subTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="isSelection != null">
+                is_selection = #{isSelection,jdbcType=TINYINT},
+            </if>
+            <if test="merchantIcon != null">
+                merchant_icon = #{merchantIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="participantsNum != null">
+                participants_num = #{participantsNum,jdbcType=INTEGER},
+            </if>
+            <if test="welfareBanner != null">
+                welfare_banner = #{welfareBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareDetail != null">
+                welfare_detail = #{welfareDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareStatus != null">
+                welfare_status = #{welfareStatus,jdbcType=TINYINT},
+            </if>
+            <if test="buttonName != null">
+                button_name = #{buttonName,jdbcType=VARCHAR},
+            </if>
+            <if test="buttonUrl != null">
+                button_url = #{buttonUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareWeight != null">
+                welfare_weight = #{welfareWeight,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE welfare_id = #{welfareId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReWelfare">
+        UPDATE re_welfare
+        SET welfare_title = #{welfareTitle,jdbcType=VARCHAR},
+            welfare_icon = #{welfareIcon,jdbcType=VARCHAR},
+            welfare_reward = #{welfareReward,jdbcType=VARCHAR},
+            welfare_type = #{welfareType,jdbcType=TINYINT},
+            sub_type_name = #{subTypeName,jdbcType=VARCHAR},
+            is_selection = #{isSelection,jdbcType=TINYINT},
+            merchant_icon = #{merchantIcon,jdbcType=VARCHAR},
+            merchant_name = #{merchantName,jdbcType=VARCHAR},
+            participants_num = #{participantsNum,jdbcType=INTEGER},
+            welfare_banner = #{welfareBanner,jdbcType=VARCHAR},
+            welfare_detail = #{welfareDetail,jdbcType=VARCHAR},
+            welfare_status = #{welfareStatus,jdbcType=TINYINT},
+            button_name = #{buttonName,jdbcType=VARCHAR},
+            button_url = #{buttonUrl,jdbcType=VARCHAR},
+            end_time = #{endTime,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR},
+            welfare_weight = #{welfareWeight,jdbcType=TINYINT}
+        WHERE welfare_id = #{welfareId,jdbcType=BIGINT}
+    </update>
+</mapper>

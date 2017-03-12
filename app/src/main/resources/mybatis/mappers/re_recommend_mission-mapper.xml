@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_mission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReRecommendMission">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="mission_type" property="missionType" jdbcType="TINYINT"/>
+        <result column="type_id" property="typeId" jdbcType="TINYINT"/>
+        <result column="img_num" property="imgNum" jdbcType="TINYINT"/>
+        <result column="sub_type_name" property="subTypeName" jdbcType="VARCHAR"/>
+        <result column="exchange_code" property="exchangeCode" jdbcType="VARCHAR"/>
+        <result column="mission_icon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="mission_title" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="mission_label" property="missionLabel" jdbcType="VARCHAR"/>
+        <result column="min_money" property="minMoney" jdbcType="DECIMAL"/>
+        <result column="max_money" property="maxMoney" jdbcType="DECIMAL"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+        <result column="mission_desc" property="missionDesc" jdbcType="VARCHAR"/>
+        <result column="mission_status" property="missionStatus" jdbcType="TINYINT"/>
+        <result column="is_limit_time" property="isLimitTime" jdbcType="TINYINT"/>
+        <result column="limit_minute" property="limitMinute" jdbcType="INTEGER"/>
+        <result column="is_verify" property="isVerify" jdbcType="TINYINT"/>
+        <result column="verify_text" property="verifyText" jdbcType="VARCHAR"/>
+        <result column="verify_img" property="verifyImg" jdbcType="VARCHAR"/>
+        <result column="verify_require" property="verifyRequire" jdbcType="VARCHAR"/>
+        <result column="mission_imgs" property="missionImgs" jdbcType="VARCHAR"/>
+        <result column="mission_order" property="missionOrder" jdbcType="TINYINT"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="participants_num" property="participantsNum" jdbcType="INTEGER"/>
+        <result column="mission_reward" property="missionReward" jdbcType="VARCHAR"/>
+        <result column="mission_detail" property="missionDetail" jdbcType="VARCHAR"/>
+        <result column="mission_banner" property="missionBanner" jdbcType="VARCHAR"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="merchant_icon" property="merchantIcon" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, mission_type, type_id, img_num, sub_type_name, 
+        exchange_code, mission_icon, mission_title, mission_label, min_money, 
+        max_money, start_time, end_time, total_num, left_num, 
+        mission_desc, mission_status, is_limit_time, limit_minute, is_verify, 
+        verify_text, verify_img, verify_require, mission_imgs, mission_order, 
+        is_end, participants_num, mission_reward, mission_detail, mission_banner, 
+        merchant_name, merchant_icon
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReRecommendMission">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReRecommendMission">
+        DELETE FROM re_recommend_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReRecommendMission">
+        INSERT INTO re_recommend_mission ( mission_type, 
+          type_id, img_num, sub_type_name, 
+          exchange_code, mission_icon, mission_title, 
+          mission_label, min_money, max_money, 
+          start_time, end_time, total_num, 
+          left_num, mission_desc, mission_status, 
+          is_limit_time, limit_minute, is_verify, 
+          verify_text, verify_img, verify_require, 
+          mission_imgs, mission_order, is_end, 
+          participants_num, mission_reward, mission_detail, 
+          mission_banner, merchant_name, merchant_icon )
+        VALUES ( #{missionType,jdbcType=TINYINT}, 
+          #{typeId,jdbcType=TINYINT}, #{imgNum,jdbcType=TINYINT}, #{subTypeName,jdbcType=VARCHAR}, 
+          #{exchangeCode,jdbcType=VARCHAR}, #{missionIcon,jdbcType=VARCHAR}, #{missionTitle,jdbcType=VARCHAR}, 
+          #{missionLabel,jdbcType=VARCHAR}, #{minMoney,jdbcType=DECIMAL}, #{maxMoney,jdbcType=DECIMAL}, 
+          #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{totalNum,jdbcType=INTEGER}, 
+          #{leftNum,jdbcType=INTEGER}, #{missionDesc,jdbcType=VARCHAR}, #{missionStatus,jdbcType=TINYINT}, 
+          #{isLimitTime,jdbcType=TINYINT}, #{limitMinute,jdbcType=INTEGER}, #{isVerify,jdbcType=TINYINT}, 
+          #{verifyText,jdbcType=VARCHAR}, #{verifyImg,jdbcType=VARCHAR}, #{verifyRequire,jdbcType=VARCHAR}, 
+          #{missionImgs,jdbcType=VARCHAR}, #{missionOrder,jdbcType=TINYINT}, #{isEnd,jdbcType=TINYINT}, 
+          #{participantsNum,jdbcType=INTEGER}, #{missionReward,jdbcType=VARCHAR}, #{missionDetail,jdbcType=VARCHAR}, 
+          #{missionBanner,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{merchantIcon,jdbcType=VARCHAR} )
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReRecommendMission">
+        INSERT INTO re_recommend_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionType != null">
+                mission_type,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="imgNum != null">
+                img_num,
+            </if>
+            <if test="subTypeName != null">
+                sub_type_name,
+            </if>
+            <if test="exchangeCode != null">
+                exchange_code,
+            </if>
+            <if test="missionIcon != null">
+                mission_icon,
+            </if>
+            <if test="missionTitle != null">
+                mission_title,
+            </if>
+            <if test="missionLabel != null">
+                mission_label,
+            </if>
+            <if test="minMoney != null">
+                min_money,
+            </if>
+            <if test="maxMoney != null">
+                max_money,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="totalNum != null">
+                total_num,
+            </if>
+            <if test="leftNum != null">
+                left_num,
+            </if>
+            <if test="missionDesc != null">
+                mission_desc,
+            </if>
+            <if test="missionStatus != null">
+                mission_status,
+            </if>
+            <if test="isLimitTime != null">
+                is_limit_time,
+            </if>
+            <if test="limitMinute != null">
+                limit_minute,
+            </if>
+            <if test="isVerify != null">
+                is_verify,
+            </if>
+            <if test="verifyText != null">
+                verify_text,
+            </if>
+            <if test="verifyImg != null">
+                verify_img,
+            </if>
+            <if test="verifyRequire != null">
+                verify_require,
+            </if>
+            <if test="missionImgs != null">
+                mission_imgs,
+            </if>
+            <if test="missionOrder != null">
+                mission_order,
+            </if>
+            <if test="isEnd != null">
+                is_end,
+            </if>
+            <if test="participantsNum != null">
+                participants_num,
+            </if>
+            <if test="missionReward != null">
+                mission_reward,
+            </if>
+            <if test="missionDetail != null">
+                mission_detail,
+            </if>
+            <if test="missionBanner != null">
+                mission_banner,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="merchantIcon != null">
+                merchant_icon,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionType != null">
+                #{missionType,jdbcType=TINYINT},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=TINYINT},
+            </if>
+            <if test="imgNum != null">
+                #{imgNum,jdbcType=TINYINT},
+            </if>
+            <if test="subTypeName != null">
+                #{subTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeCode != null">
+                #{exchangeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="missionIcon != null">
+                #{missionIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="missionTitle != null">
+                #{missionTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="missionLabel != null">
+                #{missionLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="minMoney != null">
+                #{minMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="maxMoney != null">
+                #{maxMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftNum != null">
+                #{leftNum,jdbcType=INTEGER},
+            </if>
+            <if test="missionDesc != null">
+                #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="missionStatus != null">
+                #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="isLimitTime != null">
+                #{isLimitTime,jdbcType=TINYINT},
+            </if>
+            <if test="limitMinute != null">
+                #{limitMinute,jdbcType=INTEGER},
+            </if>
+            <if test="isVerify != null">
+                #{isVerify,jdbcType=TINYINT},
+            </if>
+            <if test="verifyText != null">
+                #{verifyText,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyImg != null">
+                #{verifyImg,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyRequire != null">
+                #{verifyRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImgs != null">
+                #{missionImgs,jdbcType=VARCHAR},
+            </if>
+            <if test="missionOrder != null">
+                #{missionOrder,jdbcType=TINYINT},
+            </if>
+            <if test="isEnd != null">
+                #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="participantsNum != null">
+                #{participantsNum,jdbcType=INTEGER},
+            </if>
+            <if test="missionReward != null">
+                #{missionReward,jdbcType=VARCHAR},
+            </if>
+            <if test="missionDetail != null">
+                #{missionDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="missionBanner != null">
+                #{missionBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantIcon != null">
+                #{merchantIcon,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_recommend_mission ( mission_type, 
+          type_id, img_num, sub_type_name, 
+          exchange_code, mission_icon, mission_title, 
+          mission_label, min_money, max_money, 
+          start_time, end_time, total_num, 
+          left_num, mission_desc, mission_status, 
+          is_limit_time, limit_minute, is_verify, 
+          verify_text, verify_img, verify_require, 
+          mission_imgs, mission_order, is_end, 
+          participants_num, mission_reward, mission_detail, 
+          mission_banner, merchant_name, merchant_icon )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionType,jdbcType=TINYINT}, 
+            #{item.typeId,jdbcType=TINYINT}, #{item.imgNum,jdbcType=TINYINT}, #{item.subTypeName,jdbcType=VARCHAR}, 
+            #{item.exchangeCode,jdbcType=VARCHAR}, #{item.missionIcon,jdbcType=VARCHAR}, #{item.missionTitle,jdbcType=VARCHAR}, 
+            #{item.missionLabel,jdbcType=VARCHAR}, #{item.minMoney,jdbcType=DECIMAL}, #{item.maxMoney,jdbcType=DECIMAL}, 
+            #{item.startTime,jdbcType=VARCHAR}, #{item.endTime,jdbcType=VARCHAR}, #{item.totalNum,jdbcType=INTEGER}, 
+            #{item.leftNum,jdbcType=INTEGER}, #{item.missionDesc,jdbcType=VARCHAR}, #{item.missionStatus,jdbcType=TINYINT}, 
+            #{item.isLimitTime,jdbcType=TINYINT}, #{item.limitMinute,jdbcType=INTEGER}, #{item.isVerify,jdbcType=TINYINT}, 
+            #{item.verifyText,jdbcType=VARCHAR}, #{item.verifyImg,jdbcType=VARCHAR}, #{item.verifyRequire,jdbcType=VARCHAR}, 
+            #{item.missionImgs,jdbcType=VARCHAR}, #{item.missionOrder,jdbcType=TINYINT}, #{item.isEnd,jdbcType=TINYINT}, 
+            #{item.participantsNum,jdbcType=INTEGER}, #{item.missionReward,jdbcType=VARCHAR}, #{item.missionDetail,jdbcType=VARCHAR}, 
+            #{item.missionBanner,jdbcType=VARCHAR}, #{item.merchantName,jdbcType=VARCHAR}, #{item.merchantIcon,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReRecommendMission">
+        UPDATE re_recommend_mission
+        <set>
+            <if test="missionType != null">
+                mission_type = #{missionType,jdbcType=TINYINT},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=TINYINT},
+            </if>
+            <if test="imgNum != null">
+                img_num = #{imgNum,jdbcType=TINYINT},
+            </if>
+            <if test="subTypeName != null">
+                sub_type_name = #{subTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeCode != null">
+                exchange_code = #{exchangeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="missionIcon != null">
+                mission_icon = #{missionIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="missionTitle != null">
+                mission_title = #{missionTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="missionLabel != null">
+                mission_label = #{missionLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="minMoney != null">
+                min_money = #{minMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="maxMoney != null">
+                max_money = #{maxMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNum != null">
+                total_num = #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftNum != null">
+                left_num = #{leftNum,jdbcType=INTEGER},
+            </if>
+            <if test="missionDesc != null">
+                mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="missionStatus != null">
+                mission_status = #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="isLimitTime != null">
+                is_limit_time = #{isLimitTime,jdbcType=TINYINT},
+            </if>
+            <if test="limitMinute != null">
+                limit_minute = #{limitMinute,jdbcType=INTEGER},
+            </if>
+            <if test="isVerify != null">
+                is_verify = #{isVerify,jdbcType=TINYINT},
+            </if>
+            <if test="verifyText != null">
+                verify_text = #{verifyText,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyImg != null">
+                verify_img = #{verifyImg,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyRequire != null">
+                verify_require = #{verifyRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImgs != null">
+                mission_imgs = #{missionImgs,jdbcType=VARCHAR},
+            </if>
+            <if test="missionOrder != null">
+                mission_order = #{missionOrder,jdbcType=TINYINT},
+            </if>
+            <if test="isEnd != null">
+                is_end = #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="participantsNum != null">
+                participants_num = #{participantsNum,jdbcType=INTEGER},
+            </if>
+            <if test="missionReward != null">
+                mission_reward = #{missionReward,jdbcType=VARCHAR},
+            </if>
+            <if test="missionDetail != null">
+                mission_detail = #{missionDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="missionBanner != null">
+                mission_banner = #{missionBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantIcon != null">
+                merchant_icon = #{merchantIcon,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReRecommendMission">
+        UPDATE re_recommend_mission
+        SET mission_type = #{missionType,jdbcType=TINYINT},
+            type_id = #{typeId,jdbcType=TINYINT},
+            img_num = #{imgNum,jdbcType=TINYINT},
+            sub_type_name = #{subTypeName,jdbcType=VARCHAR},
+            exchange_code = #{exchangeCode,jdbcType=VARCHAR},
+            mission_icon = #{missionIcon,jdbcType=VARCHAR},
+            mission_title = #{missionTitle,jdbcType=VARCHAR},
+            mission_label = #{missionLabel,jdbcType=VARCHAR},
+            min_money = #{minMoney,jdbcType=DECIMAL},
+            max_money = #{maxMoney,jdbcType=DECIMAL},
+            start_time = #{startTime,jdbcType=VARCHAR},
+            end_time = #{endTime,jdbcType=VARCHAR},
+            total_num = #{totalNum,jdbcType=INTEGER},
+            left_num = #{leftNum,jdbcType=INTEGER},
+            mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            mission_status = #{missionStatus,jdbcType=TINYINT},
+            is_limit_time = #{isLimitTime,jdbcType=TINYINT},
+            limit_minute = #{limitMinute,jdbcType=INTEGER},
+            is_verify = #{isVerify,jdbcType=TINYINT},
+            verify_text = #{verifyText,jdbcType=VARCHAR},
+            verify_img = #{verifyImg,jdbcType=VARCHAR},
+            verify_require = #{verifyRequire,jdbcType=VARCHAR},
+            mission_imgs = #{missionImgs,jdbcType=VARCHAR},
+            mission_order = #{missionOrder,jdbcType=TINYINT},
+            is_end = #{isEnd,jdbcType=TINYINT},
+            participants_num = #{participantsNum,jdbcType=INTEGER},
+            mission_reward = #{missionReward,jdbcType=VARCHAR},
+            mission_detail = #{missionDetail,jdbcType=VARCHAR},
+            mission_banner = #{missionBanner,jdbcType=VARCHAR},
+            merchant_name = #{merchantName,jdbcType=VARCHAR},
+            merchant_icon = #{merchantIcon,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+</mapper>

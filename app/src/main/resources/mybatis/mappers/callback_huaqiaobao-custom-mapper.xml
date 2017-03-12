@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="callback_huaqiaobao">
+
+    <select id="selectRepeat" resultMap="BaseResultMap" parameterType="map">
+        <include refid="callback_huaqiaobao.SELECT_All_Column"/>
+        FROM callback_huaqiaobao
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND mobile = #{mobile,jdbcType=VARCHAR}
+        AND call_type = #{callType,jdbcType=TINYINT}
+        Limit 1
+    </select>
+
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_zy_notify">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReZyNotify">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="ad_id" property="adId" jdbcType="INTEGER"/>
+        <result column="ad_name" property="adName" jdbcType="VARCHAR"/>
+        <result column="integral" property="integral" jdbcType="INTEGER"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="day_num" property="dayNum" jdbcType="INTEGER"/>
+        <result column="notify_time" property="notifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT order_id, user_id, app_id, ad_id, ad_name, 
+        integral, device_id, package_name, price, day_num, 
+        notify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReZyNotify">
+        <include refid="re_zy_notify.SELECT_All_Column"/>
+        FROM re_zy_notify
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReZyNotify">
+        DELETE FROM re_zy_notify
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReZyNotify">
+        INSERT INTO re_zy_notify ( order_id, 
+          user_id, app_id, ad_id, 
+          ad_name, integral, device_id, 
+          package_name, price, day_num, 
+          notify_time )
+        VALUES ( #{orderId,jdbcType=VARCHAR}, 
+          #{userId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{adId,jdbcType=INTEGER}, 
+          #{adName,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER}, #{deviceId,jdbcType=VARCHAR}, 
+          #{packageName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{dayNum,jdbcType=INTEGER}, 
+          #{notifyTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReZyNotify">
+        INSERT INTO re_zy_notify
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                order_id,
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="adId != null">
+                ad_id,
+            </if>
+            <if test="adName != null">
+                ad_name,
+            </if>
+            <if test="integral != null">
+                integral,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="packageName != null">
+                package_name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="dayNum != null">
+                day_num,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{orderId,jdbcType=VARCHAR},
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adId != null">
+                #{adId,jdbcType=INTEGER},
+            </if>
+            <if test="adName != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="integral != null">
+                #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="packageName != null">
+                #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="dayNum != null">
+                #{dayNum,jdbcType=INTEGER},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_zy_notify ( order_id, 
+          user_id, app_id, ad_id, 
+          ad_name, integral, device_id, 
+          package_name, price, day_num, 
+          notify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.orderId,jdbcType=VARCHAR}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.appId,jdbcType=VARCHAR}, #{item.adId,jdbcType=INTEGER}, 
+            #{item.adName,jdbcType=VARCHAR}, #{item.integral,jdbcType=INTEGER}, #{item.deviceId,jdbcType=VARCHAR}, 
+            #{item.packageName,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL}, #{item.dayNum,jdbcType=INTEGER}, 
+            #{item.notifyTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReZyNotify">
+        UPDATE re_zy_notify
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adId != null">
+                ad_id = #{adId,jdbcType=INTEGER},
+            </if>
+            <if test="adName != null">
+                ad_name = #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="integral != null">
+                integral = #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="packageName != null">
+                package_name = #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="dayNum != null">
+                day_num = #{dayNum,jdbcType=INTEGER},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReZyNotify">
+        UPDATE re_zy_notify
+        SET user_id = #{userId,jdbcType=INTEGER},
+            app_id = #{appId,jdbcType=VARCHAR},
+            ad_id = #{adId,jdbcType=INTEGER},
+            ad_name = #{adName,jdbcType=VARCHAR},
+            integral = #{integral,jdbcType=INTEGER},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            package_name = #{packageName,jdbcType=VARCHAR},
+            price = #{price,jdbcType=DECIMAL},
+            day_num = #{dayNum,jdbcType=INTEGER},
+            notify_time = #{notifyTime,jdbcType=VARCHAR}
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_red">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserRed">
+        <id column="red_id" property="redId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="red_total_num" property="redTotalNum" jdbcType="INTEGER"/>
+        <result column="red_left_num" property="redLeftNum" jdbcType="INTEGER"/>
+        <result column="single_money" property="singleMoney" jdbcType="DECIMAL"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="red_content" property="redContent" jdbcType="VARCHAR"/>
+        <result column="is_refund" property="isRefund" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="create_time_ms" property="createTimeMs" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="refund_time" property="refundTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT red_id, user_id, red_total_num, red_left_num, single_money, 
+        total_money, red_content, is_refund, create_time, create_time_ms, 
+        update_time, refund_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserRed">
+        <include refid="re_user_red.SELECT_All_Column"/>
+        FROM re_user_red
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserRed">
+        DELETE FROM re_user_red
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserRed">
+        INSERT INTO re_user_red ( user_id, 
+          red_total_num, red_left_num, single_money, 
+          total_money, red_content, is_refund, 
+          create_time, create_time_ms, update_time, 
+          refund_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{redTotalNum,jdbcType=INTEGER}, #{redLeftNum,jdbcType=INTEGER}, #{singleMoney,jdbcType=DECIMAL}, 
+          #{totalMoney,jdbcType=DECIMAL}, #{redContent,jdbcType=VARCHAR}, #{isRefund,jdbcType=TINYINT}, 
+          #{createTime,jdbcType=VARCHAR}, #{createTimeMs,jdbcType=BIGINT}, #{updateTime,jdbcType=VARCHAR}, 
+          #{refundTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="redId" resultType="long">
+            SELECT LAST_INSERT_ID() AS redId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserRed">
+        INSERT INTO re_user_red
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="redTotalNum != null">
+                red_total_num,
+            </if>
+            <if test="redLeftNum != null">
+                red_left_num,
+            </if>
+            <if test="singleMoney != null">
+                single_money,
+            </if>
+            <if test="totalMoney != null">
+                total_money,
+            </if>
+            <if test="redContent != null">
+                red_content,
+            </if>
+            <if test="isRefund != null">
+                is_refund,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createTimeMs != null">
+                create_time_ms,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="refundTime != null">
+                refund_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="redTotalNum != null">
+                #{redTotalNum,jdbcType=INTEGER},
+            </if>
+            <if test="redLeftNum != null">
+                #{redLeftNum,jdbcType=INTEGER},
+            </if>
+            <if test="singleMoney != null">
+                #{singleMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalMoney != null">
+                #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="redContent != null">
+                #{redContent,jdbcType=VARCHAR},
+            </if>
+            <if test="isRefund != null">
+                #{isRefund,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTimeMs != null">
+                #{createTimeMs,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="refundTime != null">
+                #{refundTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="redId" resultType="long">
+            SELECT LAST_INSERT_ID() AS redId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_red ( user_id, 
+          red_total_num, red_left_num, single_money, 
+          total_money, red_content, is_refund, 
+          create_time, create_time_ms, update_time, 
+          refund_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.redTotalNum,jdbcType=INTEGER}, #{item.redLeftNum,jdbcType=INTEGER}, #{item.singleMoney,jdbcType=DECIMAL}, 
+            #{item.totalMoney,jdbcType=DECIMAL}, #{item.redContent,jdbcType=VARCHAR}, #{item.isRefund,jdbcType=TINYINT}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.createTimeMs,jdbcType=BIGINT}, #{item.updateTime,jdbcType=VARCHAR}, 
+            #{item.refundTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserRed">
+        UPDATE re_user_red
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="redTotalNum != null">
+                red_total_num = #{redTotalNum,jdbcType=INTEGER},
+            </if>
+            <if test="redLeftNum != null">
+                red_left_num = #{redLeftNum,jdbcType=INTEGER},
+            </if>
+            <if test="singleMoney != null">
+                single_money = #{singleMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalMoney != null">
+                total_money = #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="redContent != null">
+                red_content = #{redContent,jdbcType=VARCHAR},
+            </if>
+            <if test="isRefund != null">
+                is_refund = #{isRefund,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTimeMs != null">
+                create_time_ms = #{createTimeMs,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="refundTime != null">
+                refund_time = #{refundTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserRed">
+        UPDATE re_user_red
+        SET user_id = #{userId,jdbcType=INTEGER},
+            red_total_num = #{redTotalNum,jdbcType=INTEGER},
+            red_left_num = #{redLeftNum,jdbcType=INTEGER},
+            single_money = #{singleMoney,jdbcType=DECIMAL},
+            total_money = #{totalMoney,jdbcType=DECIMAL},
+            red_content = #{redContent,jdbcType=VARCHAR},
+            is_refund = #{isRefund,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            create_time_ms = #{createTimeMs,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=VARCHAR},
+            refund_time = #{refundTime,jdbcType=BIGINT}
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </update>
+</mapper>

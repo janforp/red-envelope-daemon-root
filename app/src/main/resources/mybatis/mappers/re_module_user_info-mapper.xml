@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_module_user_info">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReModuleUserInfo">
+        <id column="info_id" property="infoId" jdbcType="BIGINT"/>
+        <result column="mission_type" property="missionType" jdbcType="TINYINT"/>
+        <result column="mission_subtype" property="missionSubtype" jdbcType="TINYINT"/>
+        <result column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="platfrom" property="platfrom" jdbcType="TINYINT"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="device_name" property="deviceName" jdbcType="VARCHAR"/>
+        <result column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="user_ip" property="userIp" jdbcType="VARCHAR"/>
+        <result column="user_imsi" property="userImsi" jdbcType="VARCHAR"/>
+        <result column="user_imei" property="userImei" jdbcType="VARCHAR"/>
+        <result column="sim_num" property="simNum" jdbcType="VARCHAR"/>
+        <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT info_id, mission_type, mission_subtype, mission_id, user_id, 
+        platfrom, device_id, device_name, package_name, channel_name, 
+        app_version, user_ip, user_imsi, user_imei, sim_num, 
+        mobile_num, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReModuleUserInfo">
+        <include refid="re_module_user_info.SELECT_All_Column"/>
+        FROM re_module_user_info
+        WHERE info_id = #{infoId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReModuleUserInfo">
+        DELETE FROM re_module_user_info
+        WHERE info_id = #{infoId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReModuleUserInfo">
+        INSERT INTO re_module_user_info ( mission_type, 
+          mission_subtype, mission_id, user_id, 
+          platfrom, device_id, device_name, 
+          package_name, channel_name, app_version, 
+          user_ip, user_imsi, user_imei, 
+          sim_num, mobile_num, create_time )
+        VALUES ( #{missionType,jdbcType=TINYINT}, 
+          #{missionSubtype,jdbcType=TINYINT}, #{missionId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, 
+          #{platfrom,jdbcType=TINYINT}, #{deviceId,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+          #{packageName,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, 
+          #{userIp,jdbcType=VARCHAR}, #{userImsi,jdbcType=VARCHAR}, #{userImei,jdbcType=VARCHAR}, 
+          #{simNum,jdbcType=VARCHAR}, #{mobileNum,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="infoId" resultType="long">
+            SELECT LAST_INSERT_ID() AS infoId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReModuleUserInfo">
+        INSERT INTO re_module_user_info
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionType != null">
+                mission_type,
+            </if>
+            <if test="missionSubtype != null">
+                mission_subtype,
+            </if>
+            <if test="missionId != null">
+                mission_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="platfrom != null">
+                platfrom,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="deviceName != null">
+                device_name,
+            </if>
+            <if test="packageName != null">
+                package_name,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="appVersion != null">
+                app_version,
+            </if>
+            <if test="userIp != null">
+                user_ip,
+            </if>
+            <if test="userImsi != null">
+                user_imsi,
+            </if>
+            <if test="userImei != null">
+                user_imei,
+            </if>
+            <if test="simNum != null">
+                sim_num,
+            </if>
+            <if test="mobileNum != null">
+                mobile_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionType != null">
+                #{missionType,jdbcType=TINYINT},
+            </if>
+            <if test="missionSubtype != null">
+                #{missionSubtype,jdbcType=TINYINT},
+            </if>
+            <if test="missionId != null">
+                #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="platfrom != null">
+                #{platfrom,jdbcType=TINYINT},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null">
+                #{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="packageName != null">
+                #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="userIp != null">
+                #{userIp,jdbcType=VARCHAR},
+            </if>
+            <if test="userImsi != null">
+                #{userImsi,jdbcType=VARCHAR},
+            </if>
+            <if test="userImei != null">
+                #{userImei,jdbcType=VARCHAR},
+            </if>
+            <if test="simNum != null">
+                #{simNum,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNum != null">
+                #{mobileNum,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="infoId" resultType="long">
+            SELECT LAST_INSERT_ID() AS infoId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_module_user_info ( mission_type, 
+          mission_subtype, mission_id, user_id, 
+          platfrom, device_id, device_name, 
+          package_name, channel_name, app_version, 
+          user_ip, user_imsi, user_imei, 
+          sim_num, mobile_num, create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionType,jdbcType=TINYINT}, 
+            #{item.missionSubtype,jdbcType=TINYINT}, #{item.missionId,jdbcType=BIGINT}, #{item.userId,jdbcType=INTEGER}, 
+            #{item.platfrom,jdbcType=TINYINT}, #{item.deviceId,jdbcType=VARCHAR}, #{item.deviceName,jdbcType=VARCHAR}, 
+            #{item.packageName,jdbcType=VARCHAR}, #{item.channelName,jdbcType=VARCHAR}, #{item.appVersion,jdbcType=VARCHAR}, 
+            #{item.userIp,jdbcType=VARCHAR}, #{item.userImsi,jdbcType=VARCHAR}, #{item.userImei,jdbcType=VARCHAR}, 
+            #{item.simNum,jdbcType=VARCHAR}, #{item.mobileNum,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReModuleUserInfo">
+        UPDATE re_module_user_info
+        <set>
+            <if test="missionType != null">
+                mission_type = #{missionType,jdbcType=TINYINT},
+            </if>
+            <if test="missionSubtype != null">
+                mission_subtype = #{missionSubtype,jdbcType=TINYINT},
+            </if>
+            <if test="missionId != null">
+                mission_id = #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="platfrom != null">
+                platfrom = #{platfrom,jdbcType=TINYINT},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null">
+                device_name = #{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="packageName != null">
+                package_name = #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                app_version = #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="userIp != null">
+                user_ip = #{userIp,jdbcType=VARCHAR},
+            </if>
+            <if test="userImsi != null">
+                user_imsi = #{userImsi,jdbcType=VARCHAR},
+            </if>
+            <if test="userImei != null">
+                user_imei = #{userImei,jdbcType=VARCHAR},
+            </if>
+            <if test="simNum != null">
+                sim_num = #{simNum,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNum != null">
+                mobile_num = #{mobileNum,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE info_id = #{infoId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReModuleUserInfo">
+        UPDATE re_module_user_info
+        SET mission_type = #{missionType,jdbcType=TINYINT},
+            mission_subtype = #{missionSubtype,jdbcType=TINYINT},
+            mission_id = #{missionId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=INTEGER},
+            platfrom = #{platfrom,jdbcType=TINYINT},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            device_name = #{deviceName,jdbcType=VARCHAR},
+            package_name = #{packageName,jdbcType=VARCHAR},
+            channel_name = #{channelName,jdbcType=VARCHAR},
+            app_version = #{appVersion,jdbcType=VARCHAR},
+            user_ip = #{userIp,jdbcType=VARCHAR},
+            user_imsi = #{userImsi,jdbcType=VARCHAR},
+            user_imei = #{userImei,jdbcType=VARCHAR},
+            sim_num = #{simNum,jdbcType=VARCHAR},
+            mobile_num = #{mobileNum,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR}
+        WHERE info_id = #{infoId,jdbcType=BIGINT}
+    </update>
+</mapper>

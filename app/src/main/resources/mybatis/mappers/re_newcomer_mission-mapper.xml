@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_newcomer_mission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReNewcomerMission">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="mission_name" property="missionName" jdbcType="VARCHAR"/>
+        <result column="mission_award" property="missionAward" jdbcType="DECIMAL"/>
+        <result column="mission_type" property="missionType" jdbcType="TINYINT"/>
+        <result column="mission_status" property="missionStatus" jdbcType="TINYINT"/>
+        <result column="mission_order" property="missionOrder" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, mission_name, mission_award, mission_type, mission_status, 
+        mission_order, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReNewcomerMission">
+        <include refid="re_newcomer_mission.SELECT_All_Column"/>
+        FROM re_newcomer_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReNewcomerMission">
+        DELETE FROM re_newcomer_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReNewcomerMission">
+        INSERT INTO re_newcomer_mission ( mission_name, 
+          mission_award, mission_type, mission_status, 
+          mission_order, create_time, update_time )
+        VALUES ( #{missionName,jdbcType=VARCHAR}, 
+          #{missionAward,jdbcType=DECIMAL}, #{missionType,jdbcType=TINYINT}, #{missionStatus,jdbcType=TINYINT}, 
+          #{missionOrder,jdbcType=TINYINT}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReNewcomerMission">
+        INSERT INTO re_newcomer_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionName != null">
+                mission_name,
+            </if>
+            <if test="missionAward != null">
+                mission_award,
+            </if>
+            <if test="missionType != null">
+                mission_type,
+            </if>
+            <if test="missionStatus != null">
+                mission_status,
+            </if>
+            <if test="missionOrder != null">
+                mission_order,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionName != null">
+                #{missionName,jdbcType=VARCHAR},
+            </if>
+            <if test="missionAward != null">
+                #{missionAward,jdbcType=DECIMAL},
+            </if>
+            <if test="missionType != null">
+                #{missionType,jdbcType=TINYINT},
+            </if>
+            <if test="missionStatus != null">
+                #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="missionOrder != null">
+                #{missionOrder,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_newcomer_mission ( mission_name, 
+          mission_award, mission_type, mission_status, 
+          mission_order, create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionName,jdbcType=VARCHAR}, 
+            #{item.missionAward,jdbcType=DECIMAL}, #{item.missionType,jdbcType=TINYINT}, #{item.missionStatus,jdbcType=TINYINT}, 
+            #{item.missionOrder,jdbcType=TINYINT}, #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReNewcomerMission">
+        UPDATE re_newcomer_mission
+        <set>
+            <if test="missionName != null">
+                mission_name = #{missionName,jdbcType=VARCHAR},
+            </if>
+            <if test="missionAward != null">
+                mission_award = #{missionAward,jdbcType=DECIMAL},
+            </if>
+            <if test="missionType != null">
+                mission_type = #{missionType,jdbcType=TINYINT},
+            </if>
+            <if test="missionStatus != null">
+                mission_status = #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="missionOrder != null">
+                mission_order = #{missionOrder,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReNewcomerMission">
+        UPDATE re_newcomer_mission
+        SET mission_name = #{missionName,jdbcType=VARCHAR},
+            mission_award = #{missionAward,jdbcType=DECIMAL},
+            mission_type = #{missionType,jdbcType=TINYINT},
+            mission_status = #{missionStatus,jdbcType=TINYINT},
+            mission_order = #{missionOrder,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+</mapper>

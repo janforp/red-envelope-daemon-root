@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_article_mission">
+
+    <select id="selectArticleCount" resultType="int" parameterType="String">
+        SELECT COUNT(article_id)
+        FROM re_article_mission
+        WHERE is_end = 1
+        AND left_click_times > 0
+        AND start_mission_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+        AND end_mission_time >= #{nowTime,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectArticleList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_article_mission.SELECT_All_Column"/>
+        FROM re_article_mission
+        WHERE is_end = 1
+        AND left_click_times > 0
+        AND start_mission_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+        AND end_mission_time >= #{nowTime,jdbcType=VARCHAR}
+        <if test="articleId != null">
+            AND article_id <![CDATA[ < ]]> #{articleId,jdbcType=BIGINT}
+        </if>
+        ORDER BY article_id DESC
+        Limit 0, 20
+    </select>
+
+</mapper>

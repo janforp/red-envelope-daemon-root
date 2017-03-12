@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_xuanshang_detail">
+    <!--该悬赏任务有多少人提交-->
+    <select id="getSubmitNum" resultType="int" parameterType="long">
+        SELECT COUNT(*)
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+    </select>
+    <!--该悬赏待审核待数量-->
+    <select id="getToVerifyNum" resultType="int" parameterType="long">
+        SELECT COUNT(*)
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+        AND   detail_status = 0
+    </select>
+
+    <!--该悬赏任务审核未通过数量-->
+    <select id="getNotPassNum" resultType="int" parameterType="long">
+        SELECT COUNT(*)
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+        AND   detail_status = 2
+    </select>
+
+    <!--找出该用户做的该悬赏任务的详情-->
+    <select id="getDetailByUserId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_xuanshang_detail.SELECT_All_Column"/>
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+        AND   user_id = #{userId,jdbcType=INTEGER}
+        LIMIT 1
+    </select>
+
+    <resultMap id="XuanshangVo" type="com.hongbao.api.model.vo.XuanshangVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="xuanshangId" property="xuanshangId" jdbcType="BIGINT"/>
+        <result column="portrait" property="portrait" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="detail_status" property="detailStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="mission_desc" property="missionDesc" jdbcType="VARCHAR"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="pass_num" property="passNum" jdbcType="INTEGER"/>
+        <result column="submit_num" property="submitNum" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="do_user_id" property="doUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--我参与的
+    /**
+     * 我参与的悬赏任务列表
+     * @param userId    登录用户id
+     * @param id        当前页面最后一个id
+     * @return
+     */
+    -->
+    <select id="getMyPartInMissionList" resultMap="XuanshangVo" parameterType="map">
+        SELECT  c.id ,a.id as xuanshangId,b.portrait,b.nickname,a.mission_desc,(a.total_num * a.single_money) AS total_money,a.total_num,a.pass_num,c.detail_status
+        FROM    re_user b ,re_xuanshang_detail c
+        LEFT    JOIN  re_xuanshang a
+        ON      a.id = c.xuanshang_id
+        WHERE   a.user_id = b.user_id
+        AND     c.user_id = #{userId,jdbcType=INTEGER}
+        AND     a.user_id != #{userId,jdbcType=INTEGER}
+        <if test="id != null">
+            AND c.id <![CDATA[ < ]]> #{id, jdbcType=BIGINT}
+        </if>
+        ORDER BY c.id DESC
+        LIMIT 0,20
+    </select>
+
+    <select id="getMyPartInIdList" resultType="long" parameterType="map">
+        SELECT  id
+        FROM    re_xuanshang_detail
+        WHERE   user_id = #{userId,jdbcType=INTEGER}
+        ORDER   BY id DESC
+    </select>
+
+    <!--找到该悬赏任务的所有还没有被审核的记录-->
+    <select id="getAllListNotVerify" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_xuanshang_detail.SELECT_All_Column"/>
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+        AND   id != #{id,jdbcType=BIGINT}
+        AND   detail_status = 0
+    </select>
+
+    <resultMap id="MyXuanshangListVo" type="com.hongbao.api.model.vo.MyXuanshangListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="mission_text" property="missionText" jdbcType="VARCHAR"/>
+        <result column="mission_img" property="missionImg" jdbcType="VARCHAR"/>
+        <result column="detail_status" property="detailStatus" jdbcType="TINYINT"/>
+        <result column="portrait" property="portrait" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getMyVerifiedList" resultMap="MyXuanshangListVo" parameterType="map">
+        SELECT  a.id,a.user_id,a.mission_text,a.mission_img,a.detail_status,a.reason,b.portrait,b.nickname
+        FROM    re_xuanshang_detail a,re_user b
+        WHERE   a.user_id = b.user_id
+        AND     a.xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+        AND     (a.detail_status = 1 OR a.detail_status = 2)
+        <if test="id != null">
+            AND a.id <![CDATA[ < ]]> #{id, jdbcType=BIGINT}
+        </if>
+        ORDER BY a.id DESC
+    </select>
+
+    <!--找到该悬赏任务已经审核通过的列表-->
+    <select id="getPassList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_xuanshang_detail.SELECT_All_Column"/>
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+        AND   detail_status = 1
+        ORDER BY id DESC
+    </select>
+
+    <!--找到该悬赏任务待审核的列表-->
+    <select id="getToVerifyList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_xuanshang_detail.SELECT_All_Column"/>
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+        AND   detail_status = 0
+        <if test="id != null">
+            AND id <![CDATA[ > ]]> #{id, jdbcType=BIGINT}
+        </if>
+        ORDER BY id ASC
+        LIMIT 0,20
+    </select>
+
+
+    <!--删除该悬赏任务的所有提交记录-->
+    <delete id="deleteAllDetailsByXuanshangId"  parameterType="map">
+        DELETE
+        FROM  re_xuanshang_detail
+        WHERE xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+    </delete>
+
+    <!--删除该悬赏任务的所有提交记录-->
+    <select id="getAllDetailIdList"  parameterType="map" resultType="long">
+        SELECT  id
+        FROM    re_xuanshang_detail
+        WHERE   xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+    </select>
+
+    <update id="removeAllDetailsByXuanshangId" parameterType="long">
+        UPDATE  re_xuanshang_detail
+        SET     is_delete = 1
+        WHERE   xuanshang_id = #{xuanshangId,jdbcType=BIGINT}
+    </update>
+
+</mapper>

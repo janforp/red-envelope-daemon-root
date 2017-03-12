@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_verify_code">
+
+    <select id="selectLatestCodeByCellphoneAndNotVerifyWithinTime" parameterType="map" resultType="string">
+        SELECT code
+        FROM re_verify_code
+        WHERE code_verify_status = #{verifyStatus,jdbcType=TINYINT}
+        AND generate_time <![CDATA[ > ]]> #{startTime,jdbcType=BIGINT}
+        AND cellphone = #{cellphone,jdbcType=VARCHAR}
+        ORDER BY id DESC
+        LIMIT 0, 1
+    </select>
+
+    <select id="selectByCellphoneAndCodeNotVerifyWithinTime" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_verify_code.SELECT_All_Column"/>
+        FROM re_verify_code
+        WHERE code_verify_status = #{codeVerifyStatus,jdbcType=TINYINT}
+        AND generate_time <![CDATA[ > ]]> #{startTime,jdbcType=BIGINT}
+        AND cellphone = #{cellphone,jdbcType=VARCHAR}
+        ORDER BY id DESC
+    </select>
+
+    <update id="updateCodeVerifyStatusById" parameterType="map">
+        UPDATE re_verify_code
+        SET code_verify_status = #{codeVerifyStatus,jdbcType=TINYINT},
+        code_verify_time   = #{codeVerifyTime,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateCodeVerifyStatusByIds" parameterType="map">
+        UPDATE re_verify_code
+        SET code_verify_status = #{codeVerifyStatus,jdbcType=TINYINT}, code_verify_time =
+        #{codeVerifyTime,jdbcType=BIGINT}
+        WHERE id IN(
+        <foreach collection="ids" item="item" index="index" separator=",">#{item}</foreach>
+        )
+    </update>
+
+</mapper>

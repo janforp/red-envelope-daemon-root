@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_withdraw_bind_zfb">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReWithdrawBindZfb">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="full_name" property="fullName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT user_id, alipay_account, full_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReWithdrawBindZfb">
+        <include refid="re_withdraw_bind_zfb.SELECT_All_Column"/>
+        FROM re_withdraw_bind_zfb
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawBindZfb">
+        DELETE FROM re_withdraw_bind_zfb
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReWithdrawBindZfb">
+        INSERT INTO re_withdraw_bind_zfb ( user_id, 
+          alipay_account, full_name )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{alipayAccount,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReWithdrawBindZfb">
+        INSERT INTO re_withdraw_bind_zfb
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                user_id,
+            <if test="alipayAccount != null">
+                alipay_account,
+            </if>
+            <if test="fullName != null">
+                full_name,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{userId,jdbcType=INTEGER},
+            <if test="alipayAccount != null">
+                #{alipayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="fullName != null">
+                #{fullName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_withdraw_bind_zfb ( user_id, 
+          alipay_account, full_name )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.alipayAccount,jdbcType=VARCHAR}, #{item.fullName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReWithdrawBindZfb">
+        UPDATE re_withdraw_bind_zfb
+        <set>
+            <if test="alipayAccount != null">
+                alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="fullName != null">
+                full_name = #{fullName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReWithdrawBindZfb">
+        UPDATE re_withdraw_bind_zfb
+        SET alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+            full_name = #{fullName,jdbcType=VARCHAR}
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

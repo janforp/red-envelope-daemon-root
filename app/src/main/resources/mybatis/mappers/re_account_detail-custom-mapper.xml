@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_account_detail">
+
+    <resultMap id="RollMap" type="com.hongbao.api.model.dto.RollInfo">
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap id="IndexRollMap" type="com.hongbao.api.model.dto.IndexRollInfo">
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="detail_type" property="detailType" jdbcType="TINYINT"/>
+        <result column="mission_type" property="missionType" jdbcType="TINYINT"/>
+        <result column="mission_subtype" property="missionSubtype" jdbcType="TINYINT"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="selectAccountDetailList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_account_detail.SELECT_All_Column"/>
+        FROM re_account_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        <if test="detailId != null">
+            AND detail_id <![CDATA[ < ]]> #{detailId, jdbcType=BIGINT}
+        </if>
+        ORDER BY detail_id DESC
+        LIMIT 0, 20
+    </select>
+
+    <select id="selectRollList" resultMap="RollMap">
+        SELECT b.nickname as nickname, a.account_money as money
+        FROM re_account_detail a
+        LEFT JOIN re_user b
+        ON a.user_id = b.user_id
+        WHERE a.detail_type = 1
+        ORDER BY a.detail_id DESC
+        LIMIT 0, 20
+    </select>
+
+    <select id="selectByUserIdAndDay" resultType="BigDecimal" parameterType="map">
+        SELECT sum(account_money)
+        FROM re_account_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND detail_type = 1
+        AND instr(detail_time, #{dayTime,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectIndexRollList" resultMap="IndexRollMap" >
+        SELECT b.nickname as nickname, a.detail_type, a.mission_type, a.mission_subtype, a.account_money as money
+        FROM re_account_detail a
+        LEFT JOIN re_user b
+        ON a.user_id = b.user_id
+        ORDER BY a.detail_id DESC
+        LIMIT 0, 20
+    </select>
+
+    <select id="selectShareByUserId" resultType="BigDecimal" parameterType="Integer">
+        SELECT sum(account_money)
+        FROM re_account_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND detail_type = 1
+        AND mission_type = 2
+        AND mission_subtype in (12, 13)
+    </select>
+
+</mapper>

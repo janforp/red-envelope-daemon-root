@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="callback_huaqiaobao">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.CallbackHuaqiaobao">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="call_type" property="callType" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_id, mobile, call_type, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.CallbackHuaqiaobao">
+        <include refid="callback_huaqiaobao.SELECT_All_Column"/>
+        FROM callback_huaqiaobao
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.CallbackHuaqiaobao">
+        DELETE FROM callback_huaqiaobao
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.CallbackHuaqiaobao">
+        INSERT INTO callback_huaqiaobao ( user_id, 
+          mobile, call_type, create_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{mobile,jdbcType=VARCHAR}, #{callType,jdbcType=TINYINT}, #{createTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.CallbackHuaqiaobao">
+        INSERT INTO callback_huaqiaobao
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="callType != null">
+                call_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="callType != null">
+                #{callType,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO callback_huaqiaobao ( user_id, 
+          mobile, call_type, create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.mobile,jdbcType=VARCHAR}, #{item.callType,jdbcType=TINYINT}, #{item.createTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.CallbackHuaqiaobao">
+        UPDATE callback_huaqiaobao
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="callType != null">
+                call_type = #{callType,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.CallbackHuaqiaobao">
+        UPDATE callback_huaqiaobao
+        SET user_id = #{userId,jdbcType=INTEGER},
+            mobile = #{mobile,jdbcType=VARCHAR},
+            call_type = #{callType,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

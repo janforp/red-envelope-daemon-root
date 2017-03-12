@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_parameter_configure">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReParameterConfigure">
+        <id column="configure_id" property="configureId" jdbcType="VARCHAR"/>
+        <result column="configure_desc" property="configureDesc" jdbcType="VARCHAR"/>
+        <result column="configure_one" property="configureOne" jdbcType="VARCHAR"/>
+        <result column="configure_two" property="configureTwo" jdbcType="VARCHAR"/>
+        <result column="configure_three" property="configureThree" jdbcType="VARCHAR"/>
+        <result column="configure_four" property="configureFour" jdbcType="VARCHAR"/>
+        <result column="configure_five" property="configureFive" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT configure_id, configure_desc, configure_one, configure_two, configure_three, 
+        configure_four, configure_five
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReParameterConfigure">
+        <include refid="re_parameter_configure.SELECT_All_Column"/>
+        FROM re_parameter_configure
+        WHERE configure_id = #{configureId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReParameterConfigure">
+        DELETE FROM re_parameter_configure
+        WHERE configure_id = #{configureId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReParameterConfigure">
+        INSERT INTO re_parameter_configure ( configure_id, 
+          configure_desc, configure_one, configure_two, 
+          configure_three, configure_four, configure_five )
+        VALUES ( #{configureId,jdbcType=VARCHAR}, 
+          #{configureDesc,jdbcType=VARCHAR}, #{configureOne,jdbcType=VARCHAR}, #{configureTwo,jdbcType=VARCHAR}, 
+          #{configureThree,jdbcType=VARCHAR}, #{configureFour,jdbcType=VARCHAR}, #{configureFive,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReParameterConfigure">
+        INSERT INTO re_parameter_configure
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                configure_id,
+            <if test="configureDesc != null">
+                configure_desc,
+            </if>
+            <if test="configureOne != null">
+                configure_one,
+            </if>
+            <if test="configureTwo != null">
+                configure_two,
+            </if>
+            <if test="configureThree != null">
+                configure_three,
+            </if>
+            <if test="configureFour != null">
+                configure_four,
+            </if>
+            <if test="configureFive != null">
+                configure_five,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{configureId,jdbcType=VARCHAR},
+            <if test="configureDesc != null">
+                #{configureDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="configureOne != null">
+                #{configureOne,jdbcType=VARCHAR},
+            </if>
+            <if test="configureTwo != null">
+                #{configureTwo,jdbcType=VARCHAR},
+            </if>
+            <if test="configureThree != null">
+                #{configureThree,jdbcType=VARCHAR},
+            </if>
+            <if test="configureFour != null">
+                #{configureFour,jdbcType=VARCHAR},
+            </if>
+            <if test="configureFive != null">
+                #{configureFive,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_parameter_configure ( configure_id, 
+          configure_desc, configure_one, configure_two, 
+          configure_three, configure_four, configure_five )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.configureId,jdbcType=VARCHAR}, 
+            #{item.configureDesc,jdbcType=VARCHAR}, #{item.configureOne,jdbcType=VARCHAR}, #{item.configureTwo,jdbcType=VARCHAR}, 
+            #{item.configureThree,jdbcType=VARCHAR}, #{item.configureFour,jdbcType=VARCHAR}, #{item.configureFive,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReParameterConfigure">
+        UPDATE re_parameter_configure
+        <set>
+            <if test="configureDesc != null">
+                configure_desc = #{configureDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="configureOne != null">
+                configure_one = #{configureOne,jdbcType=VARCHAR},
+            </if>
+            <if test="configureTwo != null">
+                configure_two = #{configureTwo,jdbcType=VARCHAR},
+            </if>
+            <if test="configureThree != null">
+                configure_three = #{configureThree,jdbcType=VARCHAR},
+            </if>
+            <if test="configureFour != null">
+                configure_four = #{configureFour,jdbcType=VARCHAR},
+            </if>
+            <if test="configureFive != null">
+                configure_five = #{configureFive,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE configure_id = #{configureId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReParameterConfigure">
+        UPDATE re_parameter_configure
+        SET configure_desc = #{configureDesc,jdbcType=VARCHAR},
+            configure_one = #{configureOne,jdbcType=VARCHAR},
+            configure_two = #{configureTwo,jdbcType=VARCHAR},
+            configure_three = #{configureThree,jdbcType=VARCHAR},
+            configure_four = #{configureFour,jdbcType=VARCHAR},
+            configure_five = #{configureFive,jdbcType=VARCHAR}
+        WHERE configure_id = #{configureId,jdbcType=VARCHAR}
+    </update>
+</mapper>

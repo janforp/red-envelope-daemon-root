@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_start_ad">
+
+    <resultMap id="StartAdMap" type="com.hongbao.api.model.dto.ReStartAdInfo">
+        <result column="ad_img" property="adImg" jdbcType="VARCHAR"/>
+        <result column="ad_url" property="adUrl" jdbcType="VARCHAR"/>
+        <result column="ad_skip" property="adSkip" jdbcType="TINYINT"/>
+        <result column="ad_duration" property="adDuration" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <select id="selectIosAdRandom" resultMap="StartAdMap">
+        SELECT ad_img, ad_url, ad_skip, ad_duration
+        FROM re_start_ad
+        WHERE ad_status = 0 OR ad_status = 2
+        ORDER BY rand()
+        LIMIT 1
+    </select>
+
+    <select id="selectAndriodAdRandom" resultMap="StartAdMap">
+        SELECT ad_img, ad_url, ad_skip, ad_duration
+        FROM re_start_ad
+        WHERE ad_status = 1 OR ad_status = 2
+        ORDER BY rand()
+        LIMIT 1
+    </select>
+
+
+</mapper>

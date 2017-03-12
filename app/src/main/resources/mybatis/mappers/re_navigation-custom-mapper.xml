@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_navigation">
+
+    <resultMap id="NavigationMap" type="com.hongbao.api.model.dto.ReNavigationInfo">
+        <result column="navigation_title" property="navigationTitle" jdbcType="VARCHAR"/>
+        <result column="navigation_img" property="navigationImg" jdbcType="VARCHAR"/>
+        <result column="navigation_url" property="navigationUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectNormalNavigation" resultMap="NavigationMap" parameterType="map">
+        SELECT navigation_title, navigation_img, navigation_url
+        FROM re_navigation
+        WHERE ( navigation_status = 2 OR navigation_status = #{platform,jdbcType=INTEGER} )
+        AND limit_version <![CDATA[ <= ]]> #{version,jdbcType=VARCHAR}
+        AND max_version >= #{version,jdbcType=VARCHAR}
+        AND ( limit_channel_name = '0' OR instr(limit_channel_name, #{channelName,jdbcType=VARCHAR}) )
+        AND ( limit_package_name = '0' OR instr(limit_package_name, #{packageName,jdbcType=VARCHAR}) )
+        ORDER BY navigation_order ASC
+    </select>
+
+    <select id="selectVerifyingNavigation" resultMap="NavigationMap" parameterType="map">
+        SELECT navigation_title, navigation_img, navigation_url
+        FROM re_navigation
+        WHERE ( navigation_status = 2 OR navigation_status = #{platform,jdbcType=INTEGER} )
+        AND limit_version <![CDATA[ <= ]]> #{version,jdbcType=VARCHAR}
+        AND max_version >= #{version,jdbcType=VARCHAR}
+        AND ( limit_channel_name = '0' OR instr(limit_channel_name, #{channelName,jdbcType=VARCHAR}) )
+        AND ( limit_package_name = '0' OR instr(limit_package_name, #{packageName,jdbcType=VARCHAR}) )
+        AND is_show = 1
+        ORDER BY navigation_order ASC
+    </select>
+
+</mapper>

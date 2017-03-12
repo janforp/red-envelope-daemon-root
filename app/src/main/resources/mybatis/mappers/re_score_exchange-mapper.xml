@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_score_exchange">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReScoreExchange">
+        <id column="exchange_id" property="exchangeId" jdbcType="INTEGER"/>
+        <result column="exchange_img" property="exchangeImg" jdbcType="VARCHAR"/>
+        <result column="exchange_name" property="exchangeName" jdbcType="VARCHAR"/>
+        <result column="exchange_desc" property="exchangeDesc" jdbcType="VARCHAR"/>
+        <result column="exchange_url" property="exchangeUrl" jdbcType="VARCHAR"/>
+        <result column="exchange_status" property="exchangeStatus" jdbcType="TINYINT"/>
+        <result column="exchange_order" property="exchangeOrder" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT exchange_id, exchange_img, exchange_name, exchange_desc, exchange_url, 
+        exchange_status, exchange_order
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReScoreExchange">
+        <include refid="re_score_exchange.SELECT_All_Column"/>
+        FROM re_score_exchange
+        WHERE exchange_id = #{exchangeId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReScoreExchange">
+        DELETE FROM re_score_exchange
+        WHERE exchange_id = #{exchangeId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReScoreExchange">
+        INSERT INTO re_score_exchange ( exchange_img, 
+          exchange_name, exchange_desc, exchange_url, 
+          exchange_status, exchange_order )
+        VALUES ( #{exchangeImg,jdbcType=VARCHAR}, 
+          #{exchangeName,jdbcType=VARCHAR}, #{exchangeDesc,jdbcType=VARCHAR}, #{exchangeUrl,jdbcType=VARCHAR}, 
+          #{exchangeStatus,jdbcType=TINYINT}, #{exchangeOrder,jdbcType=TINYINT} )
+        <selectKey keyProperty="exchangeId" resultType="int">
+            SELECT LAST_INSERT_ID() AS exchangeId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReScoreExchange">
+        INSERT INTO re_score_exchange
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="exchangeImg != null">
+                exchange_img,
+            </if>
+            <if test="exchangeName != null">
+                exchange_name,
+            </if>
+            <if test="exchangeDesc != null">
+                exchange_desc,
+            </if>
+            <if test="exchangeUrl != null">
+                exchange_url,
+            </if>
+            <if test="exchangeStatus != null">
+                exchange_status,
+            </if>
+            <if test="exchangeOrder != null">
+                exchange_order,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="exchangeImg != null">
+                #{exchangeImg,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeName != null">
+                #{exchangeName,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeDesc != null">
+                #{exchangeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeUrl != null">
+                #{exchangeUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeStatus != null">
+                #{exchangeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="exchangeOrder != null">
+                #{exchangeOrder,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="exchangeId" resultType="int">
+            SELECT LAST_INSERT_ID() AS exchangeId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_score_exchange ( exchange_img, 
+          exchange_name, exchange_desc, exchange_url, 
+          exchange_status, exchange_order )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.exchangeImg,jdbcType=VARCHAR}, 
+            #{item.exchangeName,jdbcType=VARCHAR}, #{item.exchangeDesc,jdbcType=VARCHAR}, #{item.exchangeUrl,jdbcType=VARCHAR}, 
+            #{item.exchangeStatus,jdbcType=TINYINT}, #{item.exchangeOrder,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReScoreExchange">
+        UPDATE re_score_exchange
+        <set>
+            <if test="exchangeImg != null">
+                exchange_img = #{exchangeImg,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeName != null">
+                exchange_name = #{exchangeName,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeDesc != null">
+                exchange_desc = #{exchangeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeUrl != null">
+                exchange_url = #{exchangeUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeStatus != null">
+                exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="exchangeOrder != null">
+                exchange_order = #{exchangeOrder,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE exchange_id = #{exchangeId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReScoreExchange">
+        UPDATE re_score_exchange
+        SET exchange_img = #{exchangeImg,jdbcType=VARCHAR},
+            exchange_name = #{exchangeName,jdbcType=VARCHAR},
+            exchange_desc = #{exchangeDesc,jdbcType=VARCHAR},
+            exchange_url = #{exchangeUrl,jdbcType=VARCHAR},
+            exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+            exchange_order = #{exchangeOrder,jdbcType=TINYINT}
+        WHERE exchange_id = #{exchangeId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_load_html_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReLoadHtmlDetail">
+        <id column="detail_id" property="detailId" jdbcType="BIGINT"/>
+        <result column="html_id" property="htmlId" jdbcType="BIGINT"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT detail_id, html_id, device_id, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReLoadHtmlDetail">
+        <include refid="re_load_html_detail.SELECT_All_Column"/>
+        FROM re_load_html_detail
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReLoadHtmlDetail">
+        DELETE FROM re_load_html_detail
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReLoadHtmlDetail">
+        INSERT INTO re_load_html_detail ( html_id, 
+          device_id, create_time )
+        VALUES ( #{htmlId,jdbcType=BIGINT}, 
+          #{deviceId,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="detailId" resultType="long">
+            SELECT LAST_INSERT_ID() AS detailId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReLoadHtmlDetail">
+        INSERT INTO re_load_html_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="htmlId != null">
+                html_id,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="htmlId != null">
+                #{htmlId,jdbcType=BIGINT},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="detailId" resultType="long">
+            SELECT LAST_INSERT_ID() AS detailId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_load_html_detail ( html_id, 
+          device_id, create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.htmlId,jdbcType=BIGINT}, 
+            #{item.deviceId,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReLoadHtmlDetail">
+        UPDATE re_load_html_detail
+        <set>
+            <if test="htmlId != null">
+                html_id = #{htmlId,jdbcType=BIGINT},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReLoadHtmlDetail">
+        UPDATE re_load_html_detail
+        SET html_id = #{htmlId,jdbcType=BIGINT},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR}
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </update>
+</mapper>

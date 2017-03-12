@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_integral_wall">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReIntegralWall">
+        <id column="wall_id" property="wallId" jdbcType="INTEGER"/>
+        <result column="wall_title" property="wallTitle" jdbcType="VARCHAR"/>
+        <result column="wall_desc" property="wallDesc" jdbcType="VARCHAR"/>
+        <result column="wall_img" property="wallImg" jdbcType="VARCHAR"/>
+        <result column="wall_status" property="wallStatus" jdbcType="TINYINT"/>
+        <result column="wall_url" property="wallUrl" jdbcType="VARCHAR"/>
+        <result column="wall_order" property="wallOrder" jdbcType="TINYINT"/>
+        <result column="limit_version" property="limitVersion" jdbcType="VARCHAR"/>
+        <result column="max_version" property="maxVersion" jdbcType="VARCHAR"/>
+        <result column="limit_channel_name" property="limitChannelName" jdbcType="VARCHAR"/>
+        <result column="limit_package_name" property="limitPackageName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT wall_id, wall_title, wall_desc, wall_img, wall_status, 
+        wall_url, wall_order, limit_version, max_version, limit_channel_name, 
+        limit_package_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReIntegralWall">
+        <include refid="re_integral_wall.SELECT_All_Column"/>
+        FROM re_integral_wall
+        WHERE wall_id = #{wallId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReIntegralWall">
+        DELETE FROM re_integral_wall
+        WHERE wall_id = #{wallId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReIntegralWall">
+        INSERT INTO re_integral_wall ( wall_title, 
+          wall_desc, wall_img, wall_status, 
+          wall_url, wall_order, limit_version, 
+          max_version, limit_channel_name, limit_package_name )
+        VALUES ( #{wallTitle,jdbcType=VARCHAR}, 
+          #{wallDesc,jdbcType=VARCHAR}, #{wallImg,jdbcType=VARCHAR}, #{wallStatus,jdbcType=TINYINT}, 
+          #{wallUrl,jdbcType=VARCHAR}, #{wallOrder,jdbcType=TINYINT}, #{limitVersion,jdbcType=VARCHAR}, 
+          #{maxVersion,jdbcType=VARCHAR}, #{limitChannelName,jdbcType=VARCHAR}, #{limitPackageName,jdbcType=VARCHAR} )
+        <selectKey keyProperty="wallId" resultType="int">
+            SELECT LAST_INSERT_ID() AS wallId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReIntegralWall">
+        INSERT INTO re_integral_wall
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="wallTitle != null">
+                wall_title,
+            </if>
+            <if test="wallDesc != null">
+                wall_desc,
+            </if>
+            <if test="wallImg != null">
+                wall_img,
+            </if>
+            <if test="wallStatus != null">
+                wall_status,
+            </if>
+            <if test="wallUrl != null">
+                wall_url,
+            </if>
+            <if test="wallOrder != null">
+                wall_order,
+            </if>
+            <if test="limitVersion != null">
+                limit_version,
+            </if>
+            <if test="maxVersion != null">
+                max_version,
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name,
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="wallTitle != null">
+                #{wallTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="wallDesc != null">
+                #{wallDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="wallImg != null">
+                #{wallImg,jdbcType=VARCHAR},
+            </if>
+            <if test="wallStatus != null">
+                #{wallStatus,jdbcType=TINYINT},
+            </if>
+            <if test="wallUrl != null">
+                #{wallUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="wallOrder != null">
+                #{wallOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="wallId" resultType="int">
+            SELECT LAST_INSERT_ID() AS wallId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_integral_wall ( wall_title, 
+          wall_desc, wall_img, wall_status, 
+          wall_url, wall_order, limit_version, 
+          max_version, limit_channel_name, limit_package_name )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.wallTitle,jdbcType=VARCHAR}, 
+            #{item.wallDesc,jdbcType=VARCHAR}, #{item.wallImg,jdbcType=VARCHAR}, #{item.wallStatus,jdbcType=TINYINT}, 
+            #{item.wallUrl,jdbcType=VARCHAR}, #{item.wallOrder,jdbcType=TINYINT}, #{item.limitVersion,jdbcType=VARCHAR}, 
+            #{item.maxVersion,jdbcType=VARCHAR}, #{item.limitChannelName,jdbcType=VARCHAR}, #{item.limitPackageName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReIntegralWall">
+        UPDATE re_integral_wall
+        <set>
+            <if test="wallTitle != null">
+                wall_title = #{wallTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="wallDesc != null">
+                wall_desc = #{wallDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="wallImg != null">
+                wall_img = #{wallImg,jdbcType=VARCHAR},
+            </if>
+            <if test="wallStatus != null">
+                wall_status = #{wallStatus,jdbcType=TINYINT},
+            </if>
+            <if test="wallUrl != null">
+                wall_url = #{wallUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="wallOrder != null">
+                wall_order = #{wallOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                limit_version = #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                max_version = #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE wall_id = #{wallId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReIntegralWall">
+        UPDATE re_integral_wall
+        SET wall_title = #{wallTitle,jdbcType=VARCHAR},
+            wall_desc = #{wallDesc,jdbcType=VARCHAR},
+            wall_img = #{wallImg,jdbcType=VARCHAR},
+            wall_status = #{wallStatus,jdbcType=TINYINT},
+            wall_url = #{wallUrl,jdbcType=VARCHAR},
+            wall_order = #{wallOrder,jdbcType=TINYINT},
+            limit_version = #{limitVersion,jdbcType=VARCHAR},
+            max_version = #{maxVersion,jdbcType=VARCHAR},
+            limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            limit_package_name = #{limitPackageName,jdbcType=VARCHAR}
+        WHERE wall_id = #{wallId,jdbcType=INTEGER}
+    </update>
+</mapper>

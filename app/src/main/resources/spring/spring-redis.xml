@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <!-- requestId缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_requestId" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${requestId.redis.maxTotal}"/>
+        <property name="minIdle" value="${requestId.redis.minIdle}"/>
+        <property name="maxIdle" value="${requestId.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${requestId.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${requestId.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${requestId.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${requestId.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${requestId.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${requestId.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_requestId" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${requestId.redis.host}"/>
+        <property name="port" value="${requestId.redis.port}"/>
+        <!--<property name="password" value="${requestId.redis.password}"/>-->
+        <property name="timeout" value="${requestId.redis.timeout}"/>
+        <property name="database" value="${requestId.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_requestId"/>
+    </bean>
+    <bean id="requestIdCacheRedisTemplate" class="com.wujie.common.redis.StringKeyRedisTemplate">
+        <constructor-arg ref="cacheJedisConnectionFactory_requestId"/>
+    </bean>
+    <!-- requestId缓存配置 - END-->
+
+
+    <!-- SESSION项目缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_session" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${session.cache.redis.maxTotal}"/>
+        <property name="minIdle" value="${session.cache.redis.minIdle}"/>
+        <property name="maxIdle" value="${session.cache.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${session.cache.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${session.cache.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${session.cache.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${session.cache.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${session.cache.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${session.cache.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_session"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${session.cache.redis.host}"/>
+        <property name="port" value="${session.cache.redis.port}"/>
+        <!--<property name="password" value="${session.cache.redis.password}"/>-->
+        <property name="timeout" value="${session.cache.redis.timeout}"/>
+        <property name="database" value="${session.cache.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_session"/>
+    </bean>
+    <bean id="cacheRedisTemplate_session" class="com.wujie.common.redis.StringKeyRedisTemplate">
+        <constructor-arg ref="cacheJedisConnectionFactory_session"/>
+    </bean>
+    <!-- SESSION项目缓存配置 - END-->
+
+
+    <!-- 红包缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_hongbao" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${hongbao.redis.maxTotal}"/>
+        <property name="minIdle" value="${hongbao.redis.minIdle}"/>
+        <property name="maxIdle" value="${hongbao.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${hongbao.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${hongbao.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${hongbao.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${hongbao.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${hongbao.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${hongbao.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_hongbao"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <!--该redis在负载均衡的时候只允许存在一份数据-->
+        <property name="hostName" value="${hongbao.redis.host}"/>
+        <property name="port" value="${hongbao.redis.port}"/>
+        <!--<property name="password" value="${session.cache.redis.password}"/>-->
+        <property name="timeout" value="${hongbao.redis.timeout}"/>
+        <property name="database" value="${hongbao.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_hongbao"/>
+    </bean>
+    <bean id="cacheRedisTemplate_hongbao" class="com.hongbao.api.util.redis.StringKeyRedisTemplateUtil">
+        <constructor-arg ref="cacheJedisConnectionFactory_hongbao"/>
+    </bean>
+    <bean id="getHongbao" class="org.springframework.data.redis.core.script.DefaultRedisScript">
+        <property name="location" value="WEB-INF/lua/hongbao.lua"/>
+        <property name="resultType" value="java.lang.String"/>
+    </bean>
+    <!-- 红包缓存配置 - END-->
+
+
+    <!-- user缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_user" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${user.redis.maxTotal}"/>
+        <property name="minIdle" value="${user.redis.minIdle}"/>
+        <property name="maxIdle" value="${user.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${user.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${user.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${user.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${user.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${user.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${user.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_user" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${user.redis.host}"/>
+        <property name="port" value="${user.redis.port}"/>
+        <!--<property name="password" value="${user.redis.password}"/>-->
+        <property name="timeout" value="${user.redis.timeout}"/>
+        <property name="database" value="${user.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_user"/>
+    </bean>
+    <bean id="userCacheRedisTemplate" class="com.wujie.common.redis.StringKeyRedisTemplate">
+        <constructor-arg ref="cacheJedisConnectionFactory_user"/>
+    </bean>
+    <!-- user缓存配置 - END-->
+
+
+    <!-- 图形验证码缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_captcha" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${captcha.redis.maxTotal}"/>
+        <property name="minIdle" value="${captcha.redis.minIdle}"/>
+        <property name="maxIdle" value="${captcha.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${captcha.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${captcha.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${captcha.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${captcha.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${captcha.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${captcha.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_captcha" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${captcha.redis.host}"/>
+        <property name="port" value="${captcha.redis.port}"/>
+        <!--<property name="password" value="${captcha.redis.password}"/>-->
+        <property name="timeout" value="${captcha.redis.timeout}"/>
+        <property name="database" value="${captcha.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_captcha"/>
+    </bean>
+    <bean id="captchaCacheRedisTemplate" class="com.wujie.common.redis.StringKeyRedisTemplate">
+        <constructor-arg ref="cacheJedisConnectionFactory_captcha"/>
+    </bean>
+    <!-- 图形验证码缓存配置 - END-->
+
+
+    <!-- banner缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_banner" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${banner.redis.maxTotal}"/>
+        <property name="minIdle" value="${banner.redis.minIdle}"/>
+        <property name="maxIdle" value="${banner.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${banner.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${banner.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${banner.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${banner.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${banner.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${banner.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_banner"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${banner.redis.host}"/>
+        <property name="port" value="${banner.redis.port}"/>
+        <!--<property name="password" value="${banner.redis.password}"/>-->
+        <property name="timeout" value="${banner.redis.timeout}"/>
+        <property name="database" value="${banner.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_banner"/>
+    </bean>
+    <bean id="cacheRedisTemplate_banner" class="com.wujie.common.redis.StringKeyRedisTemplate">
+        <constructor-arg ref="cacheJedisConnectionFactory_banner"/>
+    </bean>
+    <!-- banner缓存配置 - END-->
+
+    <!-- welfare缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_welfare" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${welfare.redis.maxTotal}"/>
+        <property name="minIdle" value="${welfare.redis.minIdle}"/>
+        <property name="maxIdle" value="${welfare.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${welfare.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${welfare.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${welfare.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${welfare.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${welfare.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${welfare.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_welfare"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${welfare.redis.host}"/>
+        <property name="port" value="${welfare.redis.port}"/>
+        <!--<property name="password" value="${banner.redis.password}"/>-->
+        <property name="timeout" value="${welfare.redis.timeout}"/>
+        <property name="database" value="${welfare.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_welfare"/>
+    </bean>
+    <bean id="cacheRedisTemplate_welfare" class="com.hongbao.api.util.redis.StringKeyRedisTemplateUtil">
+        <constructor-arg ref="cacheJedisConnectionFactory_welfare"/>
+    </bean>
+    <!-- welfare缓存配置 - END-->
+
+
+    <!-- version缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_version" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${version.redis.maxTotal}"/>
+        <property name="minIdle" value="${version.redis.minIdle}"/>
+        <property name="maxIdle" value="${version.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${version.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${version.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${version.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${version.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${version.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${version.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_version"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${version.redis.host}"/>
+        <property name="port" value="${version.redis.port}"/>
+        <!--<property name="password" value="${banner.redis.password}"/>-->
+        <property name="timeout" value="${version.redis.timeout}"/>
+        <property name="database" value="${version.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_version"/>
+    </bean>
+    <bean id="cacheRedisTemplate_version" class="com.wujie.common.redis.StringKeyRedisTemplate">
+        <constructor-arg ref="cacheJedisConnectionFactory_version"/>
+    </bean>
+    <!-- version缓存配置 - END-->
+
+
+    <!-- android积分墙缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_android" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${android.redis.maxTotal}"/>
+        <property name="minIdle" value="${android.redis.minIdle}"/>
+        <property name="maxIdle" value="${android.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${android.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${android.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${android.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${android.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${android.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${android.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_android"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${android.redis.host}"/>
+        <property name="port" value="${android.redis.port}"/>
+        <!--<property name="password" value="${banner.redis.password}"/>-->
+        <property name="timeout" value="${android.redis.timeout}"/>
+        <property name="database" value="${android.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_android"/>
+    </bean>
+    <bean id="cacheRedisTemplate_android" class="com.hongbao.api.util.redis.StringKeyRedisTemplateUtil">
+        <constructor-arg ref="cacheJedisConnectionFactory_android"/>
+    </bean>
+    <!-- android积分墙缓存配置 - END-->
+
+    <!-- 悬赏任务缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_xuanshang" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${xuanshang.redis.maxTotal}"/>
+        <property name="minIdle" value="${xuanshang.redis.minIdle}"/>
+        <property name="maxIdle" value="${xuanshang.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${xuanshang.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${xuanshang.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${xuanshang.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${xuanshang.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${xuanshang.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${xuanshang.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_xuanshang"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${xuanshang.redis.host}"/>
+        <property name="port" value="${xuanshang.redis.port}"/>
+        <!--<property name="password" value="${banner.redis.password}"/>-->
+        <property name="timeout" value="${xuanshang.redis.timeout}"/>
+        <property name="database" value="${xuanshang.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_android"/>
+    </bean>
+    <bean id="cacheRedisTemplate_xuanshang" class="com.hongbao.api.util.redis.StringKeyRedisTemplateUtil">
+        <constructor-arg ref="cacheJedisConnectionFactory_xuanshang"/>
+    </bean>
+    <!-- 悬赏任务缓存配置 - END-->
+
+
+    <!-- ios任务缓存配置 - START-->
+    <!-- jedis pool配置 -->
+    <bean id="cacheJedisPoolConfig_ios" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${ios.redis.maxTotal}"/>
+        <property name="minIdle" value="${ios.redis.minIdle}"/>
+        <property name="maxIdle" value="${ios.redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${ios.redis.maxWaitMillis}"/>
+        <property name="blockWhenExhausted" value="${ios.redis.blockWhenExhausted}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${ios.redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${ios.redis.minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${ios.redis.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${ios.redis.testWhileIdle}"/>
+    </bean>
+    <!-- spring data redis -->
+    <bean id="cacheJedisConnectionFactory_ios"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${ios.redis.host}"/>
+        <property name="port" value="${ios.redis.port}"/>
+        <!--<property name="password" value="${ios.redis.password}"/>-->
+        <property name="timeout" value="${ios.redis.timeout}"/>
+        <property name="database" value="${ios.redis.database}"></property>
+        <constructor-arg index="0" ref="cacheJedisPoolConfig_ios"/>
+    </bean>
+    <bean id="cacheRedisTemplate_ios" class="com.hongbao.api.util.redis.StringKeyRedisTemplateUtil">
+        <constructor-arg ref="cacheJedisConnectionFactory_ios"/>
+    </bean>
+    <!-- ios任务缓存配置 - END-->
+
+</beans>
+
+

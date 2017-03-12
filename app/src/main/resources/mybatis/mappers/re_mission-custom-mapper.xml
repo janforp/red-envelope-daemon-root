@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_mission">
+
+    <resultMap id="MissionMap" type="com.hongbao.api.model.dto.ReMissionInfo">
+        <id column="mission_id" property="missionId" jdbcType="INTEGER"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="mission_img" property="missionImg" jdbcType="VARCHAR"/>
+        <result column="mission_reward" property="missionReward" jdbcType="VARCHAR"/>
+        <result column="mission_status" property="missionStatus" jdbcType="TINYINT"/>
+        <result column="merchant_detail" property="merchantDetail" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectIosMission" resultMap="MissionMap">
+        SELECT mission_id, merchant_name, mission_img, mission_reward, mission_status, merchant_detail
+        FROM re_mission
+        WHERE show_or_not = 0 OR show_or_not = 2
+        ORDER BY mission_order DESC, mission_id DESC
+    </select>
+
+    <select id="selectAndriodMission" resultMap="MissionMap">
+        SELECT mission_id, merchant_name, mission_img, mission_reward, mission_status, merchant_detail
+        FROM re_mission
+        WHERE show_or_not = 1 OR show_or_not = 2
+        ORDER BY mission_order DESC, mission_id DESC
+    </select>
+
+    <select id="selectIndexIosMission" resultMap="MissionMap">
+        SELECT mission_id, merchant_name, mission_img, mission_reward, mission_status, merchant_detail
+        FROM re_mission
+        WHERE show_or_not = 0 OR show_or_not = 2
+        ORDER BY mission_order DESC, mission_id DESC
+        LIMIT 0, 6
+    </select>
+
+    <select id="selectIndexAndriodMission" resultMap="MissionMap">
+        SELECT mission_id, merchant_name, mission_img, mission_reward, mission_status, merchant_detail
+        FROM re_mission
+        WHERE show_or_not = 1 OR show_or_not = 2
+        ORDER BY mission_order DESC, mission_id DESC
+        LIMIT 0, 6
+    </select>
+
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_welfare_type">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReWelfareType">
+        <id column="type_id" property="typeId" jdbcType="TINYINT"/>
+        <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+        <result column="sub_type_name" property="subTypeName" jdbcType="VARCHAR"/>
+        <result column="type_img" property="typeImg" jdbcType="VARCHAR"/>
+        <result column="type_status" property="typeStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT type_id, type_name, sub_type_name, type_img, type_status, 
+        create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReWelfareType">
+        <include refid="re_welfare_type.SELECT_All_Column"/>
+        FROM re_welfare_type
+        WHERE type_id = #{typeId,jdbcType=TINYINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReWelfareType">
+        DELETE FROM re_welfare_type
+        WHERE type_id = #{typeId,jdbcType=TINYINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReWelfareType">
+        INSERT INTO re_welfare_type ( type_name, 
+          sub_type_name, type_img, type_status, 
+          create_time, update_time )
+        VALUES ( #{typeName,jdbcType=VARCHAR}, 
+          #{subTypeName,jdbcType=VARCHAR}, #{typeImg,jdbcType=VARCHAR}, #{typeStatus,jdbcType=TINYINT}, 
+          #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="typeId" resultType="int">
+            SELECT LAST_INSERT_ID() AS typeId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReWelfareType">
+        INSERT INTO re_welfare_type
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="typeName != null">
+                type_name,
+            </if>
+            <if test="subTypeName != null">
+                sub_type_name,
+            </if>
+            <if test="typeImg != null">
+                type_img,
+            </if>
+            <if test="typeStatus != null">
+                type_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="subTypeName != null">
+                #{subTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeImg != null">
+                #{typeImg,jdbcType=VARCHAR},
+            </if>
+            <if test="typeStatus != null">
+                #{typeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="typeId" resultType="int">
+            SELECT LAST_INSERT_ID() AS typeId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_welfare_type ( type_name, 
+          sub_type_name, type_img, type_status, 
+          create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.typeName,jdbcType=VARCHAR}, 
+            #{item.subTypeName,jdbcType=VARCHAR}, #{item.typeImg,jdbcType=VARCHAR}, #{item.typeStatus,jdbcType=TINYINT}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReWelfareType">
+        UPDATE re_welfare_type
+        <set>
+            <if test="typeName != null">
+                type_name = #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="subTypeName != null">
+                sub_type_name = #{subTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeImg != null">
+                type_img = #{typeImg,jdbcType=VARCHAR},
+            </if>
+            <if test="typeStatus != null">
+                type_status = #{typeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE type_id = #{typeId,jdbcType=TINYINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReWelfareType">
+        UPDATE re_welfare_type
+        SET type_name = #{typeName,jdbcType=VARCHAR},
+            sub_type_name = #{subTypeName,jdbcType=VARCHAR},
+            type_img = #{typeImg,jdbcType=VARCHAR},
+            type_status = #{typeStatus,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE type_id = #{typeId,jdbcType=TINYINT}
+    </update>
+</mapper>

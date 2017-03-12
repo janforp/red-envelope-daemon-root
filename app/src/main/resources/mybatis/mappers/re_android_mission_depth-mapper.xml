@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_mission_depth">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAndroidMissionDepth">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="depth_id" property="depthId" jdbcType="INTEGER"/>
+        <result column="depth_money" property="depthMoney" jdbcType="DECIMAL"/>
+        <result column="depth_desc" property="depthDesc" jdbcType="VARCHAR"/>
+        <result column="depth_start_time" property="depthStartTime" jdbcType="VARCHAR"/>
+        <result column="depth_keep" property="depthKeep" jdbcType="DECIMAL"/>
+        <result column="depth_time" property="depthTime" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, depth_id, depth_money, depth_desc, depth_start_time, 
+        depth_keep, depth_time, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAndroidMissionDepth">
+        <include refid="re_android_mission_depth.SELECT_All_Column"/>
+        FROM re_android_mission_depth
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidMissionDepth">
+        DELETE FROM re_android_mission_depth
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAndroidMissionDepth">
+        INSERT INTO re_android_mission_depth ( mission_id, 
+          depth_id, depth_money, depth_desc, 
+          depth_start_time, depth_keep, depth_time, 
+          create_time, update_time )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{depthId,jdbcType=INTEGER}, #{depthMoney,jdbcType=DECIMAL}, #{depthDesc,jdbcType=VARCHAR}, 
+          #{depthStartTime,jdbcType=VARCHAR}, #{depthKeep,jdbcType=DECIMAL}, #{depthTime,jdbcType=INTEGER}, 
+          #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAndroidMissionDepth">
+        INSERT INTO re_android_mission_depth
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                depth_id,
+            <if test="depthMoney != null">
+                depth_money,
+            </if>
+            <if test="depthDesc != null">
+                depth_desc,
+            </if>
+            <if test="depthStartTime != null">
+                depth_start_time,
+            </if>
+            <if test="depthKeep != null">
+                depth_keep,
+            </if>
+            <if test="depthTime != null">
+                depth_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{depthId,jdbcType=INTEGER},
+            <if test="depthMoney != null">
+                #{depthMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="depthDesc != null">
+                #{depthDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="depthStartTime != null">
+                #{depthStartTime,jdbcType=VARCHAR},
+            </if>
+            <if test="depthKeep != null">
+                #{depthKeep,jdbcType=DECIMAL},
+            </if>
+            <if test="depthTime != null">
+                #{depthTime,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_android_mission_depth ( mission_id, 
+          depth_id, depth_money, depth_desc, 
+          depth_start_time, depth_keep, depth_time, 
+          create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.depthId,jdbcType=INTEGER}, #{item.depthMoney,jdbcType=DECIMAL}, #{item.depthDesc,jdbcType=VARCHAR}, 
+            #{item.depthStartTime,jdbcType=VARCHAR}, #{item.depthKeep,jdbcType=DECIMAL}, #{item.depthTime,jdbcType=INTEGER}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAndroidMissionDepth">
+        UPDATE re_android_mission_depth
+        <set>
+            <if test="depthMoney != null">
+                depth_money = #{depthMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="depthDesc != null">
+                depth_desc = #{depthDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="depthStartTime != null">
+                depth_start_time = #{depthStartTime,jdbcType=VARCHAR},
+            </if>
+            <if test="depthKeep != null">
+                depth_keep = #{depthKeep,jdbcType=DECIMAL},
+            </if>
+            <if test="depthTime != null">
+                depth_time = #{depthTime,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidMissionDepth">
+        UPDATE re_android_mission_depth
+        SET depth_money = #{depthMoney,jdbcType=DECIMAL},
+            depth_desc = #{depthDesc,jdbcType=VARCHAR},
+            depth_start_time = #{depthStartTime,jdbcType=VARCHAR},
+            depth_keep = #{depthKeep,jdbcType=DECIMAL},
+            depth_time = #{depthTime,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+    </update>
+</mapper>

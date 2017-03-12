@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_article_click_detail">
+
+    <select id="selectCountByArticleIdAndUserId" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM re_article_click_detail
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_article_click_detail.SELECT_All_Column"/>
+        FROM re_article_click_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        Limit 1
+    </select>
+
+</mapper>

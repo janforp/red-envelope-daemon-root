@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_mission_depth_keep">
+
+    <select id="selectRealNumLock" resultType="int" parameterType="map">
+        SELECT real_num
+        FROM re_android_mission_depth_keep
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+        AND data_day = #{dataDay,jdbcType=VARCHAR}
+        FOR UPDATE
+    </select>
+
+</mapper>

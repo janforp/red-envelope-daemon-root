@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_receive_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReReceiveDetail">
+        <id column="detail_id" property="detailId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="red_type" property="redType" jdbcType="TINYINT"/>
+        <result column="red_id" property="redId" jdbcType="INTEGER"/>
+        <result column="red_money" property="redMoney" jdbcType="DECIMAL"/>
+        <result column="detail_time" property="detailTime" jdbcType="VARCHAR"/>
+        <result column="red_order" property="redOrder" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT detail_id, user_id, red_type, red_id, red_money, 
+        detail_time, red_order
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReReceiveDetail">
+        <include refid="re_receive_detail.SELECT_All_Column"/>
+        FROM re_receive_detail
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReReceiveDetail">
+        DELETE FROM re_receive_detail
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReReceiveDetail">
+        INSERT INTO re_receive_detail ( user_id, 
+          red_type, red_id, red_money, 
+          detail_time, red_order )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{redType,jdbcType=TINYINT}, #{redId,jdbcType=INTEGER}, #{redMoney,jdbcType=DECIMAL}, 
+          #{detailTime,jdbcType=VARCHAR}, #{redOrder,jdbcType=INTEGER} )
+        <selectKey keyProperty="detailId" resultType="long">
+            SELECT LAST_INSERT_ID() AS detailId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReReceiveDetail">
+        INSERT INTO re_receive_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="redType != null">
+                red_type,
+            </if>
+            <if test="redId != null">
+                red_id,
+            </if>
+            <if test="redMoney != null">
+                red_money,
+            </if>
+            <if test="detailTime != null">
+                detail_time,
+            </if>
+            <if test="redOrder != null">
+                red_order,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="redType != null">
+                #{redType,jdbcType=TINYINT},
+            </if>
+            <if test="redId != null">
+                #{redId,jdbcType=INTEGER},
+            </if>
+            <if test="redMoney != null">
+                #{redMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="detailTime != null">
+                #{detailTime,jdbcType=VARCHAR},
+            </if>
+            <if test="redOrder != null">
+                #{redOrder,jdbcType=INTEGER},
+            </if>
+        </trim>
+        <selectKey keyProperty="detailId" resultType="long">
+            SELECT LAST_INSERT_ID() AS detailId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_receive_detail ( user_id, 
+          red_type, red_id, red_money, 
+          detail_time, red_order )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.redType,jdbcType=TINYINT}, #{item.redId,jdbcType=INTEGER}, #{item.redMoney,jdbcType=DECIMAL}, 
+            #{item.detailTime,jdbcType=VARCHAR}, #{item.redOrder,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReReceiveDetail">
+        UPDATE re_receive_detail
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="redType != null">
+                red_type = #{redType,jdbcType=TINYINT},
+            </if>
+            <if test="redId != null">
+                red_id = #{redId,jdbcType=INTEGER},
+            </if>
+            <if test="redMoney != null">
+                red_money = #{redMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="detailTime != null">
+                detail_time = #{detailTime,jdbcType=VARCHAR},
+            </if>
+            <if test="redOrder != null">
+                red_order = #{redOrder,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReReceiveDetail">
+        UPDATE re_receive_detail
+        SET user_id = #{userId,jdbcType=INTEGER},
+            red_type = #{redType,jdbcType=TINYINT},
+            red_id = #{redId,jdbcType=INTEGER},
+            red_money = #{redMoney,jdbcType=DECIMAL},
+            detail_time = #{detailTime,jdbcType=VARCHAR},
+            red_order = #{redOrder,jdbcType=INTEGER}
+        WHERE detail_id = #{detailId,jdbcType=BIGINT}
+    </update>
+</mapper>

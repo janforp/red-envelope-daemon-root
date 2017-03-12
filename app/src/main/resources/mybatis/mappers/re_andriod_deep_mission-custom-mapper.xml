@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_andriod_deep_mission">
+
+    <resultMap id="WallMap" type="com.hongbao.api.model.ReAndriodIntegralWall">
+        <id column="wall_id" property="wallId" jdbcType="BIGINT"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="app_url" property="appUrl" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="app_package" property="appPackage" jdbcType="VARCHAR"/>
+        <result column="app_desc" property="appDesc" jdbcType="VARCHAR"/>
+        <result column="app_size" property="appSize" jdbcType="VARCHAR"/>
+        <result column="app_label" property="appLabel" jdbcType="VARCHAR"/>
+        <result column="app_introduce" property="appIntroduce" jdbcType="VARCHAR"/>
+        <result column="app_img" property="appImg" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="is_limit_num" property="isLimitNum" jdbcType="TINYINT"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="step_one_money" property="stepOneMoney" jdbcType="DECIMAL"/>
+        <result column="step_one_desc" property="stepOneDesc" jdbcType="VARCHAR"/>
+        <result column="step_one_second" property="stepOneSecond" jdbcType="INTEGER"/>
+        <result column="step_two_money" property="stepTwoMoney" jdbcType="DECIMAL"/>
+        <result column="step_two_day" property="stepTwoDay" jdbcType="INTEGER"/>
+        <result column="step_two_second" property="stepTwoSecond" jdbcType="INTEGER"/>
+        <result column="wall_weight" property="wallWeight" jdbcType="TINYINT"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectUnderwayByUserId" resultMap="WallMap" parameterType="map">
+        SELECT b.wall_id, b.app_name, b.app_url, b.app_icon, b.app_package, b.step_two_money, b.step_two_second, b.wall_weight
+        FROM re_andriod_deep_mission a, re_andriod_integral_wall b
+        WHERE a.user_id = #{userId,jdbcType=INTEGER}
+        AND (a.last_finish_time is null OR a.last_finish_time != #{dayTime,jdbcType=VARCHAR})
+        AND a.start_time <![CDATA[ <= ]]> #{dayTime,jdbcType=VARCHAR}
+        AND a.end_time >= #{dayTime,jdbcType=VARCHAR}
+        AND b.wall_id = a.wall_id
+        ORDER BY b.wall_weight DESC
+    </select>
+
+    <select id="selectLockByWallId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_andriod_deep_mission.SELECT_All_Column"/>
+        FROM re_andriod_deep_mission
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+        AND (last_finish_time != #{dayTime,jdbcType=VARCHAR} OR last_finish_time is null)
+        AND start_time <![CDATA[ <= ]]> #{dayTime,jdbcType=VARCHAR}
+        AND end_time >= #{dayTime,jdbcType=VARCHAR}
+        FOR UPDATE
+    </select>
+
+
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_dtn_notify">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReDtnNotify">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="udid" property="udid" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="currency" property="currency" jdbcType="DECIMAL"/>
+        <result column="ad_name" property="adName" jdbcType="VARCHAR"/>
+        <result column="notify_time" property="notifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT order_id, app_id, udid, user_id, currency, 
+        ad_name, notify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReDtnNotify">
+        <include refid="re_dtn_notify.SELECT_All_Column"/>
+        FROM re_dtn_notify
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReDtnNotify">
+        DELETE FROM re_dtn_notify
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReDtnNotify">
+        INSERT INTO re_dtn_notify ( order_id, 
+          app_id, udid, user_id, 
+          currency, ad_name, notify_time )
+        VALUES ( #{orderId,jdbcType=VARCHAR}, 
+          #{appId,jdbcType=VARCHAR}, #{udid,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+          #{currency,jdbcType=DECIMAL}, #{adName,jdbcType=VARCHAR}, #{notifyTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReDtnNotify">
+        INSERT INTO re_dtn_notify
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                order_id,
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="udid != null">
+                udid,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="adName != null">
+                ad_name,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{orderId,jdbcType=VARCHAR},
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="udid != null">
+                #{udid,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=DECIMAL},
+            </if>
+            <if test="adName != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_dtn_notify ( order_id, 
+          app_id, udid, user_id, 
+          currency, ad_name, notify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.orderId,jdbcType=VARCHAR}, 
+            #{item.appId,jdbcType=VARCHAR}, #{item.udid,jdbcType=VARCHAR}, #{item.userId,jdbcType=INTEGER}, 
+            #{item.currency,jdbcType=DECIMAL}, #{item.adName,jdbcType=VARCHAR}, #{item.notifyTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReDtnNotify">
+        UPDATE re_dtn_notify
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="udid != null">
+                udid = #{udid,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=DECIMAL},
+            </if>
+            <if test="adName != null">
+                ad_name = #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReDtnNotify">
+        UPDATE re_dtn_notify
+        SET app_id = #{appId,jdbcType=VARCHAR},
+            udid = #{udid,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=INTEGER},
+            currency = #{currency,jdbcType=DECIMAL},
+            ad_name = #{adName,jdbcType=VARCHAR},
+            notify_time = #{notifyTime,jdbcType=VARCHAR}
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+</mapper>

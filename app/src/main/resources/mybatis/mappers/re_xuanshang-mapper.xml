@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_xuanshang">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReXuanshang">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="pass_num" property="passNum" jdbcType="INTEGER"/>
+        <result column="single_money" property="singleMoney" jdbcType="DECIMAL"/>
+        <result column="mission_desc" property="missionDesc" jdbcType="VARCHAR"/>
+        <result column="mission_img" property="missionImg" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_id, total_num, pass_num, single_money, 
+        mission_desc, mission_img, is_delete, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReXuanshang">
+        <include refid="re_xuanshang.SELECT_All_Column"/>
+        FROM re_xuanshang
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReXuanshang">
+        DELETE FROM re_xuanshang
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReXuanshang">
+        INSERT INTO re_xuanshang ( user_id, 
+          total_num, pass_num, single_money, 
+          mission_desc, mission_img, is_delete, 
+          create_time, update_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{totalNum,jdbcType=INTEGER}, #{passNum,jdbcType=INTEGER}, #{singleMoney,jdbcType=DECIMAL}, 
+          #{missionDesc,jdbcType=VARCHAR}, #{missionImg,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, 
+          #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReXuanshang">
+        INSERT INTO re_xuanshang
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="totalNum != null">
+                total_num,
+            </if>
+            <if test="passNum != null">
+                pass_num,
+            </if>
+            <if test="singleMoney != null">
+                single_money,
+            </if>
+            <if test="missionDesc != null">
+                mission_desc,
+            </if>
+            <if test="missionImg != null">
+                mission_img,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="passNum != null">
+                #{passNum,jdbcType=INTEGER},
+            </if>
+            <if test="singleMoney != null">
+                #{singleMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="missionDesc != null">
+                #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImg != null">
+                #{missionImg,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_xuanshang ( user_id, 
+          total_num, pass_num, single_money, 
+          mission_desc, mission_img, is_delete, 
+          create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.totalNum,jdbcType=INTEGER}, #{item.passNum,jdbcType=INTEGER}, #{item.singleMoney,jdbcType=DECIMAL}, 
+            #{item.missionDesc,jdbcType=VARCHAR}, #{item.missionImg,jdbcType=VARCHAR}, #{item.isDelete,jdbcType=TINYINT}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReXuanshang">
+        UPDATE re_xuanshang
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="totalNum != null">
+                total_num = #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="passNum != null">
+                pass_num = #{passNum,jdbcType=INTEGER},
+            </if>
+            <if test="singleMoney != null">
+                single_money = #{singleMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="missionDesc != null">
+                mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImg != null">
+                mission_img = #{missionImg,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReXuanshang">
+        UPDATE re_xuanshang
+        SET user_id = #{userId,jdbcType=INTEGER},
+            total_num = #{totalNum,jdbcType=INTEGER},
+            pass_num = #{passNum,jdbcType=INTEGER},
+            single_money = #{singleMoney,jdbcType=DECIMAL},
+            mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            mission_img = #{missionImg,jdbcType=VARCHAR},
+            is_delete = #{isDelete,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

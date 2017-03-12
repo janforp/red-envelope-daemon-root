@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_commission_record">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserCommissionRecord">
+        <id column="data_day" property="dataDay" jdbcType="VARCHAR"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <id column="invited_user_id" property="invitedUserId" jdbcType="INTEGER"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="gain_money" property="gainMoney" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT data_day, user_id, invited_user_id, total_money, gain_money, 
+        create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserCommissionRecord">
+        <include refid="re_user_commission_record.SELECT_All_Column"/>
+        FROM re_user_commission_record
+        WHERE data_day = #{dataDay,jdbcType=VARCHAR}
+        AND user_id = #{userId,jdbcType=INTEGER}
+        AND invited_user_id = #{invitedUserId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserCommissionRecord">
+        DELETE FROM re_user_commission_record
+        WHERE data_day = #{dataDay,jdbcType=VARCHAR}
+        AND user_id = #{userId,jdbcType=INTEGER}
+        AND invited_user_id = #{invitedUserId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserCommissionRecord">
+        INSERT INTO re_user_commission_record ( data_day, 
+          user_id, invited_user_id, total_money, 
+          gain_money, create_time, update_time )
+        VALUES ( #{dataDay,jdbcType=VARCHAR}, 
+          #{userId,jdbcType=INTEGER}, #{invitedUserId,jdbcType=INTEGER}, #{totalMoney,jdbcType=DECIMAL}, 
+          #{gainMoney,jdbcType=DECIMAL}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserCommissionRecord">
+        INSERT INTO re_user_commission_record
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                data_day,
+                user_id,
+                invited_user_id,
+            <if test="totalMoney != null">
+                total_money,
+            </if>
+            <if test="gainMoney != null">
+                gain_money,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{dataDay,jdbcType=VARCHAR},
+                #{userId,jdbcType=INTEGER},
+                #{invitedUserId,jdbcType=INTEGER},
+            <if test="totalMoney != null">
+                #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="gainMoney != null">
+                #{gainMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_commission_record ( data_day, 
+          user_id, invited_user_id, total_money, 
+          gain_money, create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.dataDay,jdbcType=VARCHAR}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.invitedUserId,jdbcType=INTEGER}, #{item.totalMoney,jdbcType=DECIMAL}, 
+            #{item.gainMoney,jdbcType=DECIMAL}, #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserCommissionRecord">
+        UPDATE re_user_commission_record
+        <set>
+            <if test="totalMoney != null">
+                total_money = #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="gainMoney != null">
+                gain_money = #{gainMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE data_day = #{dataDay,jdbcType=VARCHAR}
+        AND user_id = #{userId,jdbcType=INTEGER}
+        AND invited_user_id = #{invitedUserId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserCommissionRecord">
+        UPDATE re_user_commission_record
+        SET total_money = #{totalMoney,jdbcType=DECIMAL},
+            gain_money = #{gainMoney,jdbcType=DECIMAL},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE data_day = #{dataDay,jdbcType=VARCHAR}
+        AND user_id = #{userId,jdbcType=INTEGER}
+        AND invited_user_id = #{invitedUserId,jdbcType=INTEGER}
+    </update>
+</mapper>

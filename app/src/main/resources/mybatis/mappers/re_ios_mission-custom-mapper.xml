@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_ios_mission">
+
+    <select id="selectAllByTime" resultMap="BaseResultMap" parameterType="String">
+        SELECT mission_id, app_name, app_icon, app_label, step_num, operator_limit, address_limit,total_money
+        FROM re_ios_mission
+        WHERE is_end = 1
+        and is_delete = 0
+        AND start_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+        AND end_time >= #{nowTime,jdbcType=VARCHAR}
+        ORDER BY mission_weight DESC, mission_id DESC
+    </select>
+
+</mapper>

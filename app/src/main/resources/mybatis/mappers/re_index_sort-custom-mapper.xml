@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_index_sort">
+
+    <select id="selectByPlatform" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_index_sort.SELECT_All_Column"/>
+        FROM re_index_sort
+        WHERE ( sort_status = 2 OR sort_status = #{platform,jdbcType=INTEGER} )
+        AND limit_version <![CDATA[ <= ]]> #{version,jdbcType=VARCHAR}
+        AND ( limit_channel_name = '0' OR instr(limit_channel_name, #{channelName,jdbcType=VARCHAR}) )
+        AND ( limit_package_name = '0' OR instr(limit_package_name, #{packageName,jdbcType=VARCHAR}) )
+        AND
+        (
+        verify_version != #{version,jdbcType=VARCHAR}
+        OR
+        (verify_channel_package = '0' OR instr(verify_channel_package, #{verifyValue,jdbcType=VARCHAR}))
+        )
+        ORDER BY sort_order ASC
+    </select>
+
+</mapper>

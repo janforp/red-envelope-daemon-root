@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_discover_banner">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReDiscoverBanner">
+        <id column="banner_id" property="bannerId" jdbcType="INTEGER"/>
+        <result column="banner_title" property="bannerTitle" jdbcType="VARCHAR"/>
+        <result column="banner_img" property="bannerImg" jdbcType="VARCHAR"/>
+        <result column="banner_status" property="bannerStatus" jdbcType="TINYINT"/>
+        <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR"/>
+        <result column="banner_order" property="bannerOrder" jdbcType="TINYINT"/>
+        <result column="limit_version" property="limitVersion" jdbcType="VARCHAR"/>
+        <result column="max_version" property="maxVersion" jdbcType="VARCHAR"/>
+        <result column="limit_channel_name" property="limitChannelName" jdbcType="VARCHAR"/>
+        <result column="limit_package_name" property="limitPackageName" jdbcType="VARCHAR"/>
+        <result column="is_show" property="isShow" jdbcType="TINYINT"/>
+        <result column="min_version_code" property="minVersionCode" jdbcType="INTEGER"/>
+        <result column="max_version_code" property="maxVersionCode" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT banner_id, banner_title, banner_img, banner_status, banner_url, 
+        banner_order, limit_version, max_version, limit_channel_name, limit_package_name, 
+        is_show, min_version_code, max_version_code
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReDiscoverBanner">
+        <include refid="re_discover_banner.SELECT_All_Column"/>
+        FROM re_discover_banner
+        WHERE banner_id = #{bannerId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReDiscoverBanner">
+        DELETE FROM re_discover_banner
+        WHERE banner_id = #{bannerId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReDiscoverBanner">
+        INSERT INTO re_discover_banner ( banner_title, 
+          banner_img, banner_status, banner_url, 
+          banner_order, limit_version, max_version, 
+          limit_channel_name, limit_package_name, is_show, 
+          min_version_code, max_version_code )
+        VALUES ( #{bannerTitle,jdbcType=VARCHAR}, 
+          #{bannerImg,jdbcType=VARCHAR}, #{bannerStatus,jdbcType=TINYINT}, #{bannerUrl,jdbcType=VARCHAR}, 
+          #{bannerOrder,jdbcType=TINYINT}, #{limitVersion,jdbcType=VARCHAR}, #{maxVersion,jdbcType=VARCHAR}, 
+          #{limitChannelName,jdbcType=VARCHAR}, #{limitPackageName,jdbcType=VARCHAR}, #{isShow,jdbcType=TINYINT}, 
+          #{minVersionCode,jdbcType=INTEGER}, #{maxVersionCode,jdbcType=INTEGER} )
+        <selectKey keyProperty="bannerId" resultType="int">
+            SELECT LAST_INSERT_ID() AS bannerId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReDiscoverBanner">
+        INSERT INTO re_discover_banner
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="bannerTitle != null">
+                banner_title,
+            </if>
+            <if test="bannerImg != null">
+                banner_img,
+            </if>
+            <if test="bannerStatus != null">
+                banner_status,
+            </if>
+            <if test="bannerUrl != null">
+                banner_url,
+            </if>
+            <if test="bannerOrder != null">
+                banner_order,
+            </if>
+            <if test="limitVersion != null">
+                limit_version,
+            </if>
+            <if test="maxVersion != null">
+                max_version,
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name,
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="minVersionCode != null">
+                min_version_code,
+            </if>
+            <if test="maxVersionCode != null">
+                max_version_code,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="bannerTitle != null">
+                #{bannerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerImg != null">
+                #{bannerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerStatus != null">
+                #{bannerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="bannerUrl != null">
+                #{bannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerOrder != null">
+                #{bannerOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="minVersionCode != null">
+                #{minVersionCode,jdbcType=INTEGER},
+            </if>
+            <if test="maxVersionCode != null">
+                #{maxVersionCode,jdbcType=INTEGER},
+            </if>
+        </trim>
+        <selectKey keyProperty="bannerId" resultType="int">
+            SELECT LAST_INSERT_ID() AS bannerId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_discover_banner ( banner_title, 
+          banner_img, banner_status, banner_url, 
+          banner_order, limit_version, max_version, 
+          limit_channel_name, limit_package_name, is_show, 
+          min_version_code, max_version_code )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.bannerTitle,jdbcType=VARCHAR}, 
+            #{item.bannerImg,jdbcType=VARCHAR}, #{item.bannerStatus,jdbcType=TINYINT}, #{item.bannerUrl,jdbcType=VARCHAR}, 
+            #{item.bannerOrder,jdbcType=TINYINT}, #{item.limitVersion,jdbcType=VARCHAR}, #{item.maxVersion,jdbcType=VARCHAR}, 
+            #{item.limitChannelName,jdbcType=VARCHAR}, #{item.limitPackageName,jdbcType=VARCHAR}, #{item.isShow,jdbcType=TINYINT}, 
+            #{item.minVersionCode,jdbcType=INTEGER}, #{item.maxVersionCode,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReDiscoverBanner">
+        UPDATE re_discover_banner
+        <set>
+            <if test="bannerTitle != null">
+                banner_title = #{bannerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerImg != null">
+                banner_img = #{bannerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerStatus != null">
+                banner_status = #{bannerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="bannerUrl != null">
+                banner_url = #{bannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerOrder != null">
+                banner_order = #{bannerOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                limit_version = #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                max_version = #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="minVersionCode != null">
+                min_version_code = #{minVersionCode,jdbcType=INTEGER},
+            </if>
+            <if test="maxVersionCode != null">
+                max_version_code = #{maxVersionCode,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE banner_id = #{bannerId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReDiscoverBanner">
+        UPDATE re_discover_banner
+        SET banner_title = #{bannerTitle,jdbcType=VARCHAR},
+            banner_img = #{bannerImg,jdbcType=VARCHAR},
+            banner_status = #{bannerStatus,jdbcType=TINYINT},
+            banner_url = #{bannerUrl,jdbcType=VARCHAR},
+            banner_order = #{bannerOrder,jdbcType=TINYINT},
+            limit_version = #{limitVersion,jdbcType=VARCHAR},
+            max_version = #{maxVersion,jdbcType=VARCHAR},
+            limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            is_show = #{isShow,jdbcType=TINYINT},
+            min_version_code = #{minVersionCode,jdbcType=INTEGER},
+            max_version_code = #{maxVersionCode,jdbcType=INTEGER}
+        WHERE banner_id = #{bannerId,jdbcType=INTEGER}
+    </update>
+</mapper>

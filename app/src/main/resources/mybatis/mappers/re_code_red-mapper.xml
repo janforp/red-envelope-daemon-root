@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_code_red">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReCodeRed">
+        <id column="code_id" property="codeId" jdbcType="INTEGER"/>
+        <result column="red_code" property="redCode" jdbcType="VARCHAR"/>
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR"/>
+        <result column="customer_img" property="customerImg" jdbcType="VARCHAR"/>
+        <result column="customer_desc" property="customerDesc" jdbcType="VARCHAR"/>
+        <result column="award_desc" property="awardDesc" jdbcType="VARCHAR"/>
+        <result column="customer_banner" property="customerBanner" jdbcType="VARCHAR"/>
+        <result column="customer_banner_url" property="customerBannerUrl" jdbcType="VARCHAR"/>
+        <result column="red_max" property="redMax" jdbcType="VARCHAR"/>
+        <result column="red_desc" property="redDesc" jdbcType="VARCHAR"/>
+        <result column="red_num_total" property="redNumTotal" jdbcType="INTEGER"/>
+        <result column="red_num_left" property="redNumLeft" jdbcType="INTEGER"/>
+        <result column="red_num_day_total" property="redNumDayTotal" jdbcType="INTEGER"/>
+        <result column="red_num_day_left" property="redNumDayLeft" jdbcType="INTEGER"/>
+        <result column="code_status" property="codeStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT code_id, red_code, customer_name, customer_img, customer_desc, 
+        award_desc, customer_banner, customer_banner_url, red_max, red_desc, 
+        red_num_total, red_num_left, red_num_day_total, red_num_day_left, code_status, 
+        create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReCodeRed">
+        <include refid="re_code_red.SELECT_All_Column"/>
+        FROM re_code_red
+        WHERE code_id = #{codeId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReCodeRed">
+        DELETE FROM re_code_red
+        WHERE code_id = #{codeId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReCodeRed">
+        INSERT INTO re_code_red ( red_code, 
+          customer_name, customer_img, customer_desc, 
+          award_desc, customer_banner, customer_banner_url, 
+          red_max, red_desc, red_num_total, 
+          red_num_left, red_num_day_total, red_num_day_left, 
+          code_status, create_time, update_time )
+        VALUES ( #{redCode,jdbcType=VARCHAR}, 
+          #{customerName,jdbcType=VARCHAR}, #{customerImg,jdbcType=VARCHAR}, #{customerDesc,jdbcType=VARCHAR}, 
+          #{awardDesc,jdbcType=VARCHAR}, #{customerBanner,jdbcType=VARCHAR}, #{customerBannerUrl,jdbcType=VARCHAR}, 
+          #{redMax,jdbcType=VARCHAR}, #{redDesc,jdbcType=VARCHAR}, #{redNumTotal,jdbcType=INTEGER}, 
+          #{redNumLeft,jdbcType=INTEGER}, #{redNumDayTotal,jdbcType=INTEGER}, #{redNumDayLeft,jdbcType=INTEGER}, 
+          #{codeStatus,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="codeId" resultType="int">
+            SELECT LAST_INSERT_ID() AS codeId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReCodeRed">
+        INSERT INTO re_code_red
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="redCode != null">
+                red_code,
+            </if>
+            <if test="customerName != null">
+                customer_name,
+            </if>
+            <if test="customerImg != null">
+                customer_img,
+            </if>
+            <if test="customerDesc != null">
+                customer_desc,
+            </if>
+            <if test="awardDesc != null">
+                award_desc,
+            </if>
+            <if test="customerBanner != null">
+                customer_banner,
+            </if>
+            <if test="customerBannerUrl != null">
+                customer_banner_url,
+            </if>
+            <if test="redMax != null">
+                red_max,
+            </if>
+            <if test="redDesc != null">
+                red_desc,
+            </if>
+            <if test="redNumTotal != null">
+                red_num_total,
+            </if>
+            <if test="redNumLeft != null">
+                red_num_left,
+            </if>
+            <if test="redNumDayTotal != null">
+                red_num_day_total,
+            </if>
+            <if test="redNumDayLeft != null">
+                red_num_day_left,
+            </if>
+            <if test="codeStatus != null">
+                code_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="redCode != null">
+                #{redCode,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerImg != null">
+                #{customerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="customerDesc != null">
+                #{customerDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="awardDesc != null">
+                #{awardDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBanner != null">
+                #{customerBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBannerUrl != null">
+                #{customerBannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="redMax != null">
+                #{redMax,jdbcType=VARCHAR},
+            </if>
+            <if test="redDesc != null">
+                #{redDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="redNumTotal != null">
+                #{redNumTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumLeft != null">
+                #{redNumLeft,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayTotal != null">
+                #{redNumDayTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayLeft != null">
+                #{redNumDayLeft,jdbcType=INTEGER},
+            </if>
+            <if test="codeStatus != null">
+                #{codeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="codeId" resultType="int">
+            SELECT LAST_INSERT_ID() AS codeId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_code_red ( red_code, 
+          customer_name, customer_img, customer_desc, 
+          award_desc, customer_banner, customer_banner_url, 
+          red_max, red_desc, red_num_total, 
+          red_num_left, red_num_day_total, red_num_day_left, 
+          code_status, create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.redCode,jdbcType=VARCHAR}, 
+            #{item.customerName,jdbcType=VARCHAR}, #{item.customerImg,jdbcType=VARCHAR}, #{item.customerDesc,jdbcType=VARCHAR}, 
+            #{item.awardDesc,jdbcType=VARCHAR}, #{item.customerBanner,jdbcType=VARCHAR}, #{item.customerBannerUrl,jdbcType=VARCHAR}, 
+            #{item.redMax,jdbcType=VARCHAR}, #{item.redDesc,jdbcType=VARCHAR}, #{item.redNumTotal,jdbcType=INTEGER}, 
+            #{item.redNumLeft,jdbcType=INTEGER}, #{item.redNumDayTotal,jdbcType=INTEGER}, #{item.redNumDayLeft,jdbcType=INTEGER}, 
+            #{item.codeStatus,jdbcType=TINYINT}, #{item.createTime,jdbcType=BIGINT}, #{item.updateTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReCodeRed">
+        UPDATE re_code_red
+        <set>
+            <if test="redCode != null">
+                red_code = #{redCode,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerImg != null">
+                customer_img = #{customerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="customerDesc != null">
+                customer_desc = #{customerDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="awardDesc != null">
+                award_desc = #{awardDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBanner != null">
+                customer_banner = #{customerBanner,jdbcType=VARCHAR},
+            </if>
+            <if test="customerBannerUrl != null">
+                customer_banner_url = #{customerBannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="redMax != null">
+                red_max = #{redMax,jdbcType=VARCHAR},
+            </if>
+            <if test="redDesc != null">
+                red_desc = #{redDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="redNumTotal != null">
+                red_num_total = #{redNumTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumLeft != null">
+                red_num_left = #{redNumLeft,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayTotal != null">
+                red_num_day_total = #{redNumDayTotal,jdbcType=INTEGER},
+            </if>
+            <if test="redNumDayLeft != null">
+                red_num_day_left = #{redNumDayLeft,jdbcType=INTEGER},
+            </if>
+            <if test="codeStatus != null">
+                code_status = #{codeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE code_id = #{codeId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReCodeRed">
+        UPDATE re_code_red
+        SET red_code = #{redCode,jdbcType=VARCHAR},
+            customer_name = #{customerName,jdbcType=VARCHAR},
+            customer_img = #{customerImg,jdbcType=VARCHAR},
+            customer_desc = #{customerDesc,jdbcType=VARCHAR},
+            award_desc = #{awardDesc,jdbcType=VARCHAR},
+            customer_banner = #{customerBanner,jdbcType=VARCHAR},
+            customer_banner_url = #{customerBannerUrl,jdbcType=VARCHAR},
+            red_max = #{redMax,jdbcType=VARCHAR},
+            red_desc = #{redDesc,jdbcType=VARCHAR},
+            red_num_total = #{redNumTotal,jdbcType=INTEGER},
+            red_num_left = #{redNumLeft,jdbcType=INTEGER},
+            red_num_day_total = #{redNumDayTotal,jdbcType=INTEGER},
+            red_num_day_left = #{redNumDayLeft,jdbcType=INTEGER},
+            code_status = #{codeStatus,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=BIGINT}
+        WHERE code_id = #{codeId,jdbcType=INTEGER}
+    </update>
+</mapper>

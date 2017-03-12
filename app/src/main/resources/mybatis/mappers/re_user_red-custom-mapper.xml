@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_red">
+
+    <resultMap id="RedMap" type="com.hongbao.api.model.dto.ReUserRedInfo">
+        <id column="red_id" property="redId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="portrait" property="portrait" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="create_time_ms" property="createTimeMs" jdbcType="BIGINT"/>
+        <result column="red_content" property="redContent" jdbcType="VARCHAR"/>
+        <result column="red_total_num" property="redTotalNum" jdbcType="INTEGER"/>
+        <result column="red_left_num" property="redLeftNum" jdbcType="INTEGER"/>
+        <result column="refund_time" property="refundTime" jdbcType="BIGINT"/>
+        <result column="red_money" property="redMoney" jdbcType="DECIMAL"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="selectRedList" resultMap="RedMap" parameterType="Map">
+        SELECT a.red_id, a.user_id, b.portrait, b.nickname, a.create_time_ms, a.red_content, a.red_total_num, a.red_left_num, a.refund_time
+        <if test="userId != null">
+            , c.red_money
+        </if>
+        FROM re_user b, re_user_red a
+        <if test="userId != null">
+            LEFT JOIN re_user_red_detail c ON
+            a.user_id = #{userId,jdbcType=INTEGER}
+            AND c.red_id = a.red_id
+        </if>
+        WHERE b.user_id = a.user_id
+        <if test="redId != null">
+            AND a.red_id <![CDATA[ < ]]> #{redId, jdbcType=BIGINT}
+        </if>
+        ORDER BY a.red_id DESC
+        Limit 0, 20
+    </select>
+
+    <select id="selectLockByRedId" resultMap="BaseResultMap" parameterType="Long">
+        <include refid="re_user_red.SELECT_All_Column"/>
+        FROM re_user_red
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+        FOR UPDATE
+    </select>
+
+    <select id="selectRedDetail" resultMap="RedMap" parameterType="Map">
+        SELECT a.red_content, a.red_total_num, a.total_money, b.portrait, b.nickname, a.refund_time, c.red_money, a.red_left_num
+        FROM re_user b, re_user_red a
+        LEFT JOIN re_user_red_detail c ON c.user_id = #{userId,jdbcType=INTEGER} AND c.red_id = a.red_id
+        WHERE b.user_id = a.user_id
+        AND a.red_id = #{redId, jdbcType=BIGINT}
+    </select>
+
+</mapper>

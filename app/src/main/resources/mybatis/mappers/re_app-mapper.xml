@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReApp">
+        <id column="app_id" property="appId" jdbcType="BIGINT"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="app_size" property="appSize" jdbcType="VARCHAR"/>
+        <result column="market_id" property="marketId" jdbcType="INTEGER"/>
+        <result column="app_package" property="appPackage" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="app_desc" property="appDesc" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT app_id, app_name, app_size, market_id, app_package, 
+        app_icon, app_desc, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReApp">
+        <include refid="re_app.SELECT_All_Column"/>
+        FROM re_app
+        WHERE app_id = #{appId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReApp">
+        DELETE FROM re_app
+        WHERE app_id = #{appId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReApp">
+        INSERT INTO re_app ( app_name, 
+          app_size, market_id, app_package, 
+          app_icon, app_desc, create_time )
+        VALUES ( #{appName,jdbcType=VARCHAR}, 
+          #{appSize,jdbcType=VARCHAR}, #{marketId,jdbcType=INTEGER}, #{appPackage,jdbcType=VARCHAR}, 
+          #{appIcon,jdbcType=VARCHAR}, #{appDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="appId" resultType="long">
+            SELECT LAST_INSERT_ID() AS appId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReApp">
+        INSERT INTO re_app
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appName != null">
+                app_name,
+            </if>
+            <if test="appSize != null">
+                app_size,
+            </if>
+            <if test="marketId != null">
+                market_id,
+            </if>
+            <if test="appPackage != null">
+                app_package,
+            </if>
+            <if test="appIcon != null">
+                app_icon,
+            </if>
+            <if test="appDesc != null">
+                app_desc,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appName != null">
+                #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appSize != null">
+                #{appSize,jdbcType=VARCHAR},
+            </if>
+            <if test="marketId != null">
+                #{marketId,jdbcType=INTEGER},
+            </if>
+            <if test="appPackage != null">
+                #{appPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="appId" resultType="long">
+            SELECT LAST_INSERT_ID() AS appId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_app ( app_name, 
+          app_size, market_id, app_package, 
+          app_icon, app_desc, create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.appName,jdbcType=VARCHAR}, 
+            #{item.appSize,jdbcType=VARCHAR}, #{item.marketId,jdbcType=INTEGER}, #{item.appPackage,jdbcType=VARCHAR}, 
+            #{item.appIcon,jdbcType=VARCHAR}, #{item.appDesc,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReApp">
+        UPDATE re_app
+        <set>
+            <if test="appName != null">
+                app_name = #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appSize != null">
+                app_size = #{appSize,jdbcType=VARCHAR},
+            </if>
+            <if test="marketId != null">
+                market_id = #{marketId,jdbcType=INTEGER},
+            </if>
+            <if test="appPackage != null">
+                app_package = #{appPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                app_icon = #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                app_desc = #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE app_id = #{appId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReApp">
+        UPDATE re_app
+        SET app_name = #{appName,jdbcType=VARCHAR},
+            app_size = #{appSize,jdbcType=VARCHAR},
+            market_id = #{marketId,jdbcType=INTEGER},
+            app_package = #{appPackage,jdbcType=VARCHAR},
+            app_icon = #{appIcon,jdbcType=VARCHAR},
+            app_desc = #{appDesc,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR}
+        WHERE app_id = #{appId,jdbcType=BIGINT}
+    </update>
+</mapper>

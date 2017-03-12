@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_discover">
+
+    <resultMap id="DiscoverMap" type="com.hongbao.api.model.dto.ReDiscoverInfo">
+        <result column="discover_title" property="discoverTitle" jdbcType="VARCHAR"/>
+        <result column="discover_description" property="discoverDescription" jdbcType="VARCHAR"/>
+        <result column="discover_img" property="discoverImg" jdbcType="VARCHAR"/>
+        <result column="discover_url" property="discoverUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectDiscoverByPlatform" resultMap="DiscoverMap" parameterType="map">
+        SELECT discover_title, discover_description, discover_img, discover_url
+        FROM re_discover
+        WHERE ( discover_status = 2 OR discover_status = #{platform,jdbcType=INTEGER} )
+        AND limit_version <![CDATA[ <= ]]> #{version,jdbcType=VARCHAR}
+        AND max_version >= #{version,jdbcType=VARCHAR}
+        AND ( limit_channel_name = '0' OR instr(limit_channel_name, #{channelName,jdbcType=VARCHAR}) )
+        AND ( limit_package_name = '0' OR instr(limit_package_name, #{packageName,jdbcType=VARCHAR}) )
+        ORDER BY discover_order ASC
+    </select>
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app_task">
+
+    <resultMap id="TaskMap" type="com.hongbao.api.model.dto.TaskInfo">
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="app_market" property="appMarket" jdbcType="VARCHAR"/>
+        <result column="task_label" property="taskLabel" jdbcType="VARCHAR"/>
+        <result column="missionDesc" property="missionDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectFinishByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_app_task.SELECT_All_Column"/>
+        FROM re_app_task
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND task_status = 1
+        Limit 1
+    </select>
+
+    <select id="selectFinishByUserIdAndSize" resultMap="TaskMap" parameterType="map">
+        SELECT a.keyword, a.task_label, b.app_icon, b.app_desc as missionDesc, c.market_name as app_market
+        FROM re_app_keywords a, re_app b, re_app_market c, re_app_task d
+        WHERE d.user_id = #{userId,jdbcType=INTEGER}
+        AND task_status = 1
+        AND a.keyword_id = d.keyword_id
+        AND b.app_id = d.app_id
+        AND b.market_id = c.market_id
+        ORDER BY d.task_id DESC 
+        Limit 0, #{limitSize,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserIdAndDeviceId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_app_task.SELECT_All_Column"/>
+        FROM re_app_task
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND device_id = #{deviceId,jdbcType=VARCHAR}
+        AND task_status = 0
+        Limit 1
+        FOR UPDATE
+    </select>
+
+    <select id="selectIngTaskByUserIdAndKeywordIdLock" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_app_task.SELECT_All_Column"/>
+        FROM re_app_task
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND   keyword_id = #{keywordId,jdbcType=BIGINT}
+        AND task_status = 0
+        Limit 1
+    </select>
+
+    <select id="selectByUserIdAndAppId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_app_task.SELECT_All_Column"/>
+        FROM re_app_task
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND app_id = #{appId,jdbcType=BIGINT}
+        AND task_status != 2
+        Limit 1
+    </select>
+
+    <select id="selectOvertimeTask" resultMap="BaseResultMap" parameterType="long">
+        <include refid="re_app_task.SELECT_All_Column"/>
+        FROM re_app_task
+        WHERE task_status = 0
+        AND create_time <![CDATA[ <= ]]> #{createTime,jdbcType=BIGINT}
+        FOR UPDATE
+    </select>
+
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_index_mission_navigation">
+
+    <select id="selectByPlatform" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_index_mission_navigation.SELECT_All_Column"/>
+        FROM re_index_mission_navigation
+        WHERE navigation_status = 2 OR navigation_status = #{platform,jdbcType=INTEGER}
+        ORDER BY navigation_weight DESC
+    </select>
+
+</mapper>

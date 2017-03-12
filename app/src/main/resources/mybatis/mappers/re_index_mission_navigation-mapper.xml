@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_index_mission_navigation">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReIndexMissionNavigation">
+        <id column="navigation_id" property="navigationId" jdbcType="BIGINT"/>
+        <result column="navigation_name" property="navigationName" jdbcType="VARCHAR"/>
+        <result column="navigation_img" property="navigationImg" jdbcType="VARCHAR"/>
+        <result column="navigation_url" property="navigationUrl" jdbcType="VARCHAR"/>
+        <result column="navigation_status" property="navigationStatus" jdbcType="TINYINT"/>
+        <result column="navigation_weight" property="navigationWeight" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT navigation_id, navigation_name, navigation_img, navigation_url, navigation_status, 
+        navigation_weight, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReIndexMissionNavigation">
+        <include refid="re_index_mission_navigation.SELECT_All_Column"/>
+        FROM re_index_mission_navigation
+        WHERE navigation_id = #{navigationId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReIndexMissionNavigation">
+        DELETE FROM re_index_mission_navigation
+        WHERE navigation_id = #{navigationId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReIndexMissionNavigation">
+        INSERT INTO re_index_mission_navigation ( navigation_name, 
+          navigation_img, navigation_url, navigation_status, 
+          navigation_weight, create_time, update_time )
+        VALUES ( #{navigationName,jdbcType=VARCHAR}, 
+          #{navigationImg,jdbcType=VARCHAR}, #{navigationUrl,jdbcType=VARCHAR}, #{navigationStatus,jdbcType=TINYINT}, 
+          #{navigationWeight,jdbcType=TINYINT}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="navigationId" resultType="long">
+            SELECT LAST_INSERT_ID() AS navigationId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReIndexMissionNavigation">
+        INSERT INTO re_index_mission_navigation
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="navigationName != null">
+                navigation_name,
+            </if>
+            <if test="navigationImg != null">
+                navigation_img,
+            </if>
+            <if test="navigationUrl != null">
+                navigation_url,
+            </if>
+            <if test="navigationStatus != null">
+                navigation_status,
+            </if>
+            <if test="navigationWeight != null">
+                navigation_weight,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="navigationName != null">
+                #{navigationName,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationImg != null">
+                #{navigationImg,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationUrl != null">
+                #{navigationUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationStatus != null">
+                #{navigationStatus,jdbcType=TINYINT},
+            </if>
+            <if test="navigationWeight != null">
+                #{navigationWeight,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="navigationId" resultType="long">
+            SELECT LAST_INSERT_ID() AS navigationId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_index_mission_navigation ( navigation_name, 
+          navigation_img, navigation_url, navigation_status, 
+          navigation_weight, create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.navigationName,jdbcType=VARCHAR}, 
+            #{item.navigationImg,jdbcType=VARCHAR}, #{item.navigationUrl,jdbcType=VARCHAR}, #{item.navigationStatus,jdbcType=TINYINT}, 
+            #{item.navigationWeight,jdbcType=TINYINT}, #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReIndexMissionNavigation">
+        UPDATE re_index_mission_navigation
+        <set>
+            <if test="navigationName != null">
+                navigation_name = #{navigationName,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationImg != null">
+                navigation_img = #{navigationImg,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationUrl != null">
+                navigation_url = #{navigationUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationStatus != null">
+                navigation_status = #{navigationStatus,jdbcType=TINYINT},
+            </if>
+            <if test="navigationWeight != null">
+                navigation_weight = #{navigationWeight,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE navigation_id = #{navigationId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReIndexMissionNavigation">
+        UPDATE re_index_mission_navigation
+        SET navigation_name = #{navigationName,jdbcType=VARCHAR},
+            navigation_img = #{navigationImg,jdbcType=VARCHAR},
+            navigation_url = #{navigationUrl,jdbcType=VARCHAR},
+            navigation_status = #{navigationStatus,jdbcType=TINYINT},
+            navigation_weight = #{navigationWeight,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE navigation_id = #{navigationId,jdbcType=BIGINT}
+    </update>
+</mapper>

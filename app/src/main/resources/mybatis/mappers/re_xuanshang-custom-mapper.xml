@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_xuanshang">
+
+    <resultMap id="XuanshangVo" type="com.hongbao.api.model.vo.XuanshangVo">
+        <id column="id" property="xuanshangId" jdbcType="BIGINT"/>
+        <result column="portrait" property="portrait" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="mission_desc" property="missionDesc" jdbcType="VARCHAR"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="pass_num" property="passNum" jdbcType="INTEGER"/>
+        <result column="submit_num" property="submitNum" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="do_user_id" property="doUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--悬赏任务首页列表，用户看到的是多少人已经提交了-->
+    <select id="getXuanshangList" resultMap="XuanshangVo" parameterType="map">
+      SELECT  a.id ,b.portrait,b.nickname,a.create_time,a.mission_desc,(a.total_num * a.single_money) AS total_money,a.total_num,a.pass_num,a.user_id
+      FROM    re_xuanshang a,re_user b
+      WHERE   a.user_id = b.user_id
+      AND     a.is_delete = 0
+      <if test="xuanshangId != null">
+          AND a.id <![CDATA[ < ]]> #{xuanshangId, jdbcType=BIGINT}
+      </if>
+      ORDER BY a.id DESC
+      LIMIT 0,20
+    </select>
+
+    <!--获取某个悬赏任务的XuanshangVo-->
+    <select id="getXuanshangVoById" resultMap="XuanshangVo" parameterType="map">
+        SELECT  a.id ,b.portrait,b.nickname,a.create_time,a.mission_desc,(a.total_num * a.single_money) AS total_money,a.total_num,a.pass_num,a.user_id
+        FROM    re_xuanshang a,re_user b
+        WHERE   a.user_id = b.user_id
+        AND     a.id = #{xuanshangId, jdbcType=BIGINT}
+        AND     a.is_delete = 0
+    </select>
+
+    <!--从mysql中获取所有的悬赏任务id列表-->
+    <select id="getIdList" resultType="long">
+        SELECT    id
+        FROM      re_xuanshang
+        WHERE     is_delete = 0
+        ORDER BY  id DESC
+    </select>
+
+    <!--我发布的就要看多少个人通过了-->
+    <select id="getMySendMissionList" resultMap="XuanshangVo" parameterType="map">
+        SELECT  a.id ,b.portrait,b.nickname,a.mission_desc,(a.total_num * a.single_money) AS total_money,a.total_num,a.pass_num
+        FROM    re_xuanshang a,re_user b
+        WHERE   a.user_id = b.user_id
+        AND     a.user_id = #{userId,jdbcType=INTEGER}
+        AND     a.is_delete = 0
+        <if test="xuanshangId != null">
+            AND a.id <![CDATA[ < ]]> #{xuanshangId, jdbcType=BIGINT}
+        </if>
+        ORDER BY a.id DESC
+        LIMIT 0,20
+    </select>
+
+    <!--根据id找到该悬赏任务并且锁定-->
+    <select id="selectByPrimaryKeyLock" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_xuanshang.SELECT_All_Column"/>
+        FROM re_xuanshang
+        WHERE id = #{xuanshagnId,jdbcType=BIGINT}
+        FOR UPDATE
+    </select>
+
+    <select id="getMySendIdList" parameterType="int" resultType="long">
+        SELECT  id
+        FROM    re_xuanshang
+        WHERE   user_id = #{userId,jdbcType=INTEGER}
+        AND     is_delete = 0
+        ORDER   BY id DESC
+    </select>
+
+    <update id="removeByXuanshangId" parameterType="long">
+        UPDATE  re_xuanshang
+        SET     is_delete = 1
+        WHERE   id = #{xuanshangId, jdbcType=BIGINT}
+    </update>
+
+    <select id="getHisXuanshangIdList" parameterType="int" resultType="long">
+        SELECT  id
+        FROM    re_xuanshang
+        WHERE   user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>

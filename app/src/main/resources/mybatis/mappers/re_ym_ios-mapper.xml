@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_ym_ios">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReYmIos">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="ad_name" property="adName" jdbcType="VARCHAR"/>
+        <result column="ad_id" property="adId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="points" property="points" jdbcType="DECIMAL"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="notify_time" property="notifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT order_id, app_id, ad_name, ad_id, user_id, 
+        device_id, channel_name, price, points, store_id, 
+        notify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReYmIos">
+        <include refid="re_ym_ios.SELECT_All_Column"/>
+        FROM re_ym_ios
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReYmIos">
+        DELETE FROM re_ym_ios
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReYmIos">
+        INSERT INTO re_ym_ios ( order_id, 
+          app_id, ad_name, ad_id, 
+          user_id, device_id, channel_name, 
+          price, points, store_id, 
+          notify_time )
+        VALUES ( #{orderId,jdbcType=VARCHAR}, 
+          #{appId,jdbcType=VARCHAR}, #{adName,jdbcType=VARCHAR}, #{adId,jdbcType=INTEGER}, 
+          #{userId,jdbcType=INTEGER}, #{deviceId,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR}, 
+          #{price,jdbcType=DECIMAL}, #{points,jdbcType=DECIMAL}, #{storeId,jdbcType=VARCHAR}, 
+          #{notifyTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReYmIos">
+        INSERT INTO re_ym_ios
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                order_id,
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="adName != null">
+                ad_name,
+            </if>
+            <if test="adId != null">
+                ad_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="points != null">
+                points,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{orderId,jdbcType=VARCHAR},
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="adId != null">
+                #{adId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="points != null">
+                #{points,jdbcType=DECIMAL},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_ym_ios ( order_id, 
+          app_id, ad_name, ad_id, 
+          user_id, device_id, channel_name, 
+          price, points, store_id, 
+          notify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.orderId,jdbcType=VARCHAR}, 
+            #{item.appId,jdbcType=VARCHAR}, #{item.adName,jdbcType=VARCHAR}, #{item.adId,jdbcType=INTEGER}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.deviceId,jdbcType=VARCHAR}, #{item.channelName,jdbcType=VARCHAR}, 
+            #{item.price,jdbcType=DECIMAL}, #{item.points,jdbcType=DECIMAL}, #{item.storeId,jdbcType=VARCHAR}, 
+            #{item.notifyTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReYmIos">
+        UPDATE re_ym_ios
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                ad_name = #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="adId != null">
+                ad_id = #{adId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="points != null">
+                points = #{points,jdbcType=DECIMAL},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReYmIos">
+        UPDATE re_ym_ios
+        SET app_id = #{appId,jdbcType=VARCHAR},
+            ad_name = #{adName,jdbcType=VARCHAR},
+            ad_id = #{adId,jdbcType=INTEGER},
+            user_id = #{userId,jdbcType=INTEGER},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            channel_name = #{channelName,jdbcType=VARCHAR},
+            price = #{price,jdbcType=DECIMAL},
+            points = #{points,jdbcType=DECIMAL},
+            store_id = #{storeId,jdbcType=VARCHAR},
+            notify_time = #{notifyTime,jdbcType=VARCHAR}
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+</mapper>

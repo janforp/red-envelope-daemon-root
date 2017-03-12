@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_mission_finish">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAndroidMissionFinish">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="app_package" property="appPackage" jdbcType="VARCHAR"/>
+        <result column="start_day" property="startDay" jdbcType="VARCHAR"/>
+        <result column="end_day" property="endDay" jdbcType="VARCHAR"/>
+        <result column="total_day" property="totalDay" jdbcType="TINYINT"/>
+        <result column="mission_no" property="missionNo" jdbcType="TINYINT"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, user_id, app_package, start_day, end_day, 
+        total_day, mission_no, total_money, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAndroidMissionFinish">
+        <include refid="re_android_mission_finish.SELECT_All_Column"/>
+        FROM re_android_mission_finish
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidMissionFinish">
+        DELETE FROM re_android_mission_finish
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAndroidMissionFinish">
+        INSERT INTO re_android_mission_finish ( mission_id, 
+          user_id, app_package, start_day, 
+          end_day, total_day, mission_no, 
+          total_money, create_time, update_time )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{appPackage,jdbcType=VARCHAR}, #{startDay,jdbcType=VARCHAR}, 
+          #{endDay,jdbcType=VARCHAR}, #{totalDay,jdbcType=TINYINT}, #{missionNo,jdbcType=TINYINT}, 
+          #{totalMoney,jdbcType=DECIMAL}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAndroidMissionFinish">
+        INSERT INTO re_android_mission_finish
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                user_id,
+            <if test="appPackage != null">
+                app_package,
+            </if>
+            <if test="startDay != null">
+                start_day,
+            </if>
+            <if test="endDay != null">
+                end_day,
+            </if>
+            <if test="totalDay != null">
+                total_day,
+            </if>
+            <if test="missionNo != null">
+                mission_no,
+            </if>
+            <if test="totalMoney != null">
+                total_money,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="appPackage != null">
+                #{appPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="startDay != null">
+                #{startDay,jdbcType=VARCHAR},
+            </if>
+            <if test="endDay != null">
+                #{endDay,jdbcType=VARCHAR},
+            </if>
+            <if test="totalDay != null">
+                #{totalDay,jdbcType=TINYINT},
+            </if>
+            <if test="missionNo != null">
+                #{missionNo,jdbcType=TINYINT},
+            </if>
+            <if test="totalMoney != null">
+                #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_android_mission_finish ( mission_id, 
+          user_id, app_package, start_day, 
+          end_day, total_day, mission_no, 
+          total_money, create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.appPackage,jdbcType=VARCHAR}, #{item.startDay,jdbcType=VARCHAR}, 
+            #{item.endDay,jdbcType=VARCHAR}, #{item.totalDay,jdbcType=TINYINT}, #{item.missionNo,jdbcType=TINYINT}, 
+            #{item.totalMoney,jdbcType=DECIMAL}, #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAndroidMissionFinish">
+        UPDATE re_android_mission_finish
+        <set>
+            <if test="appPackage != null">
+                app_package = #{appPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="startDay != null">
+                start_day = #{startDay,jdbcType=VARCHAR},
+            </if>
+            <if test="endDay != null">
+                end_day = #{endDay,jdbcType=VARCHAR},
+            </if>
+            <if test="totalDay != null">
+                total_day = #{totalDay,jdbcType=TINYINT},
+            </if>
+            <if test="missionNo != null">
+                mission_no = #{missionNo,jdbcType=TINYINT},
+            </if>
+            <if test="totalMoney != null">
+                total_money = #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidMissionFinish">
+        UPDATE re_android_mission_finish
+        SET app_package = #{appPackage,jdbcType=VARCHAR},
+            start_day = #{startDay,jdbcType=VARCHAR},
+            end_day = #{endDay,jdbcType=VARCHAR},
+            total_day = #{totalDay,jdbcType=TINYINT},
+            mission_no = #{missionNo,jdbcType=TINYINT},
+            total_money = #{totalMoney,jdbcType=DECIMAL},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_invitation">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserInvitation">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="invited_user_id" property="invitedUserId" jdbcType="INTEGER"/>
+        <result column="invited_time" property="invitedTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_id, invited_user_id, invited_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserInvitation">
+        <include refid="re_user_invitation.SELECT_All_Column"/>
+        FROM re_user_invitation
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserInvitation">
+        DELETE FROM re_user_invitation
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserInvitation">
+        INSERT INTO re_user_invitation ( user_id, 
+          invited_user_id, invited_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{invitedUserId,jdbcType=INTEGER}, #{invitedTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserInvitation">
+        INSERT INTO re_user_invitation
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="invitedUserId != null">
+                invited_user_id,
+            </if>
+            <if test="invitedTime != null">
+                invited_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="invitedUserId != null">
+                #{invitedUserId,jdbcType=INTEGER},
+            </if>
+            <if test="invitedTime != null">
+                #{invitedTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_invitation ( user_id, 
+          invited_user_id, invited_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.invitedUserId,jdbcType=INTEGER}, #{item.invitedTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserInvitation">
+        UPDATE re_user_invitation
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="invitedUserId != null">
+                invited_user_id = #{invitedUserId,jdbcType=INTEGER},
+            </if>
+            <if test="invitedTime != null">
+                invited_time = #{invitedTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserInvitation">
+        UPDATE re_user_invitation
+        SET user_id = #{userId,jdbcType=INTEGER},
+            invited_user_id = #{invitedUserId,jdbcType=INTEGER},
+            invited_time = #{invitedTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

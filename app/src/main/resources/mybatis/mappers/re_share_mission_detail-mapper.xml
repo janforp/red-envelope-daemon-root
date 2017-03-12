@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_share_mission_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReShareMissionDetail">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="open_id" property="openId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="click_time" property="clickTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, open_id, user_id, click_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReShareMissionDetail">
+        <include refid="re_share_mission_detail.SELECT_All_Column"/>
+        FROM re_share_mission_detail
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND open_id = #{openId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReShareMissionDetail">
+        DELETE FROM re_share_mission_detail
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND open_id = #{openId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReShareMissionDetail">
+        INSERT INTO re_share_mission_detail ( mission_id, 
+          open_id, user_id, click_time )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{openId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{clickTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReShareMissionDetail">
+        INSERT INTO re_share_mission_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                open_id,
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="clickTime != null">
+                click_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{openId,jdbcType=VARCHAR},
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="clickTime != null">
+                #{clickTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_share_mission_detail ( mission_id, 
+          open_id, user_id, click_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.openId,jdbcType=VARCHAR}, #{item.userId,jdbcType=INTEGER}, #{item.clickTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReShareMissionDetail">
+        UPDATE re_share_mission_detail
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="clickTime != null">
+                click_time = #{clickTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND open_id = #{openId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReShareMissionDetail">
+        UPDATE re_share_mission_detail
+        SET user_id = #{userId,jdbcType=INTEGER},
+            click_time = #{clickTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND open_id = #{openId,jdbcType=VARCHAR}
+    </update>
+</mapper>

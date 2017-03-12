@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_mission_finish">
+
+    <resultMap id="FinishMap" type="com.hongbao.api.model.dto.AndroidFinishInfo">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="gain_money" property="gainMoney" jdbcType="DECIMAL"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="end_day" property="endDay" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectFinishAppPackageList" resultType="String" parameterType="Integer">
+        SELECT app_package
+        FROM re_android_mission_finish
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectExclusiveId" resultType="Long" parameterType="map">
+        SELECT mission_id
+        FROM re_android_mission_finish
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND start_day <![CDATA[ <= ]]> #{dayTime,jdbcType=VARCHAR}
+        AND end_day >= #{dayTime,jdbcType=VARCHAR}
+        AND total_day > mission_no
+    </select>
+
+
+    <select id="selectByUserIdAndTime" resultMap="FinishMap" parameterType="map">
+        SELECT a.mission_id, a.total_money as gain_money, a.update_time, a.end_day, b.app_name, b.app_icon, b.total_money
+        FROM re_android_mission_finish a
+        LEFT JOIN re_android_mission b
+        ON b.mission_id = a.mission_id
+        WHERE a.user_id = #{userId,jdbcType=INTEGER}
+        <if test="updateTime != null">
+            AND a.update_time <![CDATA[ < ]]> #{updateTime,jdbcType=VARCHAR}
+        </if>
+        ORDER BY a.update_time DESC
+        Limit 0, 20
+    </select>
+
+
+</mapper>

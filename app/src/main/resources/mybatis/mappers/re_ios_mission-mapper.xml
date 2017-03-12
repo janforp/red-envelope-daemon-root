@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_ios_mission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReIosMission">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="app_label" property="appLabel" jdbcType="VARCHAR"/>
+        <result column="app_size" property="appSize" jdbcType="VARCHAR"/>
+        <result column="app_url" property="appUrl" jdbcType="VARCHAR"/>
+        <result column="app_desc" property="appDesc" jdbcType="VARCHAR"/>
+        <result column="app_introduce" property="appIntroduce" jdbcType="VARCHAR"/>
+        <result column="app_img" property="appImg" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="mission_weight" property="missionWeight" jdbcType="TINYINT"/>
+        <result column="step_num" property="stepNum" jdbcType="INTEGER"/>
+        <result column="operator_limit" property="operatorLimit" jdbcType="VARCHAR"/>
+        <result column="address_limit" property="addressLimit" jdbcType="VARCHAR"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, app_name, app_icon, app_label, app_size, 
+        app_url, app_desc, app_introduce, app_img, start_time, 
+        end_time, mission_weight, step_num, operator_limit, address_limit, 
+        is_end, is_delete, total_money, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReIosMission">
+        <include refid="re_ios_mission.SELECT_All_Column"/>
+        FROM re_ios_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReIosMission">
+        DELETE FROM re_ios_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReIosMission">
+        INSERT INTO re_ios_mission ( app_name, 
+          app_icon, app_label, app_size, 
+          app_url, app_desc, app_introduce, 
+          app_img, start_time, end_time, 
+          mission_weight, step_num, operator_limit, 
+          address_limit, is_end, is_delete, 
+          total_money, create_time, update_time )
+        VALUES ( #{appName,jdbcType=VARCHAR}, 
+          #{appIcon,jdbcType=VARCHAR}, #{appLabel,jdbcType=VARCHAR}, #{appSize,jdbcType=VARCHAR}, 
+          #{appUrl,jdbcType=VARCHAR}, #{appDesc,jdbcType=VARCHAR}, #{appIntroduce,jdbcType=VARCHAR}, 
+          #{appImg,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+          #{missionWeight,jdbcType=TINYINT}, #{stepNum,jdbcType=INTEGER}, #{operatorLimit,jdbcType=VARCHAR}, 
+          #{addressLimit,jdbcType=VARCHAR}, #{isEnd,jdbcType=TINYINT}, #{isDelete,jdbcType=TINYINT}, 
+          #{totalMoney,jdbcType=DECIMAL}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReIosMission">
+        INSERT INTO re_ios_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appName != null">
+                app_name,
+            </if>
+            <if test="appIcon != null">
+                app_icon,
+            </if>
+            <if test="appLabel != null">
+                app_label,
+            </if>
+            <if test="appSize != null">
+                app_size,
+            </if>
+            <if test="appUrl != null">
+                app_url,
+            </if>
+            <if test="appDesc != null">
+                app_desc,
+            </if>
+            <if test="appIntroduce != null">
+                app_introduce,
+            </if>
+            <if test="appImg != null">
+                app_img,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="missionWeight != null">
+                mission_weight,
+            </if>
+            <if test="stepNum != null">
+                step_num,
+            </if>
+            <if test="operatorLimit != null">
+                operator_limit,
+            </if>
+            <if test="addressLimit != null">
+                address_limit,
+            </if>
+            <if test="isEnd != null">
+                is_end,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="totalMoney != null">
+                total_money,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="appName != null">
+                #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="appLabel != null">
+                #{appLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="appSize != null">
+                #{appSize,jdbcType=VARCHAR},
+            </if>
+            <if test="appUrl != null">
+                #{appUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="appIntroduce != null">
+                #{appIntroduce,jdbcType=VARCHAR},
+            </if>
+            <if test="appImg != null">
+                #{appImg,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="missionWeight != null">
+                #{missionWeight,jdbcType=TINYINT},
+            </if>
+            <if test="stepNum != null">
+                #{stepNum,jdbcType=INTEGER},
+            </if>
+            <if test="operatorLimit != null">
+                #{operatorLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="addressLimit != null">
+                #{addressLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="totalMoney != null">
+                #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_ios_mission ( app_name, 
+          app_icon, app_label, app_size, 
+          app_url, app_desc, app_introduce, 
+          app_img, start_time, end_time, 
+          mission_weight, step_num, operator_limit, 
+          address_limit, is_end, is_delete, 
+          total_money, create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.appName,jdbcType=VARCHAR}, 
+            #{item.appIcon,jdbcType=VARCHAR}, #{item.appLabel,jdbcType=VARCHAR}, #{item.appSize,jdbcType=VARCHAR}, 
+            #{item.appUrl,jdbcType=VARCHAR}, #{item.appDesc,jdbcType=VARCHAR}, #{item.appIntroduce,jdbcType=VARCHAR}, 
+            #{item.appImg,jdbcType=VARCHAR}, #{item.startTime,jdbcType=VARCHAR}, #{item.endTime,jdbcType=VARCHAR}, 
+            #{item.missionWeight,jdbcType=TINYINT}, #{item.stepNum,jdbcType=INTEGER}, #{item.operatorLimit,jdbcType=VARCHAR}, 
+            #{item.addressLimit,jdbcType=VARCHAR}, #{item.isEnd,jdbcType=TINYINT}, #{item.isDelete,jdbcType=TINYINT}, 
+            #{item.totalMoney,jdbcType=DECIMAL}, #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReIosMission">
+        UPDATE re_ios_mission
+        <set>
+            <if test="appName != null">
+                app_name = #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                app_icon = #{appIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="appLabel != null">
+                app_label = #{appLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="appSize != null">
+                app_size = #{appSize,jdbcType=VARCHAR},
+            </if>
+            <if test="appUrl != null">
+                app_url = #{appUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                app_desc = #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="appIntroduce != null">
+                app_introduce = #{appIntroduce,jdbcType=VARCHAR},
+            </if>
+            <if test="appImg != null">
+                app_img = #{appImg,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="missionWeight != null">
+                mission_weight = #{missionWeight,jdbcType=TINYINT},
+            </if>
+            <if test="stepNum != null">
+                step_num = #{stepNum,jdbcType=INTEGER},
+            </if>
+            <if test="operatorLimit != null">
+                operator_limit = #{operatorLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="addressLimit != null">
+                address_limit = #{addressLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                is_end = #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="totalMoney != null">
+                total_money = #{totalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReIosMission">
+        UPDATE re_ios_mission
+        SET app_name = #{appName,jdbcType=VARCHAR},
+            app_icon = #{appIcon,jdbcType=VARCHAR},
+            app_label = #{appLabel,jdbcType=VARCHAR},
+            app_size = #{appSize,jdbcType=VARCHAR},
+            app_url = #{appUrl,jdbcType=VARCHAR},
+            app_desc = #{appDesc,jdbcType=VARCHAR},
+            app_introduce = #{appIntroduce,jdbcType=VARCHAR},
+            app_img = #{appImg,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=VARCHAR},
+            end_time = #{endTime,jdbcType=VARCHAR},
+            mission_weight = #{missionWeight,jdbcType=TINYINT},
+            step_num = #{stepNum,jdbcType=INTEGER},
+            operator_limit = #{operatorLimit,jdbcType=VARCHAR},
+            address_limit = #{addressLimit,jdbcType=VARCHAR},
+            is_end = #{isEnd,jdbcType=TINYINT},
+            is_delete = #{isDelete,jdbcType=TINYINT},
+            total_money = #{totalMoney,jdbcType=DECIMAL},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+</mapper>

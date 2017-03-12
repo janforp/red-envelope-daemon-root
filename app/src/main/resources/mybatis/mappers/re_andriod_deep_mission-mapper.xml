@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_andriod_deep_mission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAndriodDeepMission">
+        <id column="wall_id" property="wallId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="info_id" property="infoId" jdbcType="BIGINT"/>
+        <result column="finish_times" property="finishTimes" jdbcType="TINYINT"/>
+        <result column="last_finish_time" property="lastFinishTime" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT wall_id, user_id, info_id, finish_times, last_finish_time, 
+        start_time, end_time, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAndriodDeepMission">
+        <include refid="re_andriod_deep_mission.SELECT_All_Column"/>
+        FROM re_andriod_deep_mission
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAndriodDeepMission">
+        DELETE FROM re_andriod_deep_mission
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAndriodDeepMission">
+        INSERT INTO re_andriod_deep_mission ( wall_id, 
+          user_id, info_id, finish_times, 
+          last_finish_time, start_time, end_time, 
+          create_time, update_time )
+        VALUES ( #{wallId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{infoId,jdbcType=BIGINT}, #{finishTimes,jdbcType=TINYINT}, 
+          #{lastFinishTime,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+          #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAndriodDeepMission">
+        INSERT INTO re_andriod_deep_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                wall_id,
+                user_id,
+            <if test="infoId != null">
+                info_id,
+            </if>
+            <if test="finishTimes != null">
+                finish_times,
+            </if>
+            <if test="lastFinishTime != null">
+                last_finish_time,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{wallId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="infoId != null">
+                #{infoId,jdbcType=BIGINT},
+            </if>
+            <if test="finishTimes != null">
+                #{finishTimes,jdbcType=TINYINT},
+            </if>
+            <if test="lastFinishTime != null">
+                #{lastFinishTime,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_andriod_deep_mission ( wall_id, 
+          user_id, info_id, finish_times, 
+          last_finish_time, start_time, end_time, 
+          create_time, update_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.wallId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.infoId,jdbcType=BIGINT}, #{item.finishTimes,jdbcType=TINYINT}, 
+            #{item.lastFinishTime,jdbcType=VARCHAR}, #{item.startTime,jdbcType=VARCHAR}, #{item.endTime,jdbcType=VARCHAR}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAndriodDeepMission">
+        UPDATE re_andriod_deep_mission
+        <set>
+            <if test="infoId != null">
+                info_id = #{infoId,jdbcType=BIGINT},
+            </if>
+            <if test="finishTimes != null">
+                finish_times = #{finishTimes,jdbcType=TINYINT},
+            </if>
+            <if test="lastFinishTime != null">
+                last_finish_time = #{lastFinishTime,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAndriodDeepMission">
+        UPDATE re_andriod_deep_mission
+        SET info_id = #{infoId,jdbcType=BIGINT},
+            finish_times = #{finishTimes,jdbcType=TINYINT},
+            last_finish_time = #{lastFinishTime,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=VARCHAR},
+            end_time = #{endTime,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR}
+        WHERE wall_id = #{wallId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

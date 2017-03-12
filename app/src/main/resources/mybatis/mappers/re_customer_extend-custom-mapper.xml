@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_customer_extend">
+
+    <resultMap id="ExtendMap" type="com.hongbao.api.model.dto.ReExtendInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="customer_id" property="customerId" jdbcType="INTEGER"/>
+        <result column="red_num_day_left" property="redNumDayLeft" jdbcType="INTEGER"/>
+        <result column="award_desc" property="awardDesc" jdbcType="VARCHAR"/>
+        <result column="extend_desc" property="extendDesc" jdbcType="VARCHAR"/>
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR"/>
+        <result column="customer_img" property="customerImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectIosExtend" resultMap="ExtendMap" >
+        SELECT a.id, a.customer_id, a.red_num_day_left, a.award_desc, a.extend_desc, b.customer_name, b.customer_img
+        FROM re_customer_extend a
+        LEFT JOIN re_customer b ON b.customer_id = a.customer_id
+        WHERE (a.extend_status = 0 OR a.extend_status = 2)
+        AND a.red_num_day_left > 0
+        ORDER BY a.red_num_day_left DESC
+    </select>
+
+    <select id="selectAndriodExtend" resultMap="ExtendMap" >
+        SELECT a.id, a.customer_id, a.red_num_day_left, a.award_desc, a.extend_desc, b.customer_name, b.customer_img
+        FROM re_customer_extend a
+        LEFT JOIN re_customer b ON b.customer_id = a.customer_id
+        WHERE (a.extend_status = 1 OR a.extend_status = 2)
+        AND a.red_num_day_left > 0
+        ORDER BY a.red_num_day_left DESC
+    </select>
+
+    <select id="selectIndexIosExtend" resultMap="ExtendMap" parameterType="Integer">
+        SELECT a.id, a.customer_id, a.red_num_day_left, a.award_desc, a.extend_desc, b.customer_name, b.customer_img
+        FROM re_customer_extend a
+        LEFT JOIN re_customer b ON b.customer_id = a.customer_id
+        WHERE (a.extend_status = 0 OR a.extend_status = 2)
+        AND a.red_num_day_left > 0
+        ORDER BY a.red_num_day_left DESC
+        LIMIT 0, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectIndexAndriodExtend" resultMap="ExtendMap" parameterType="Integer" >
+        SELECT a.id, a.customer_id, a.red_num_day_left, a.award_desc, a.extend_desc, b.customer_name, b.customer_img
+        FROM re_customer_extend a
+        LEFT JOIN re_customer b ON b.customer_id = a.customer_id
+        WHERE (a.extend_status = 1 OR a.extend_status = 2)
+        AND a.red_num_day_left > 0
+        ORDER BY a.red_num_day_left DESC
+        LIMIT 0, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>

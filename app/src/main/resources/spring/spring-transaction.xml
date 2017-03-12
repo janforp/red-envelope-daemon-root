@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2013 Raycloud.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd"
+       default-lazy-init="false">
+
+    <description>Spring事务配置</description>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="jdbcDataSource"/>
+    </bean>
+
+    <!--
+    @Transactional(propagation = Propagation.SUPPORTS)和tx:advice是两种声明事务拦截的方式，只需要使用一种
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    -->
+    <!-- 事务配置拦截器 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" isolation="READ_COMMITTED" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--
+	 ANSI标准定义了4个隔离级别，MySQL的InnoDB都支持：一般使用READ COMMITTED
+	 1:READ UNCOMMITTED：最低级别的隔离，通常又称为dirty read，它允许一个事务读取还没commit的数据，这样可能会提高性能，但是dirty read可能不是我们想要的
+	 2:READ COMMITTED：在一个事务中只允许已经commit的记录可见，如果session中select还在查询中，另一个session此时insert一条记录，则新添加的数据不可见，除非插入记录的session commit；
+	 4:REPEATABLE READ：在一个事务开始后，其他session对数据库的修改在本事务中不可见，直到本事务commit或rollback。在一个事务中重复select的结果一样，除非本事务中update数据库。
+	 8:SERIALIZABLE：最高级别的隔离，只允许事务串行执行。为了达到此目的，数据库会锁住每行已经读取的记录，其他session不能修改数据直到前一事务结束，事务commit或取消时才释放锁。
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" isolation="READ_COMMITTED"/>增加记录的方法
+            <tx:method name="get*" propagation="REQUIRED" isolation="READ_COMMITTED"/>获取记录的方法
+            <tx:method name="delete*" propagation="REQUIRED" isolation="READ_COMMITTED"/>删除的方法
+            <tx:method name="update*" propagation="REQUIRED" isolation="SERIALIZABLE"/>更改记录的方法
+        </tx:attributes>
+    </tx:advice>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" isolation="READ_COMMITTED"/>增加记录的方法
+            <tx:method name="get*" propagation="REQUIRED" isolation="READ_COMMITTED"/>获取记录的方法
+            <tx:method name="delete*" propagation="REQUIRED" isolation="READ_COMMITTED"/>删除的方法
+            <tx:method name="update*" propagation="REQUIRED" isolation="SERIALIZABLE"/>更改记录的方法
+        </tx:attributes>
+    </tx:advice>
+    -->
+    <aop:config>
+        <aop:pointcut id="serviceOperation" expression="execution(* com.hongbao.api.service..*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+    </aop:config>
+</beans>

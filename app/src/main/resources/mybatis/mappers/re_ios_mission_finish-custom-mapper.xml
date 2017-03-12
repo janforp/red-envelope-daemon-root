@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_ios_mission_finish">
+
+    <select id="selectFinishMissionList" resultType="Long" parameterType="Integer">
+        SELECT DISTINCT(mission_id)
+        FROM re_ios_mission_finish
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByMissionIdAndUserId" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_ios_mission_finish.SELECT_All_Column"/>
+        FROM re_ios_mission_finish
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+        ORDER BY step_id DESC
+        limit 1
+    </select>
+
+</mapper>

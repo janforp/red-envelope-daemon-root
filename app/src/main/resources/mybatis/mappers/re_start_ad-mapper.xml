@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_start_ad">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReStartAd">
+        <id column="ad_id" property="adId" jdbcType="INTEGER"/>
+        <result column="ad_title" property="adTitle" jdbcType="VARCHAR"/>
+        <result column="ad_img" property="adImg" jdbcType="VARCHAR"/>
+        <result column="ad_url" property="adUrl" jdbcType="VARCHAR"/>
+        <result column="ad_status" property="adStatus" jdbcType="TINYINT"/>
+        <result column="ad_skip" property="adSkip" jdbcType="TINYINT"/>
+        <result column="ad_duration" property="adDuration" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT ad_id, ad_title, ad_img, ad_url, ad_status, 
+        ad_skip, ad_duration
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReStartAd">
+        <include refid="re_start_ad.SELECT_All_Column"/>
+        FROM re_start_ad
+        WHERE ad_id = #{adId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReStartAd">
+        DELETE FROM re_start_ad
+        WHERE ad_id = #{adId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReStartAd">
+        INSERT INTO re_start_ad ( ad_title, 
+          ad_img, ad_url, ad_status, 
+          ad_skip, ad_duration )
+        VALUES ( #{adTitle,jdbcType=VARCHAR}, 
+          #{adImg,jdbcType=VARCHAR}, #{adUrl,jdbcType=VARCHAR}, #{adStatus,jdbcType=TINYINT}, 
+          #{adSkip,jdbcType=TINYINT}, #{adDuration,jdbcType=TINYINT} )
+        <selectKey keyProperty="adId" resultType="int">
+            SELECT LAST_INSERT_ID() AS adId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReStartAd">
+        INSERT INTO re_start_ad
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="adTitle != null">
+                ad_title,
+            </if>
+            <if test="adImg != null">
+                ad_img,
+            </if>
+            <if test="adUrl != null">
+                ad_url,
+            </if>
+            <if test="adStatus != null">
+                ad_status,
+            </if>
+            <if test="adSkip != null">
+                ad_skip,
+            </if>
+            <if test="adDuration != null">
+                ad_duration,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="adTitle != null">
+                #{adTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="adImg != null">
+                #{adImg,jdbcType=VARCHAR},
+            </if>
+            <if test="adUrl != null">
+                #{adUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="adStatus != null">
+                #{adStatus,jdbcType=TINYINT},
+            </if>
+            <if test="adSkip != null">
+                #{adSkip,jdbcType=TINYINT},
+            </if>
+            <if test="adDuration != null">
+                #{adDuration,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="adId" resultType="int">
+            SELECT LAST_INSERT_ID() AS adId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_start_ad ( ad_title, 
+          ad_img, ad_url, ad_status, 
+          ad_skip, ad_duration )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.adTitle,jdbcType=VARCHAR}, 
+            #{item.adImg,jdbcType=VARCHAR}, #{item.adUrl,jdbcType=VARCHAR}, #{item.adStatus,jdbcType=TINYINT}, 
+            #{item.adSkip,jdbcType=TINYINT}, #{item.adDuration,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReStartAd">
+        UPDATE re_start_ad
+        <set>
+            <if test="adTitle != null">
+                ad_title = #{adTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="adImg != null">
+                ad_img = #{adImg,jdbcType=VARCHAR},
+            </if>
+            <if test="adUrl != null">
+                ad_url = #{adUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="adStatus != null">
+                ad_status = #{adStatus,jdbcType=TINYINT},
+            </if>
+            <if test="adSkip != null">
+                ad_skip = #{adSkip,jdbcType=TINYINT},
+            </if>
+            <if test="adDuration != null">
+                ad_duration = #{adDuration,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE ad_id = #{adId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReStartAd">
+        UPDATE re_start_ad
+        SET ad_title = #{adTitle,jdbcType=VARCHAR},
+            ad_img = #{adImg,jdbcType=VARCHAR},
+            ad_url = #{adUrl,jdbcType=VARCHAR},
+            ad_status = #{adStatus,jdbcType=TINYINT},
+            ad_skip = #{adSkip,jdbcType=TINYINT},
+            ad_duration = #{adDuration,jdbcType=TINYINT}
+        WHERE ad_id = #{adId,jdbcType=INTEGER}
+    </update>
+</mapper>

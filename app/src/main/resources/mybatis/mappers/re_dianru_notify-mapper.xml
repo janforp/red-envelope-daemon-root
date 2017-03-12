@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_dianru_notify">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReDianruNotify">
+        <id column="hash_id" property="hashId" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="ad_id" property="adId" jdbcType="VARCHAR"/>
+        <result column="ad_name" property="adName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="mac_add" property="macAdd" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="source" property="source" jdbcType="VARCHAR"/>
+        <result column="point" property="point" jdbcType="INTEGER"/>
+        <result column="notify_time" property="notifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT hash_id, app_id, ad_id, ad_name, user_id, 
+        mac_add, device_id, source, point, notify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReDianruNotify">
+        <include refid="re_dianru_notify.SELECT_All_Column"/>
+        FROM re_dianru_notify
+        WHERE hash_id = #{hashId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReDianruNotify">
+        DELETE FROM re_dianru_notify
+        WHERE hash_id = #{hashId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReDianruNotify">
+        INSERT INTO re_dianru_notify ( hash_id, 
+          app_id, ad_id, ad_name, 
+          user_id, mac_add, device_id, 
+          source, point, notify_time )
+        VALUES ( #{hashId,jdbcType=VARCHAR}, 
+          #{appId,jdbcType=VARCHAR}, #{adId,jdbcType=VARCHAR}, #{adName,jdbcType=VARCHAR}, 
+          #{userId,jdbcType=INTEGER}, #{macAdd,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, 
+          #{source,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, #{notifyTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReDianruNotify">
+        INSERT INTO re_dianru_notify
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                hash_id,
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="adId != null">
+                ad_id,
+            </if>
+            <if test="adName != null">
+                ad_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="macAdd != null">
+                mac_add,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{hashId,jdbcType=VARCHAR},
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adId != null">
+                #{adId,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="macAdd != null">
+                #{macAdd,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="point != null">
+                #{point,jdbcType=INTEGER},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_dianru_notify ( hash_id, 
+          app_id, ad_id, ad_name, 
+          user_id, mac_add, device_id, 
+          source, point, notify_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.hashId,jdbcType=VARCHAR}, 
+            #{item.appId,jdbcType=VARCHAR}, #{item.adId,jdbcType=VARCHAR}, #{item.adName,jdbcType=VARCHAR}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.macAdd,jdbcType=VARCHAR}, #{item.deviceId,jdbcType=VARCHAR}, 
+            #{item.source,jdbcType=VARCHAR}, #{item.point,jdbcType=INTEGER}, #{item.notifyTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReDianruNotify">
+        UPDATE re_dianru_notify
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="adId != null">
+                ad_id = #{adId,jdbcType=VARCHAR},
+            </if>
+            <if test="adName != null">
+                ad_name = #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="macAdd != null">
+                mac_add = #{macAdd,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="point != null">
+                point = #{point,jdbcType=INTEGER},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE hash_id = #{hashId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReDianruNotify">
+        UPDATE re_dianru_notify
+        SET app_id = #{appId,jdbcType=VARCHAR},
+            ad_id = #{adId,jdbcType=VARCHAR},
+            ad_name = #{adName,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=INTEGER},
+            mac_add = #{macAdd,jdbcType=VARCHAR},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            source = #{source,jdbcType=VARCHAR},
+            point = #{point,jdbcType=INTEGER},
+            notify_time = #{notifyTime,jdbcType=VARCHAR}
+        WHERE hash_id = #{hashId,jdbcType=VARCHAR}
+    </update>
+</mapper>

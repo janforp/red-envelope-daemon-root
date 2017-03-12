@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_share_mission">
+
+    <select id="getList" resultMap="BaseResultMap" parameterType="String">
+        <include refid="re_share_mission.SELECT_All_Column"/>
+        FROM re_share_mission
+        WHERE is_end = 1
+        AND   start_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectShareCount" resultType="int" parameterType="String">
+        SELECT COUNT(*)
+        FROM re_share_mission
+        WHERE is_end = 1
+        AND   start_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

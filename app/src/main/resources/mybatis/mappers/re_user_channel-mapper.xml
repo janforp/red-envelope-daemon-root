@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_channel">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserChannel">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="platform" property="platform" jdbcType="TINYINT"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="device_name" property="deviceName" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="TINYINT"/>
+        <result column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="user_ip" property="userIp" jdbcType="VARCHAR"/>
+        <result column="user_imsi" property="userImsi" jdbcType="VARCHAR"/>
+        <result column="user_imei" property="userImei" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_id, platform, device_id, device_name, 
+        app_id, package_name, channel_name, app_version, create_time, 
+        user_ip, user_imsi, user_imei
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserChannel">
+        <include refid="re_user_channel.SELECT_All_Column"/>
+        FROM re_user_channel
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserChannel">
+        DELETE FROM re_user_channel
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserChannel">
+        INSERT INTO re_user_channel ( user_id, 
+          platform, device_id, device_name, 
+          app_id, package_name, channel_name, 
+          app_version, create_time, user_ip, 
+          user_imsi, user_imei )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{platform,jdbcType=TINYINT}, #{deviceId,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+          #{appId,jdbcType=TINYINT}, #{packageName,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR}, 
+          #{appVersion,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{userIp,jdbcType=VARCHAR}, 
+          #{userImsi,jdbcType=VARCHAR}, #{userImei,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserChannel">
+        INSERT INTO re_user_channel
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="platform != null">
+                platform,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="deviceName != null">
+                device_name,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="packageName != null">
+                package_name,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="appVersion != null">
+                app_version,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userIp != null">
+                user_ip,
+            </if>
+            <if test="userImsi != null">
+                user_imsi,
+            </if>
+            <if test="userImei != null">
+                user_imei,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="platform != null">
+                #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null">
+                #{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=TINYINT},
+            </if>
+            <if test="packageName != null">
+                #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="userIp != null">
+                #{userIp,jdbcType=VARCHAR},
+            </if>
+            <if test="userImsi != null">
+                #{userImsi,jdbcType=VARCHAR},
+            </if>
+            <if test="userImei != null">
+                #{userImei,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_channel ( user_id, 
+          platform, device_id, device_name, 
+          app_id, package_name, channel_name, 
+          app_version, create_time, user_ip, 
+          user_imsi, user_imei )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.platform,jdbcType=TINYINT}, #{item.deviceId,jdbcType=VARCHAR}, #{item.deviceName,jdbcType=VARCHAR}, 
+            #{item.appId,jdbcType=TINYINT}, #{item.packageName,jdbcType=VARCHAR}, #{item.channelName,jdbcType=VARCHAR}, 
+            #{item.appVersion,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}, #{item.userIp,jdbcType=VARCHAR}, 
+            #{item.userImsi,jdbcType=VARCHAR}, #{item.userImei,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserChannel">
+        UPDATE re_user_channel
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null">
+                device_name = #{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=TINYINT},
+            </if>
+            <if test="packageName != null">
+                package_name = #{packageName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                app_version = #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="userIp != null">
+                user_ip = #{userIp,jdbcType=VARCHAR},
+            </if>
+            <if test="userImsi != null">
+                user_imsi = #{userImsi,jdbcType=VARCHAR},
+            </if>
+            <if test="userImei != null">
+                user_imei = #{userImei,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserChannel">
+        UPDATE re_user_channel
+        SET user_id = #{userId,jdbcType=INTEGER},
+            platform = #{platform,jdbcType=TINYINT},
+            device_id = #{deviceId,jdbcType=VARCHAR},
+            device_name = #{deviceName,jdbcType=VARCHAR},
+            app_id = #{appId,jdbcType=TINYINT},
+            package_name = #{packageName,jdbcType=VARCHAR},
+            channel_name = #{channelName,jdbcType=VARCHAR},
+            app_version = #{appVersion,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            user_ip = #{userIp,jdbcType=VARCHAR},
+            user_imsi = #{userImsi,jdbcType=VARCHAR},
+            user_imei = #{userImei,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

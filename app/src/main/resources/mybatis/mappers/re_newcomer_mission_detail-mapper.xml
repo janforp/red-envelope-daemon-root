@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_newcomer_mission_detail">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReNewcomerMissionDetail">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="draw_time" property="drawTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, user_id, money, draw_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReNewcomerMissionDetail">
+        <include refid="re_newcomer_mission_detail.SELECT_All_Column"/>
+        FROM re_newcomer_mission_detail
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReNewcomerMissionDetail">
+        DELETE FROM re_newcomer_mission_detail
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReNewcomerMissionDetail">
+        INSERT INTO re_newcomer_mission_detail ( mission_id, 
+          user_id, money, draw_time )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{money,jdbcType=DECIMAL}, #{drawTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReNewcomerMissionDetail">
+        INSERT INTO re_newcomer_mission_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                user_id,
+            <if test="money != null">
+                money,
+            </if>
+            <if test="drawTime != null">
+                draw_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="drawTime != null">
+                #{drawTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_newcomer_mission_detail ( mission_id, 
+          user_id, money, draw_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.money,jdbcType=DECIMAL}, #{item.drawTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReNewcomerMissionDetail">
+        UPDATE re_newcomer_mission_detail
+        <set>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="drawTime != null">
+                draw_time = #{drawTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReNewcomerMissionDetail">
+        UPDATE re_newcomer_mission_detail
+        SET money = #{money,jdbcType=DECIMAL},
+            draw_time = #{drawTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

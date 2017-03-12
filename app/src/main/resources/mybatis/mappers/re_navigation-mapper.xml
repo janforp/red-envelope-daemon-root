@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_navigation">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReNavigation">
+        <id column="navigation_id" property="navigationId" jdbcType="INTEGER"/>
+        <result column="navigation_title" property="navigationTitle" jdbcType="VARCHAR"/>
+        <result column="navigation_img" property="navigationImg" jdbcType="VARCHAR"/>
+        <result column="navigation_status" property="navigationStatus" jdbcType="TINYINT"/>
+        <result column="navigation_url" property="navigationUrl" jdbcType="VARCHAR"/>
+        <result column="navigation_order" property="navigationOrder" jdbcType="TINYINT"/>
+        <result column="limit_version" property="limitVersion" jdbcType="VARCHAR"/>
+        <result column="max_version" property="maxVersion" jdbcType="VARCHAR"/>
+        <result column="limit_channel_name" property="limitChannelName" jdbcType="VARCHAR"/>
+        <result column="limit_package_name" property="limitPackageName" jdbcType="VARCHAR"/>
+        <result column="is_show" property="isShow" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT navigation_id, navigation_title, navigation_img, navigation_status, navigation_url, 
+        navigation_order, limit_version, max_version, limit_channel_name, limit_package_name, 
+        is_show
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReNavigation">
+        <include refid="re_navigation.SELECT_All_Column"/>
+        FROM re_navigation
+        WHERE navigation_id = #{navigationId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReNavigation">
+        DELETE FROM re_navigation
+        WHERE navigation_id = #{navigationId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReNavigation">
+        INSERT INTO re_navigation ( navigation_title, 
+          navigation_img, navigation_status, navigation_url, 
+          navigation_order, limit_version, max_version, 
+          limit_channel_name, limit_package_name, is_show )
+        VALUES ( #{navigationTitle,jdbcType=VARCHAR}, 
+          #{navigationImg,jdbcType=VARCHAR}, #{navigationStatus,jdbcType=TINYINT}, #{navigationUrl,jdbcType=VARCHAR}, 
+          #{navigationOrder,jdbcType=TINYINT}, #{limitVersion,jdbcType=VARCHAR}, #{maxVersion,jdbcType=VARCHAR}, 
+          #{limitChannelName,jdbcType=VARCHAR}, #{limitPackageName,jdbcType=VARCHAR}, #{isShow,jdbcType=TINYINT} )
+        <selectKey keyProperty="navigationId" resultType="int">
+            SELECT LAST_INSERT_ID() AS navigationId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReNavigation">
+        INSERT INTO re_navigation
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="navigationTitle != null">
+                navigation_title,
+            </if>
+            <if test="navigationImg != null">
+                navigation_img,
+            </if>
+            <if test="navigationStatus != null">
+                navigation_status,
+            </if>
+            <if test="navigationUrl != null">
+                navigation_url,
+            </if>
+            <if test="navigationOrder != null">
+                navigation_order,
+            </if>
+            <if test="limitVersion != null">
+                limit_version,
+            </if>
+            <if test="maxVersion != null">
+                max_version,
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name,
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="navigationTitle != null">
+                #{navigationTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationImg != null">
+                #{navigationImg,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationStatus != null">
+                #{navigationStatus,jdbcType=TINYINT},
+            </if>
+            <if test="navigationUrl != null">
+                #{navigationUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationOrder != null">
+                #{navigationOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="navigationId" resultType="int">
+            SELECT LAST_INSERT_ID() AS navigationId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_navigation ( navigation_title, 
+          navigation_img, navigation_status, navigation_url, 
+          navigation_order, limit_version, max_version, 
+          limit_channel_name, limit_package_name, is_show )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.navigationTitle,jdbcType=VARCHAR}, 
+            #{item.navigationImg,jdbcType=VARCHAR}, #{item.navigationStatus,jdbcType=TINYINT}, #{item.navigationUrl,jdbcType=VARCHAR}, 
+            #{item.navigationOrder,jdbcType=TINYINT}, #{item.limitVersion,jdbcType=VARCHAR}, #{item.maxVersion,jdbcType=VARCHAR}, 
+            #{item.limitChannelName,jdbcType=VARCHAR}, #{item.limitPackageName,jdbcType=VARCHAR}, #{item.isShow,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReNavigation">
+        UPDATE re_navigation
+        <set>
+            <if test="navigationTitle != null">
+                navigation_title = #{navigationTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationImg != null">
+                navigation_img = #{navigationImg,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationStatus != null">
+                navigation_status = #{navigationStatus,jdbcType=TINYINT},
+            </if>
+            <if test="navigationUrl != null">
+                navigation_url = #{navigationUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationOrder != null">
+                navigation_order = #{navigationOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                limit_version = #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                max_version = #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE navigation_id = #{navigationId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReNavigation">
+        UPDATE re_navigation
+        SET navigation_title = #{navigationTitle,jdbcType=VARCHAR},
+            navigation_img = #{navigationImg,jdbcType=VARCHAR},
+            navigation_status = #{navigationStatus,jdbcType=TINYINT},
+            navigation_url = #{navigationUrl,jdbcType=VARCHAR},
+            navigation_order = #{navigationOrder,jdbcType=TINYINT},
+            limit_version = #{limitVersion,jdbcType=VARCHAR},
+            max_version = #{maxVersion,jdbcType=VARCHAR},
+            limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            is_show = #{isShow,jdbcType=TINYINT}
+        WHERE navigation_id = #{navigationId,jdbcType=INTEGER}
+    </update>
+</mapper>

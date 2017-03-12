@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_mission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReMission">
+        <id column="mission_id" property="missionId" jdbcType="INTEGER"/>
+        <result column="mission_name" property="missionName" jdbcType="VARCHAR"/>
+        <result column="mission_img" property="missionImg" jdbcType="VARCHAR"/>
+        <result column="mission_reward" property="missionReward" jdbcType="VARCHAR"/>
+        <result column="gain_reward_num" property="gainRewardNum" jdbcType="INTEGER"/>
+        <result column="mission_ad_img" property="missionAdImg" jdbcType="VARCHAR"/>
+        <result column="mission_url" property="missionUrl" jdbcType="VARCHAR"/>
+        <result column="mission_hot" property="missionHot" jdbcType="TINYINT"/>
+        <result column="mission_sort" property="missionSort" jdbcType="TINYINT"/>
+        <result column="mission_order" property="missionOrder" jdbcType="INTEGER"/>
+        <result column="participants_num" property="participantsNum" jdbcType="INTEGER"/>
+        <result column="start_time" property="startTime" jdbcType="INTEGER"/>
+        <result column="end_time" property="endTime" jdbcType="INTEGER"/>
+        <result column="mission_status" property="missionStatus" jdbcType="TINYINT"/>
+        <result column="mission_step" property="missionStep" jdbcType="VARCHAR"/>
+        <result column="mission_rule" property="missionRule" jdbcType="VARCHAR"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="mission_extra_reward" property="missionExtraReward" jdbcType="VARCHAR"/>
+        <result column="merchant_detail" property="merchantDetail" jdbcType="VARCHAR"/>
+        <result column="show_or_not" property="showOrNot" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, mission_name, mission_img, mission_reward, gain_reward_num, 
+        mission_ad_img, mission_url, mission_hot, mission_sort, mission_order, 
+        participants_num, start_time, end_time, mission_status, mission_step, 
+        mission_rule, merchant_name, mission_extra_reward, merchant_detail, show_or_not
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReMission">
+        <include refid="re_mission.SELECT_All_Column"/>
+        FROM re_mission
+        WHERE mission_id = #{missionId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReMission">
+        DELETE FROM re_mission
+        WHERE mission_id = #{missionId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReMission">
+        INSERT INTO re_mission ( mission_name, 
+          mission_img, mission_reward, gain_reward_num, 
+          mission_ad_img, mission_url, mission_hot, 
+          mission_sort, mission_order, participants_num, 
+          start_time, end_time, mission_status, 
+          mission_step, mission_rule, merchant_name, 
+          mission_extra_reward, merchant_detail, show_or_not )
+        VALUES ( #{missionName,jdbcType=VARCHAR}, 
+          #{missionImg,jdbcType=VARCHAR}, #{missionReward,jdbcType=VARCHAR}, #{gainRewardNum,jdbcType=INTEGER}, 
+          #{missionAdImg,jdbcType=VARCHAR}, #{missionUrl,jdbcType=VARCHAR}, #{missionHot,jdbcType=TINYINT}, 
+          #{missionSort,jdbcType=TINYINT}, #{missionOrder,jdbcType=INTEGER}, #{participantsNum,jdbcType=INTEGER}, 
+          #{startTime,jdbcType=INTEGER}, #{endTime,jdbcType=INTEGER}, #{missionStatus,jdbcType=TINYINT}, 
+          #{missionStep,jdbcType=VARCHAR}, #{missionRule,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+          #{missionExtraReward,jdbcType=VARCHAR}, #{merchantDetail,jdbcType=VARCHAR}, #{showOrNot,jdbcType=TINYINT} )
+        <selectKey keyProperty="missionId" resultType="int">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReMission">
+        INSERT INTO re_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionName != null">
+                mission_name,
+            </if>
+            <if test="missionImg != null">
+                mission_img,
+            </if>
+            <if test="missionReward != null">
+                mission_reward,
+            </if>
+            <if test="gainRewardNum != null">
+                gain_reward_num,
+            </if>
+            <if test="missionAdImg != null">
+                mission_ad_img,
+            </if>
+            <if test="missionUrl != null">
+                mission_url,
+            </if>
+            <if test="missionHot != null">
+                mission_hot,
+            </if>
+            <if test="missionSort != null">
+                mission_sort,
+            </if>
+            <if test="missionOrder != null">
+                mission_order,
+            </if>
+            <if test="participantsNum != null">
+                participants_num,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="missionStatus != null">
+                mission_status,
+            </if>
+            <if test="missionStep != null">
+                mission_step,
+            </if>
+            <if test="missionRule != null">
+                mission_rule,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="missionExtraReward != null">
+                mission_extra_reward,
+            </if>
+            <if test="merchantDetail != null">
+                merchant_detail,
+            </if>
+            <if test="showOrNot != null">
+                show_or_not,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionName != null">
+                #{missionName,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImg != null">
+                #{missionImg,jdbcType=VARCHAR},
+            </if>
+            <if test="missionReward != null">
+                #{missionReward,jdbcType=VARCHAR},
+            </if>
+            <if test="gainRewardNum != null">
+                #{gainRewardNum,jdbcType=INTEGER},
+            </if>
+            <if test="missionAdImg != null">
+                #{missionAdImg,jdbcType=VARCHAR},
+            </if>
+            <if test="missionUrl != null">
+                #{missionUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="missionHot != null">
+                #{missionHot,jdbcType=TINYINT},
+            </if>
+            <if test="missionSort != null">
+                #{missionSort,jdbcType=TINYINT},
+            </if>
+            <if test="missionOrder != null">
+                #{missionOrder,jdbcType=INTEGER},
+            </if>
+            <if test="participantsNum != null">
+                #{participantsNum,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=INTEGER},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=INTEGER},
+            </if>
+            <if test="missionStatus != null">
+                #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="missionStep != null">
+                #{missionStep,jdbcType=VARCHAR},
+            </if>
+            <if test="missionRule != null">
+                #{missionRule,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="missionExtraReward != null">
+                #{missionExtraReward,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantDetail != null">
+                #{merchantDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="showOrNot != null">
+                #{showOrNot,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="missionId" resultType="int">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_mission ( mission_name, 
+          mission_img, mission_reward, gain_reward_num, 
+          mission_ad_img, mission_url, mission_hot, 
+          mission_sort, mission_order, participants_num, 
+          start_time, end_time, mission_status, 
+          mission_step, mission_rule, merchant_name, 
+          mission_extra_reward, merchant_detail, show_or_not )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionName,jdbcType=VARCHAR}, 
+            #{item.missionImg,jdbcType=VARCHAR}, #{item.missionReward,jdbcType=VARCHAR}, #{item.gainRewardNum,jdbcType=INTEGER}, 
+            #{item.missionAdImg,jdbcType=VARCHAR}, #{item.missionUrl,jdbcType=VARCHAR}, #{item.missionHot,jdbcType=TINYINT}, 
+            #{item.missionSort,jdbcType=TINYINT}, #{item.missionOrder,jdbcType=INTEGER}, #{item.participantsNum,jdbcType=INTEGER}, 
+            #{item.startTime,jdbcType=INTEGER}, #{item.endTime,jdbcType=INTEGER}, #{item.missionStatus,jdbcType=TINYINT}, 
+            #{item.missionStep,jdbcType=VARCHAR}, #{item.missionRule,jdbcType=VARCHAR}, #{item.merchantName,jdbcType=VARCHAR}, 
+            #{item.missionExtraReward,jdbcType=VARCHAR}, #{item.merchantDetail,jdbcType=VARCHAR}, #{item.showOrNot,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReMission">
+        UPDATE re_mission
+        <set>
+            <if test="missionName != null">
+                mission_name = #{missionName,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImg != null">
+                mission_img = #{missionImg,jdbcType=VARCHAR},
+            </if>
+            <if test="missionReward != null">
+                mission_reward = #{missionReward,jdbcType=VARCHAR},
+            </if>
+            <if test="gainRewardNum != null">
+                gain_reward_num = #{gainRewardNum,jdbcType=INTEGER},
+            </if>
+            <if test="missionAdImg != null">
+                mission_ad_img = #{missionAdImg,jdbcType=VARCHAR},
+            </if>
+            <if test="missionUrl != null">
+                mission_url = #{missionUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="missionHot != null">
+                mission_hot = #{missionHot,jdbcType=TINYINT},
+            </if>
+            <if test="missionSort != null">
+                mission_sort = #{missionSort,jdbcType=TINYINT},
+            </if>
+            <if test="missionOrder != null">
+                mission_order = #{missionOrder,jdbcType=INTEGER},
+            </if>
+            <if test="participantsNum != null">
+                participants_num = #{participantsNum,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=INTEGER},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=INTEGER},
+            </if>
+            <if test="missionStatus != null">
+                mission_status = #{missionStatus,jdbcType=TINYINT},
+            </if>
+            <if test="missionStep != null">
+                mission_step = #{missionStep,jdbcType=VARCHAR},
+            </if>
+            <if test="missionRule != null">
+                mission_rule = #{missionRule,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="missionExtraReward != null">
+                mission_extra_reward = #{missionExtraReward,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantDetail != null">
+                merchant_detail = #{merchantDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="showOrNot != null">
+                show_or_not = #{showOrNot,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReMission">
+        UPDATE re_mission
+        SET mission_name = #{missionName,jdbcType=VARCHAR},
+            mission_img = #{missionImg,jdbcType=VARCHAR},
+            mission_reward = #{missionReward,jdbcType=VARCHAR},
+            gain_reward_num = #{gainRewardNum,jdbcType=INTEGER},
+            mission_ad_img = #{missionAdImg,jdbcType=VARCHAR},
+            mission_url = #{missionUrl,jdbcType=VARCHAR},
+            mission_hot = #{missionHot,jdbcType=TINYINT},
+            mission_sort = #{missionSort,jdbcType=TINYINT},
+            mission_order = #{missionOrder,jdbcType=INTEGER},
+            participants_num = #{participantsNum,jdbcType=INTEGER},
+            start_time = #{startTime,jdbcType=INTEGER},
+            end_time = #{endTime,jdbcType=INTEGER},
+            mission_status = #{missionStatus,jdbcType=TINYINT},
+            mission_step = #{missionStep,jdbcType=VARCHAR},
+            mission_rule = #{missionRule,jdbcType=VARCHAR},
+            merchant_name = #{merchantName,jdbcType=VARCHAR},
+            mission_extra_reward = #{missionExtraReward,jdbcType=VARCHAR},
+            merchant_detail = #{merchantDetail,jdbcType=VARCHAR},
+            show_or_not = #{showOrNot,jdbcType=TINYINT}
+        WHERE mission_id = #{missionId,jdbcType=INTEGER}
+    </update>
+</mapper>

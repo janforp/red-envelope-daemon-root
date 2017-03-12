@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_withdraw_sort">
+
+    <resultMap id="WithdrawSortMap" type="com.hongbao.api.model.dto.ReWithdrawSortInfo" >
+        <id column="withdraw_id" property="withdrawId" jdbcType="INTEGER"/>
+        <result column="withdraw_name" property="withdrawName" jdbcType="VARCHAR"/>
+        <result column="withdraw_img" property="withdrawImg" jdbcType="VARCHAR"/>
+        <result column="withdraw_explain" property="withdrawExplain" jdbcType="VARCHAR"/>
+        <result column="withdraw_url" property="withdrawUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectIosWithdrawSort" resultMap="WithdrawSortMap">
+        SELECT withdraw_id, withdraw_name, withdraw_img, withdraw_explain, withdraw_url
+        FROM re_withdraw_sort
+        WHERE withdraw_status = 0 OR withdraw_status = 2
+        ORDER BY withdraw_order ASC
+    </select>
+
+    <select id="selectAndriodWithdrawSort" resultMap="WithdrawSortMap">
+        SELECT withdraw_id, withdraw_name, withdraw_img, withdraw_explain, withdraw_url
+        FROM re_withdraw_sort
+        WHERE withdraw_status = 1 OR withdraw_status = 2
+        ORDER BY withdraw_order ASC
+    </select>
+
+</mapper>

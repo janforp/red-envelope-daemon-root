@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_mission_install">
+
+    <select id="selectUnderWayId" resultType="Long" parameterType="Integer">
+        SELECT mission_id
+        FROM re_android_mission_install
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND mission_status = 0
+    </select>
+
+</mapper>

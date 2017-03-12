@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_newcomer_mission">
+
+    <select id="selectByPlatform" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_newcomer_mission.SELECT_All_Column"/>
+        FROM re_newcomer_mission
+        WHERE ( mission_status = 2 OR mission_status = #{platform,jdbcType=INTEGER} )
+        ORDER BY mission_order DESC, mission_id DESC
+    </select>
+
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_portrait">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReUserPortrait">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_portrait" property="userPortrait" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_portrait
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReUserPortrait">
+        <include refid="re_user_portrait.SELECT_All_Column"/>
+        FROM re_user_portrait
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReUserPortrait">
+        DELETE FROM re_user_portrait
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReUserPortrait">
+        INSERT INTO re_user_portrait ( user_portrait )
+        VALUES ( #{userPortrait,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReUserPortrait">
+        INSERT INTO re_user_portrait
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userPortrait != null">
+                user_portrait,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userPortrait != null">
+                #{userPortrait,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_portrait ( user_portrait )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userPortrait,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReUserPortrait">
+        UPDATE re_user_portrait
+        <set>
+            <if test="userPortrait != null">
+                user_portrait = #{userPortrait,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReUserPortrait">
+        UPDATE re_user_portrait
+        SET user_portrait = #{userPortrait,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

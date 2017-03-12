@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_task">
+
+    <resultMap id="TaskMap" type="com.hongbao.api.model.dto.ReTaskInfo" >
+        <id column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="mission_icon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="mission_title" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="mission_label" property="missionLabel" jdbcType="VARCHAR"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+        <result column="task_status" property="taskStatus" jdbcType="TINYINT"/>
+        <result column="verify_remarks" property="verifyRemarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="GreatInfoMap" type="com.hongbao.api.model.dto.GreatMissionInfo">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="mission_icon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="mission_title" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="mission_reward" property="missionReward" jdbcType="VARCHAR"/>
+        <result column="merchant_icon" property="merchantIcon" jdbcType="VARCHAR"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="participants_num" property="participantsNum" jdbcType="INTEGER"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="left_num" property="leftNum" jdbcType="INTEGER"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="task_status" property="taskStatus" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <select id="selectMyMissionList" resultMap="GreatInfoMap" parameterType="map">
+        SELECT a.mission_id, a.mission_icon, a.mission_title, a.mission_reward, a.merchant_icon, a.merchant_name, a.participants_num, b.task_id, b.task_status
+        FROM re_recommend_mission a, re_recommend_task b
+        WHERE (a.mission_status = 2 OR a.mission_status = #{platform,jdbcType=INTEGER})
+        AND b.task_status != 4
+        AND b.mission_id = a.mission_id
+        AND b.user_id = #{userId,jdbcType=INTEGER}
+        <if test="missionType != null">
+            <choose>
+                <when test="missionType == 1">
+                    AND b.task_status = 0
+                </when>
+                <when test="missionType == 2">
+                    AND b.task_status = 1
+                </when>
+                <otherwise>
+                    AND b.task_status in (2, 3)
+                </otherwise>
+            </choose>
+        </if>
+        <if test="missionId != null">
+            AND b.task_id <![CDATA[ < ]]> #{missionId,jdbcType=BIGINT}
+        </if>
+        ORDER BY b.task_id DESC
+        Limit 0, 20
+    </select>
+
+    <select id="selectOneByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_recommend_task.SELECT_All_Column"/>
+        FROM re_recommend_task
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND task_status = 2
+        Limit 1
+    </select>
+
+    <select id="selectByUserId" resultMap="TaskMap" parameterType="Integer">
+        SELECT a.task_id, a.mission_id, b.mission_icon, b.mission_title, b.mission_label, b.left_num, a.task_status, a.verify_remarks
+        FROM re_recommend_task a, re_recommend_mission b
+        WHERE b.mission_id = a.mission_id
+        AND user_id = #{userId,jdbcType=INTEGER}
+        AND task_status != 4
+        ORDER BY a.task_status ASC
+    </select>
+
+    <select id="selectUserTask" resultMap="TaskMap" parameterType="map">
+        SELECT a.task_id, a.mission_id, b.mission_icon, b.mission_title, b.mission_label, b.left_num, a.task_status, a.verify_remarks
+        FROM re_recommend_task a, re_recommend_mission b
+        WHERE b.mission_id = a.mission_id
+        AND user_id = #{userId,jdbcType=INTEGER}
+        <if test="taskId != null">
+            AND task_id <![CDATA[ < ]]> #{taskId,jdbcType=BIGINT}
+        </if>
+        <if test="taskStatus != null">
+            <choose>
+                <when test="taskStatus == 3">
+                    AND task_status IN ('2', '3', '4')
+                </when>
+                <otherwise>
+                    AND task_status = #{taskStatus,jdbcType=TINYINT}
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY a.task_id DESC
+        Limit 0, 20
+    </select>
+
+    <select id="selectByIdAndStatus" resultMap="BaseResultMap" parameterType="long">
+        <include refid="re_recommend_task.SELECT_All_Column"/>
+        FROM re_recommend_task
+        WHERE task_id = #{taskId,jdbcType=BIGINT}
+        AND task_status = 0
+    </select>
+
+</mapper>

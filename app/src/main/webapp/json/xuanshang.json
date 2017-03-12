@@ -1,0 +1,17 @@
+{
+  "bannerList":[
+    {"bannerImg":"http://4493bz.1985t.com/uploads/allimg/150127/4-15012G52133.jpg",
+      "bannerUrl":"http://www.baidu.com"}],
+  "times":10,
+  "xuanshangList": [{
+    "xuanshangId": "21",
+    "portrait": "http://4493bz.1985t.com/uploads/allimg/150127/4-15012G52133.jpg",
+    "nickname": "许明荣",
+    "createTime": "21分钟前",
+    "missionContent": "总悬赏20.00元，简单几步就能赚钱,快来交作业。",
+    "missionDesc": "群发红包群发红包群发红包群发红包群发红包群发红包群发红包群发红包群发红包群发红包",
+    "statusContent": "共有20个任务，10人已提交",
+    "redStatus": "1",
+    "isSelf": "1"
+  }]
+}

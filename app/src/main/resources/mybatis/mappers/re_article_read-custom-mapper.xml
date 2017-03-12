@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_article_read">
+
+    <resultMap id="ArticleMap" type="com.hongbao.api.model.dto.ReArticleInfo">
+        <id column="article_id" property="articleId" jdbcType="BIGINT"/>
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR"/>
+        <result column="article_icon" property="articleIcon" jdbcType="VARCHAR"/>
+        <result column="app_read_money" property="appReadMoney" jdbcType="DECIMAL"/>
+        <result column="wx_click_money" property="wxClickMoney" jdbcType="DECIMAL"/>
+        <result column="left_click_times" property="leftClickTimes" jdbcType="INTEGER"/>
+        <result column="start_mission_time" property="startMissionTime" jdbcType="VARCHAR"/>
+        <result column="end_mission_time" property="endMissionTime" jdbcType="VARCHAR"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+    </resultMap>
+
+
+    <select id="selectByArticleIdAndUserId" resultMap="ArticleMap" parameterType="map">
+        SELECT a.article_id, b.article_title, b.article_icon, b.app_read_money, b.wx_click_money, b.left_click_times, b.start_mission_time,
+          b.end_mission_time, b.is_end
+        FROM re_article_read a
+        LEFT JOIN re_article_mission b
+        ON b.article_id = a.article_id
+        WHERE a.user_id = #{userId,jdbcType=INTEGER}
+        <if test="articleId != null">
+            AND a.article_id <![CDATA[ < ]]> #{articleId,jdbcType=BIGINT}
+        </if>
+        ORDER BY article_id DESC
+        Limit 0, 20
+    </select>
+
+</mapper>

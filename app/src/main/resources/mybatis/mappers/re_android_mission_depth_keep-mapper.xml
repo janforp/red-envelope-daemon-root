@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_mission_depth_keep">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAndroidMissionDepthKeep">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="depth_id" property="depthId" jdbcType="INTEGER"/>
+        <id column="data_day" property="dataDay" jdbcType="VARCHAR"/>
+        <result column="activate_num" property="activateNum" jdbcType="INTEGER"/>
+        <result column="plan_num" property="planNum" jdbcType="INTEGER"/>
+        <result column="real_num" property="realNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, depth_id, data_day, activate_num, plan_num, 
+        real_num
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAndroidMissionDepthKeep">
+        <include refid="re_android_mission_depth_keep.SELECT_All_Column"/>
+        FROM re_android_mission_depth_keep
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+        AND data_day = #{dataDay,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidMissionDepthKeep">
+        DELETE FROM re_android_mission_depth_keep
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+        AND data_day = #{dataDay,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAndroidMissionDepthKeep">
+        INSERT INTO re_android_mission_depth_keep ( mission_id, 
+          depth_id, data_day, activate_num, 
+          plan_num, real_num )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{depthId,jdbcType=INTEGER}, #{dataDay,jdbcType=VARCHAR}, #{activateNum,jdbcType=INTEGER}, 
+          #{planNum,jdbcType=INTEGER}, #{realNum,jdbcType=INTEGER} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAndroidMissionDepthKeep">
+        INSERT INTO re_android_mission_depth_keep
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                depth_id,
+                data_day,
+            <if test="activateNum != null">
+                activate_num,
+            </if>
+            <if test="planNum != null">
+                plan_num,
+            </if>
+            <if test="realNum != null">
+                real_num,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{depthId,jdbcType=INTEGER},
+                #{dataDay,jdbcType=VARCHAR},
+            <if test="activateNum != null">
+                #{activateNum,jdbcType=INTEGER},
+            </if>
+            <if test="planNum != null">
+                #{planNum,jdbcType=INTEGER},
+            </if>
+            <if test="realNum != null">
+                #{realNum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_android_mission_depth_keep ( mission_id, 
+          depth_id, data_day, activate_num, 
+          plan_num, real_num )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.depthId,jdbcType=INTEGER}, #{item.dataDay,jdbcType=VARCHAR}, #{item.activateNum,jdbcType=INTEGER}, 
+            #{item.planNum,jdbcType=INTEGER}, #{item.realNum,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAndroidMissionDepthKeep">
+        UPDATE re_android_mission_depth_keep
+        <set>
+            <if test="activateNum != null">
+                activate_num = #{activateNum,jdbcType=INTEGER},
+            </if>
+            <if test="planNum != null">
+                plan_num = #{planNum,jdbcType=INTEGER},
+            </if>
+            <if test="realNum != null">
+                real_num = #{realNum,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+        AND data_day = #{dataDay,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAndroidMissionDepthKeep">
+        UPDATE re_android_mission_depth_keep
+        SET activate_num = #{activateNum,jdbcType=INTEGER},
+            plan_num = #{planNum,jdbcType=INTEGER},
+            real_num = #{realNum,jdbcType=INTEGER}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND depth_id = #{depthId,jdbcType=INTEGER}
+        AND data_day = #{dataDay,jdbcType=VARCHAR}
+    </update>
+</mapper>

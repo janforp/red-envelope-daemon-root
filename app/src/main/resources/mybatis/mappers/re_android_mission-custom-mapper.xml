@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_android_mission">
+
+    <select id="selectAllByDay" resultMap="BaseResultMap" parameterType="String">
+        SELECT mission_id, app_name, app_icon, app_label, app_package, total_money, activate_start_time,
+          activate_end_time,  operator_limit, address_limit, sim_limit, num_limit, left_num
+        FROM re_android_mission
+        WHERE is_end = 1
+        and is_delete = 0
+        AND start_time <![CDATA[ <= ]]> #{nowDay,jdbcType=VARCHAR}
+        AND end_time >= #{nowDay,jdbcType=VARCHAR}
+        ORDER BY mission_weight DESC, mission_id DESC
+    </select>
+
+    <select id="selectLeftNumLock" resultType="int" parameterType="Long">
+        SELECT left_num
+        FROM re_android_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        FOR UPDATE
+    </select>
+
+    <update id="updateLeftNum" parameterType="map">
+        UPDATE re_android_mission
+        SET left_num = #{leftNum,jdbcType=INTEGER}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+
+
+</mapper>

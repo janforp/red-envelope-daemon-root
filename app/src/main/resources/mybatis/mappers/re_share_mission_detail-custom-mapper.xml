@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_share_mission_detail">
+
+    <select id="selectPartInNum" resultType="int" parameterType="long">
+        SELECT COUNT(DISTINCT mission_id, user_id)
+        FROM re_share_mission_detail
+        WHERE mission_id = #{dbcType=BIGINT}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_share_mission_detail.SELECT_All_Column"/>
+        FROM re_share_mission_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        Limit 1
+    </select>
+
+</mapper>

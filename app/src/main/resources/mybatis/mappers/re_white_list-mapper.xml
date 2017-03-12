@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_white_list">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReWhiteList">
+        <id column="mobile" property="mobile" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mobile
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReWhiteList">
+        <include refid="re_white_list.SELECT_All_Column"/>
+        FROM re_white_list
+        WHERE mobile = #{mobile,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReWhiteList">
+        DELETE FROM re_white_list
+        WHERE mobile = #{mobile,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReWhiteList">
+        INSERT INTO re_white_list ( mobile )
+        VALUES ( #{mobile,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReWhiteList">
+        INSERT INTO re_white_list
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mobile,
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{mobile,jdbcType=VARCHAR},
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_white_list ( mobile )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.mobile,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReWhiteList">
+        UPDATE re_white_list
+        <set>
+        </set>
+        WHERE mobile = #{mobile,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReWhiteList">
+        UPDATE re_white_list
+
+        WHERE mobile = #{mobile,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_share_mission">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReShareMission">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="mission_title" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="mission_icon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="interface_url" property="interfaceUrl" jdbcType="VARCHAR"/>
+        <result column="callback_url" property="callbackUrl" jdbcType="VARCHAR"/>
+        <result column="mission_desc" property="missionDesc" jdbcType="VARCHAR"/>
+        <result column="mission_text" property="missionText" jdbcType="VARCHAR"/>
+        <result column="mission_img" property="missionImg" jdbcType="VARCHAR"/>
+        <result column="example_img" property="exampleImg" jdbcType="VARCHAR"/>
+        <result column="total_click_times" property="totalClickTimes" jdbcType="INTEGER"/>
+        <result column="left_click_times" property="leftClickTimes" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, money, mission_title, mission_icon, interface_url, 
+        callback_url, mission_desc, mission_text, mission_img, example_img, 
+        total_click_times, left_click_times, create_time, is_end, start_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReShareMission">
+        <include refid="re_share_mission.SELECT_All_Column"/>
+        FROM re_share_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReShareMission">
+        DELETE FROM re_share_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReShareMission">
+        INSERT INTO re_share_mission ( money, 
+          mission_title, mission_icon, interface_url, 
+          callback_url, mission_desc, mission_text, 
+          mission_img, example_img, total_click_times, 
+          left_click_times, create_time, is_end, 
+          start_time )
+        VALUES ( #{money,jdbcType=DECIMAL}, 
+          #{missionTitle,jdbcType=VARCHAR}, #{missionIcon,jdbcType=VARCHAR}, #{interfaceUrl,jdbcType=VARCHAR}, 
+          #{callbackUrl,jdbcType=VARCHAR}, #{missionDesc,jdbcType=VARCHAR}, #{missionText,jdbcType=VARCHAR}, 
+          #{missionImg,jdbcType=VARCHAR}, #{exampleImg,jdbcType=VARCHAR}, #{totalClickTimes,jdbcType=INTEGER}, 
+          #{leftClickTimes,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{isEnd,jdbcType=TINYINT}, 
+          #{startTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReShareMission">
+        INSERT INTO re_share_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="money != null">
+                money,
+            </if>
+            <if test="missionTitle != null">
+                mission_title,
+            </if>
+            <if test="missionIcon != null">
+                mission_icon,
+            </if>
+            <if test="interfaceUrl != null">
+                interface_url,
+            </if>
+            <if test="callbackUrl != null">
+                callback_url,
+            </if>
+            <if test="missionDesc != null">
+                mission_desc,
+            </if>
+            <if test="missionText != null">
+                mission_text,
+            </if>
+            <if test="missionImg != null">
+                mission_img,
+            </if>
+            <if test="exampleImg != null">
+                example_img,
+            </if>
+            <if test="totalClickTimes != null">
+                total_click_times,
+            </if>
+            <if test="leftClickTimes != null">
+                left_click_times,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isEnd != null">
+                is_end,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="missionTitle != null">
+                #{missionTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="missionIcon != null">
+                #{missionIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="interfaceUrl != null">
+                #{interfaceUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="callbackUrl != null">
+                #{callbackUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="missionDesc != null">
+                #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="missionText != null">
+                #{missionText,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImg != null">
+                #{missionImg,jdbcType=VARCHAR},
+            </if>
+            <if test="exampleImg != null">
+                #{exampleImg,jdbcType=VARCHAR},
+            </if>
+            <if test="totalClickTimes != null">
+                #{totalClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leftClickTimes != null">
+                #{leftClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_share_mission ( money, 
+          mission_title, mission_icon, interface_url, 
+          callback_url, mission_desc, mission_text, 
+          mission_img, example_img, total_click_times, 
+          left_click_times, create_time, is_end, 
+          start_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.money,jdbcType=DECIMAL}, 
+            #{item.missionTitle,jdbcType=VARCHAR}, #{item.missionIcon,jdbcType=VARCHAR}, #{item.interfaceUrl,jdbcType=VARCHAR}, 
+            #{item.callbackUrl,jdbcType=VARCHAR}, #{item.missionDesc,jdbcType=VARCHAR}, #{item.missionText,jdbcType=VARCHAR}, 
+            #{item.missionImg,jdbcType=VARCHAR}, #{item.exampleImg,jdbcType=VARCHAR}, #{item.totalClickTimes,jdbcType=INTEGER}, 
+            #{item.leftClickTimes,jdbcType=INTEGER}, #{item.createTime,jdbcType=VARCHAR}, #{item.isEnd,jdbcType=TINYINT}, 
+            #{item.startTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReShareMission">
+        UPDATE re_share_mission
+        <set>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="missionTitle != null">
+                mission_title = #{missionTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="missionIcon != null">
+                mission_icon = #{missionIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="interfaceUrl != null">
+                interface_url = #{interfaceUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="callbackUrl != null">
+                callback_url = #{callbackUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="missionDesc != null">
+                mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="missionText != null">
+                mission_text = #{missionText,jdbcType=VARCHAR},
+            </if>
+            <if test="missionImg != null">
+                mission_img = #{missionImg,jdbcType=VARCHAR},
+            </if>
+            <if test="exampleImg != null">
+                example_img = #{exampleImg,jdbcType=VARCHAR},
+            </if>
+            <if test="totalClickTimes != null">
+                total_click_times = #{totalClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leftClickTimes != null">
+                left_click_times = #{leftClickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                is_end = #{isEnd,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReShareMission">
+        UPDATE re_share_mission
+        SET money = #{money,jdbcType=DECIMAL},
+            mission_title = #{missionTitle,jdbcType=VARCHAR},
+            mission_icon = #{missionIcon,jdbcType=VARCHAR},
+            interface_url = #{interfaceUrl,jdbcType=VARCHAR},
+            callback_url = #{callbackUrl,jdbcType=VARCHAR},
+            mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            mission_text = #{missionText,jdbcType=VARCHAR},
+            mission_img = #{missionImg,jdbcType=VARCHAR},
+            example_img = #{exampleImg,jdbcType=VARCHAR},
+            total_click_times = #{totalClickTimes,jdbcType=INTEGER},
+            left_click_times = #{leftClickTimes,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            is_end = #{isEnd,jdbcType=TINYINT},
+            start_time = #{startTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+</mapper>

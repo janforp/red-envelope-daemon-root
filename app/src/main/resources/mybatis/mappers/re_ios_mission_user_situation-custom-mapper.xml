@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_ios_mission_user_situation">
+
+    <select id="selectByUserIdAndTime" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_ios_mission_user_situation.SELECT_All_Column"/>
+        FROM re_ios_mission_user_situation
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        <if test="updateTime != null">
+            AND update_time <![CDATA[ < ]]> #{updateTime,jdbcType=VARCHAR}
+        </if>
+        ORDER BY update_time DESC
+        Limit 0, 20
+    </select>
+
+</mapper>

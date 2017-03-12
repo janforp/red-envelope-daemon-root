@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_auxiliary_statistic">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAuxiliaryStatistic">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="step_id" property="stepId" jdbcType="TINYINT"/>
+        <id column="platform" property="platform" jdbcType="TINYINT"/>
+        <id column="statistic_time" property="statisticTime" jdbcType="VARCHAR"/>
+        <result column="submit_num" property="submitNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, step_id, platform, statistic_time, submit_num
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAuxiliaryStatistic">
+        <include refid="re_auxiliary_statistic.SELECT_All_Column"/>
+        FROM re_auxiliary_statistic
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND step_id = #{stepId,jdbcType=TINYINT}
+        AND platform = #{platform,jdbcType=TINYINT}
+        AND statistic_time = #{statisticTime,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAuxiliaryStatistic">
+        DELETE FROM re_auxiliary_statistic
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND step_id = #{stepId,jdbcType=TINYINT}
+        AND platform = #{platform,jdbcType=TINYINT}
+        AND statistic_time = #{statisticTime,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAuxiliaryStatistic">
+        INSERT INTO re_auxiliary_statistic ( mission_id, 
+          step_id, platform, statistic_time, 
+          submit_num )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{stepId,jdbcType=TINYINT}, #{platform,jdbcType=TINYINT}, #{statisticTime,jdbcType=VARCHAR}, 
+          #{submitNum,jdbcType=INTEGER} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAuxiliaryStatistic">
+        INSERT INTO re_auxiliary_statistic
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                step_id,
+                platform,
+                statistic_time,
+            <if test="submitNum != null">
+                submit_num,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{stepId,jdbcType=TINYINT},
+                #{platform,jdbcType=TINYINT},
+                #{statisticTime,jdbcType=VARCHAR},
+            <if test="submitNum != null">
+                #{submitNum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_auxiliary_statistic ( mission_id, 
+          step_id, platform, statistic_time, 
+          submit_num )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.stepId,jdbcType=TINYINT}, #{item.platform,jdbcType=TINYINT}, #{item.statisticTime,jdbcType=VARCHAR}, 
+            #{item.submitNum,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAuxiliaryStatistic">
+        UPDATE re_auxiliary_statistic
+        <set>
+            <if test="submitNum != null">
+                submit_num = #{submitNum,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND step_id = #{stepId,jdbcType=TINYINT}
+        AND platform = #{platform,jdbcType=TINYINT}
+        AND statistic_time = #{statisticTime,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAuxiliaryStatistic">
+        UPDATE re_auxiliary_statistic
+        SET submit_num = #{submitNum,jdbcType=INTEGER}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND step_id = #{stepId,jdbcType=TINYINT}
+        AND platform = #{platform,jdbcType=TINYINT}
+        AND statistic_time = #{statisticTime,jdbcType=VARCHAR}
+    </update>
+</mapper>

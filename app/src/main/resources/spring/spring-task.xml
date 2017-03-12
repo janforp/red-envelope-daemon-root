@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 定时器开关 开始 -->
+    <task:annotation-driven/>
+    <!-- 定时器开关 结束 -->
+
+    <!--初始化并启动所有Task-->
+    <bean scope="singleton" class="org.craigq.quartz.TaskContextLoader"/>
+
+    <bean id="systemReporterTask" name="systemReporterTask" class="com.hongbao.api.task.sys.SystemReporterTask">
+        <constructor-arg index="0" value="smtp.163.com"/>
+        <constructor-arg index="1" value="25"/>
+        <constructor-arg index="2" value="true"/>
+        <constructor-arg index="3">
+            <list>
+                <bean class="com.hongbao.api.util.mail.support.MailConfig">
+                    <property name="userName" value="summer3013@163.com"/>
+                    <property name="password" value="8T45d08_R922"/>
+                </bean>
+            </list>
+        </constructor-arg>
+        <!--接收系统异常邮件的员工邮箱-->
+        <constructor-arg index="4">
+            <list>
+                <value>693074759@qq.com</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="taskInterceptor" class="org.craigq.quartz.intercept.TaskInterceptor" scope="prototype"/>
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="taskOperation" expression="execution(* com.hongbao.api.task..*Task.run())"/>
+        <aop:advisor advice-ref="taskInterceptor" pointcut-ref="taskOperation"/>
+    </aop:config>
+</beans>

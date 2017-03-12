@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_ios_mission_step">
+
+    <select id="selectAllByMissionId" resultMap="BaseResultMap" parameterType="Long">
+        <include refid="re_ios_mission_step.SELECT_All_Column"/>
+        FROM re_ios_mission_step
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        ORDER BY step_id ASC
+    </select>
+
+    <select id="selectLock" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_ios_mission_step.SELECT_All_Column"/>
+        FROM re_ios_mission_step
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND step_id = #{stepId,jdbcType=TINYINT}
+        FOR UPDATE
+    </select>
+
+
+</mapper>

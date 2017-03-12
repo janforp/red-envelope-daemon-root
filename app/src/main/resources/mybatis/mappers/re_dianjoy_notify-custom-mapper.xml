@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_dianjoy_notify">
+
+    <select id="selectRepeat" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_dianjoy_notify.SELECT_All_Column"/>
+        FROM re_dianjoy_notify
+        WHERE device_id = #{device_id,jdbcType=VARCHAR}
+        AND pack_name = #{pack_name,jdbcType=VARCHAR}
+        AND task_id = #{taskId,jdbcType=VARCHAR}
+        AND trade_type = #{tradeType,jdbcType=VARCHAR}
+        Limit 1
+    </select>
+
+</mapper>

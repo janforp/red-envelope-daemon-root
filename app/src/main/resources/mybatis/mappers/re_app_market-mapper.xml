@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app_market">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReAppMarket">
+        <id column="market_id" property="marketId" jdbcType="INTEGER"/>
+        <result column="market_name" property="marketName" jdbcType="VARCHAR"/>
+        <result column="market_package" property="marketPackage" jdbcType="VARCHAR"/>
+        <result column="market_url" property="marketUrl" jdbcType="VARCHAR"/>
+        <result column="market_order" property="marketOrder" jdbcType="TINYINT"/>
+        <result column="market_icon" property="marketIcon" jdbcType="VARCHAR"/>
+        <result column="market_title_icon" property="marketTitleIcon" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT market_id, market_name, market_package, market_url, market_order, 
+        market_icon, market_title_icon
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReAppMarket">
+        <include refid="re_app_market.SELECT_All_Column"/>
+        FROM re_app_market
+        WHERE market_id = #{marketId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReAppMarket">
+        DELETE FROM re_app_market
+        WHERE market_id = #{marketId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReAppMarket">
+        INSERT INTO re_app_market ( market_name, 
+          market_package, market_url, market_order, 
+          market_icon, market_title_icon )
+        VALUES ( #{marketName,jdbcType=VARCHAR}, 
+          #{marketPackage,jdbcType=VARCHAR}, #{marketUrl,jdbcType=VARCHAR}, #{marketOrder,jdbcType=TINYINT}, 
+          #{marketIcon,jdbcType=VARCHAR}, #{marketTitleIcon,jdbcType=VARCHAR} )
+        <selectKey keyProperty="marketId" resultType="int">
+            SELECT LAST_INSERT_ID() AS marketId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReAppMarket">
+        INSERT INTO re_app_market
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="marketName != null">
+                market_name,
+            </if>
+            <if test="marketPackage != null">
+                market_package,
+            </if>
+            <if test="marketUrl != null">
+                market_url,
+            </if>
+            <if test="marketOrder != null">
+                market_order,
+            </if>
+            <if test="marketIcon != null">
+                market_icon,
+            </if>
+            <if test="marketTitleIcon != null">
+                market_title_icon,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="marketName != null">
+                #{marketName,jdbcType=VARCHAR},
+            </if>
+            <if test="marketPackage != null">
+                #{marketPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="marketUrl != null">
+                #{marketUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="marketOrder != null">
+                #{marketOrder,jdbcType=TINYINT},
+            </if>
+            <if test="marketIcon != null">
+                #{marketIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="marketTitleIcon != null">
+                #{marketTitleIcon,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="marketId" resultType="int">
+            SELECT LAST_INSERT_ID() AS marketId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_app_market ( market_name, 
+          market_package, market_url, market_order, 
+          market_icon, market_title_icon )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.marketName,jdbcType=VARCHAR}, 
+            #{item.marketPackage,jdbcType=VARCHAR}, #{item.marketUrl,jdbcType=VARCHAR}, #{item.marketOrder,jdbcType=TINYINT}, 
+            #{item.marketIcon,jdbcType=VARCHAR}, #{item.marketTitleIcon,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReAppMarket">
+        UPDATE re_app_market
+        <set>
+            <if test="marketName != null">
+                market_name = #{marketName,jdbcType=VARCHAR},
+            </if>
+            <if test="marketPackage != null">
+                market_package = #{marketPackage,jdbcType=VARCHAR},
+            </if>
+            <if test="marketUrl != null">
+                market_url = #{marketUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="marketOrder != null">
+                market_order = #{marketOrder,jdbcType=TINYINT},
+            </if>
+            <if test="marketIcon != null">
+                market_icon = #{marketIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="marketTitleIcon != null">
+                market_title_icon = #{marketTitleIcon,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE market_id = #{marketId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReAppMarket">
+        UPDATE re_app_market
+        SET market_name = #{marketName,jdbcType=VARCHAR},
+            market_package = #{marketPackage,jdbcType=VARCHAR},
+            market_url = #{marketUrl,jdbcType=VARCHAR},
+            market_order = #{marketOrder,jdbcType=TINYINT},
+            market_icon = #{marketIcon,jdbcType=VARCHAR},
+            market_title_icon = #{marketTitleIcon,jdbcType=VARCHAR}
+        WHERE market_id = #{marketId,jdbcType=INTEGER}
+    </update>
+</mapper>

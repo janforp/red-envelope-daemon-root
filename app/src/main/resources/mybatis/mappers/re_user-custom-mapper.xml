@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user">
+
+    <resultMap id="UserKeySecretResultMap" type="com.hongbao.api.model.cache.UserKeySecret">
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_secret" property="userSecret" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="UserMoneyResultMap" type="com.hongbao.api.model.dto.ReUserMoneyAndScore">
+        <result column="user_money" property="userMoney" jdbcType="DECIMAL"/>
+        <result column="user_score" property="userScore" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectUserMoneyAndScore" parameterType="INTEGER" resultMap="UserMoneyResultMap">
+        SELECT user_money, user_score
+        FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectStatusByUserId" parameterType="INTEGER" resultType="INTEGER">
+        SELECT user_status
+        FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectUserByUserKey" parameterType="String" resultMap="UserKeySecretResultMap">
+        SELECT user_id, user_secret
+        FROM re_user
+        WHERE user_key = #{userKey,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByUserIdAndStatus" resultMap="BaseResultMap" parameterType="INTEGER">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+        WHERE user_status = 1
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="login" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+        WHERE mobile = #{loginName,jdbcType=VARCHAR}
+        AND password = #{password,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserIdByMobile" parameterType="String" resultType="INTEGER">
+        SELECT user_id
+        FROM re_user
+        WHERE mobile = #{mobile,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserKeyByUserId" parameterType="INTEGER" resultType="String">
+        SELECT user_key
+        FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectLockByUserId" resultMap="BaseResultMap" parameterType="INTEGER">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER} FOR UPDATE
+    </select>
+
+    <select id="selectUserByMobile" resultMap="BaseResultMap" parameterType="String">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+        WHERE mobile = #{mobile,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectInvitationCode" resultType="INTEGER" parameterType="String">
+        SELECT COUNT(invitation_code)
+        FROM re_user
+        WHERE invitation_code = #{invitationCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserIdByInvitationCode" parameterType="String" resultType="INTEGER">
+        SELECT user_id
+        FROM re_user
+        WHERE invitation_code = #{invitationCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserLockByUserKey" parameterType="String" resultMap="BaseResultMap">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+        WHERE user_key = #{userKey,jdbcType=VARCHAR}
+        FOR UPDATE
+    </select>
+
+    <update id="updateFreeTimes" parameterType="INTEGER">
+        UPDATE re_user
+        SET free_times = #{freeTimes,jdbcType=INTEGER}
+    </update>
+
+    <select id="getUserList"  resultMap="BaseResultMap">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+    </select>
+
+    <select id="selectUserLockByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT user_id, user_money, today_money, app_id, free_times, gain_times, mission_times
+        FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER} FOR UPDATE
+    </select>
+
+    <update id="updateSelective" parameterType="com.hongbao.api.model.ReUser">
+        UPDATE re_user
+        SET
+        user_money = #{userMoney,jdbcType=DECIMAL},
+        today_money = #{todayMoney,jdbcType=DECIMAL},
+        free_times = #{freeTimes,jdbcType=TINYINT},
+        gain_times = #{gainTimes,jdbcType=INTEGER},
+        mission_times = #{missionTimes,jdbcType=INTEGER},
+        update_time = #{updateTime,jdbcType=BIGINT}
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+
+</mapper>

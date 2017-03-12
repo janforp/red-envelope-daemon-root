@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_integral_wall">
+
+    <resultMap id="WallMap" type="com.hongbao.api.model.dto.ReIntegralWallInfo">
+        <result column="wall_title" property="wallTitle" jdbcType="VARCHAR"/>
+        <result column="wall_desc" property="wallDesc" jdbcType="VARCHAR"/>
+        <result column="wall_img" property="wallImg" jdbcType="VARCHAR"/>
+        <result column="wall_url" property="wallUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectWallListByPlatform" resultMap="WallMap" parameterType="map">
+        SELECT wall_title, wall_desc, wall_img, wall_url
+        FROM re_integral_wall
+        WHERE ( wall_status = 2 OR wall_status = #{platform,jdbcType=INTEGER} )
+        AND limit_version <![CDATA[ <= ]]> #{version,jdbcType=VARCHAR}
+        AND max_version >= #{version,jdbcType=VARCHAR}
+        AND ( limit_channel_name = '0' OR instr(limit_channel_name, #{channelName,jdbcType=VARCHAR}) )
+        AND ( limit_package_name = '0' OR instr(limit_package_name, #{packageName,jdbcType=VARCHAR}) )
+        ORDER BY wall_order ASC
+    </select>
+
+</mapper>

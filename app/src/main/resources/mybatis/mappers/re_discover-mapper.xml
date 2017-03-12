@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_discover">
+    <resultMap id="BaseResultMap" type="com.hongbao.api.model.ReDiscover">
+        <id column="discover_id" property="discoverId" jdbcType="INTEGER"/>
+        <result column="discover_title" property="discoverTitle" jdbcType="VARCHAR"/>
+        <result column="discover_description" property="discoverDescription" jdbcType="VARCHAR"/>
+        <result column="discover_img" property="discoverImg" jdbcType="VARCHAR"/>
+        <result column="discover_url" property="discoverUrl" jdbcType="VARCHAR"/>
+        <result column="discover_status" property="discoverStatus" jdbcType="TINYINT"/>
+        <result column="discover_order" property="discoverOrder" jdbcType="TINYINT"/>
+        <result column="limit_version" property="limitVersion" jdbcType="VARCHAR"/>
+        <result column="max_version" property="maxVersion" jdbcType="VARCHAR"/>
+        <result column="limit_channel_name" property="limitChannelName" jdbcType="VARCHAR"/>
+        <result column="limit_package_name" property="limitPackageName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT discover_id, discover_title, discover_description, discover_img, discover_url, 
+        discover_status, discover_order, limit_version, max_version, limit_channel_name, 
+        limit_package_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hongbao.api.model.ReDiscover">
+        <include refid="re_discover.SELECT_All_Column"/>
+        FROM re_discover
+        WHERE discover_id = #{discoverId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.hongbao.api.model.ReDiscover">
+        DELETE FROM re_discover
+        WHERE discover_id = #{discoverId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hongbao.api.model.ReDiscover">
+        INSERT INTO re_discover ( discover_title, 
+          discover_description, discover_img, discover_url, 
+          discover_status, discover_order, limit_version, 
+          max_version, limit_channel_name, limit_package_name )
+        VALUES ( #{discoverTitle,jdbcType=VARCHAR}, 
+          #{discoverDescription,jdbcType=VARCHAR}, #{discoverImg,jdbcType=VARCHAR}, #{discoverUrl,jdbcType=VARCHAR}, 
+          #{discoverStatus,jdbcType=TINYINT}, #{discoverOrder,jdbcType=TINYINT}, #{limitVersion,jdbcType=VARCHAR}, 
+          #{maxVersion,jdbcType=VARCHAR}, #{limitChannelName,jdbcType=VARCHAR}, #{limitPackageName,jdbcType=VARCHAR} )
+        <selectKey keyProperty="discoverId" resultType="int">
+            SELECT LAST_INSERT_ID() AS discoverId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.hongbao.api.model.ReDiscover">
+        INSERT INTO re_discover
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="discoverTitle != null">
+                discover_title,
+            </if>
+            <if test="discoverDescription != null">
+                discover_description,
+            </if>
+            <if test="discoverImg != null">
+                discover_img,
+            </if>
+            <if test="discoverUrl != null">
+                discover_url,
+            </if>
+            <if test="discoverStatus != null">
+                discover_status,
+            </if>
+            <if test="discoverOrder != null">
+                discover_order,
+            </if>
+            <if test="limitVersion != null">
+                limit_version,
+            </if>
+            <if test="maxVersion != null">
+                max_version,
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name,
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="discoverTitle != null">
+                #{discoverTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverDescription != null">
+                #{discoverDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverImg != null">
+                #{discoverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverUrl != null">
+                #{discoverUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverStatus != null">
+                #{discoverStatus,jdbcType=TINYINT},
+            </if>
+            <if test="discoverOrder != null">
+                #{discoverOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="discoverId" resultType="int">
+            SELECT LAST_INSERT_ID() AS discoverId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_discover ( discover_title, 
+          discover_description, discover_img, discover_url, 
+          discover_status, discover_order, limit_version, 
+          max_version, limit_channel_name, limit_package_name )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.discoverTitle,jdbcType=VARCHAR}, 
+            #{item.discoverDescription,jdbcType=VARCHAR}, #{item.discoverImg,jdbcType=VARCHAR}, #{item.discoverUrl,jdbcType=VARCHAR}, 
+            #{item.discoverStatus,jdbcType=TINYINT}, #{item.discoverOrder,jdbcType=TINYINT}, #{item.limitVersion,jdbcType=VARCHAR}, 
+            #{item.maxVersion,jdbcType=VARCHAR}, #{item.limitChannelName,jdbcType=VARCHAR}, #{item.limitPackageName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hongbao.api.model.ReDiscover">
+        UPDATE re_discover
+        <set>
+            <if test="discoverTitle != null">
+                discover_title = #{discoverTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverDescription != null">
+                discover_description = #{discoverDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverImg != null">
+                discover_img = #{discoverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverUrl != null">
+                discover_url = #{discoverUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="discoverStatus != null">
+                discover_status = #{discoverStatus,jdbcType=TINYINT},
+            </if>
+            <if test="discoverOrder != null">
+                discover_order = #{discoverOrder,jdbcType=TINYINT},
+            </if>
+            <if test="limitVersion != null">
+                limit_version = #{limitVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="maxVersion != null">
+                max_version = #{maxVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="limitChannelName != null">
+                limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitPackageName != null">
+                limit_package_name = #{limitPackageName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE discover_id = #{discoverId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hongbao.api.model.ReDiscover">
+        UPDATE re_discover
+        SET discover_title = #{discoverTitle,jdbcType=VARCHAR},
+            discover_description = #{discoverDescription,jdbcType=VARCHAR},
+            discover_img = #{discoverImg,jdbcType=VARCHAR},
+            discover_url = #{discoverUrl,jdbcType=VARCHAR},
+            discover_status = #{discoverStatus,jdbcType=TINYINT},
+            discover_order = #{discoverOrder,jdbcType=TINYINT},
+            limit_version = #{limitVersion,jdbcType=VARCHAR},
+            max_version = #{maxVersion,jdbcType=VARCHAR},
+            limit_channel_name = #{limitChannelName,jdbcType=VARCHAR},
+            limit_package_name = #{limitPackageName,jdbcType=VARCHAR}
+        WHERE discover_id = #{discoverId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_red_detail">
+
+    <resultMap id="DetailInfoMap" type="com.hongbao.api.model.dto.RedDetailInfo">
+        <result column="portrait" property="portrait" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="receiveTime" property="receiveTime" jdbcType="VARCHAR"/>
+        <result column="red_money" property="redMoney" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="selectByRedIdAndUserId" resultMap="BaseResultMap" parameterType="Map">
+        <include refid="re_user_red_detail.SELECT_All_Column"/>
+        FROM re_user_red_detail
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByRedId" resultMap="DetailInfoMap" parameterType="Long">
+        SELECT a.red_money, a.create_time as receiveTime, b.portrait, b.nickname
+        FROM re_user_red_detail a, re_user b
+        WHERE b.user_id = a.user_id
+        AND a.red_id = #{redId,jdbcType=BIGINT}
+        ORDER BY detail_id DESC
+    </select>
+
+</mapper>
