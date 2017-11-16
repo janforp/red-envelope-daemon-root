@@ -1,5 +1,9 @@
 package com.hongbao.api.util.sms;
 
+import com.alibaba.fastjson.JSON;
+import com.hongbao.api.consts.BaseConsts;
+import com.hongbao.api.model.vo.JuheMsgBack;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -54,10 +58,10 @@ public class JuheMessage {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 
-//        String msgBackStr = JuheMessage.sendMsg("2345", "15067151355", BaseConsts.SMS_BAND_PHONE_TPL_ID, "测试");
-//        JuheMsgBack msgBack = JSON.parseObject(msgBackStr, JuheMsgBack.class);
-//        //发送短信后返回的描述
-//        System.out.println(">>>>>>>>>"+msgBack.getReason());
+        String msgBackStr = JuheMessage.sendMsg("2345", "13738053603", BaseConsts.SMS_LOGIN_TPL_ID, "测试");
+        JuheMsgBack msgBack = JSON.parseObject(msgBackStr, JuheMsgBack.class);
+        //发送短信后返回的描述
+        System.out.println(">>>>>>>>>"+msgBack.getReason());
 
     }
 

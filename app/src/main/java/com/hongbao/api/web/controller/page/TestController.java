@@ -13,8 +13,6 @@ import com.hongbao.api.model.vo.NavigationVo;
 import com.hongbao.api.service.*;
 import com.hongbao.api.util.JsonUtil;
 import com.hongbao.api.util.RandomUtil;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
